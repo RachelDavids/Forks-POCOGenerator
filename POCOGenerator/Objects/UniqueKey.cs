@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database unique key of a database table.</summary>
-    public sealed class UniqueKey
+	/// <summary>Represents a database unique key of a database table.</summary>
+	public sealed class UniqueKey
     {
         private readonly POCOGenerator.DbObjects.IUniqueKey uniqueKey;
 

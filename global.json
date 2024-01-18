@@ -1,0 +1,9 @@
+{
+	"sdk": {
+		"allowPrerelease": true
+	},
+	"msbuild-sdks": {
+		"Chaucer.Extended.Sdk": "23.8.19",
+		"Microsoft.Build.NoTargets": "3.7.0"
+	}
+}

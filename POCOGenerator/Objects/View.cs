@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database view.</summary>
-    public sealed class View : IDbObject
+	/// <summary>Represents a database view.</summary>
+	public sealed class View : IDbObject
     {
         private readonly POCOGenerator.DbObjects.IView view;
 

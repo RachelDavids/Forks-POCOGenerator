@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database index of a database view.</summary>
-    public sealed class ViewIndex : Index
+	/// <summary>Represents a database index of a database view.</summary>
+	public sealed class ViewIndex : Index
     {
         internal ViewIndex(POCOGenerator.DbObjects.IIndex index, View view)
             : base(index)

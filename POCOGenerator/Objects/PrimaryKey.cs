@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database primary key of a database table.</summary>
-    public sealed class PrimaryKey
+	/// <summary>Represents a database primary key of a database table.</summary>
+	public sealed class PrimaryKey
     {
         private readonly POCOGenerator.DbObjects.IPrimaryKey primaryKey;
 

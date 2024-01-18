@@ -1,0 +1,20 @@
+<Project>
+        <PropertyGroup Label="Traceability">
+                <ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+        </PropertyGroup>
+        <!-- Build content is not mandatory in this file -->
+        <!-- However, presence of this file will stop MSBuild from looking in any Parent folders for a file of the same name -->
+
+        <PropertyGroup>
+                <NoWarn>1591;$(NoWarn)</NoWarn>
+        </PropertyGroup>
+
+        <!-- common targets are in this Sdk  -->
+        <!--<Import Project="Sdk.targets" Sdk="Chaucer.Extended.Sdk" />-->
+
+        <!-- "our" targets are all in Shared folder to reduce noise in SolutionRoot -->
+        <Import Project="$(MSBuildThisFileDirectory)\Shared\*.targets" />
+
+        <!-- allow user one final chancce to override settings -->
+        <Import Project="$(SolutionDir)My.Working.targets" Condition="Exists('$(SolutionDir)My.Working.targets')" />
+</Project>

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+
 using MySql.Data.MySqlClient;
+
 using POCOGenerator.Db;
 using POCOGenerator.Db.DbObjects;
 using POCOGenerator.DbObjects;
 using POCOGenerator.MySQL.DbObjects;
+using POCOGenerator.Utils;
 
 namespace POCOGenerator.MySQL
 {
-    internal class MySQLHelper : DbHelper
+	internal class MySQLHelper : DbHelper
     {
         #region Constructor
 

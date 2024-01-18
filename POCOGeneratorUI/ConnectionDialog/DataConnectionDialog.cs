@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.Sql;
 using System.Linq;
 using System.Windows.Forms;
+
+using Microsoft.Data.Sql;
+
 using POCOGenerator;
 
 namespace POCOGeneratorUI.ConnectionDialog

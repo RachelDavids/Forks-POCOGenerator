@@ -1,80 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props" Condition="Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72C68B48-8903-4C5E-A464-29FD45F3CB3B}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>POCOGenerator.SQLServer</RootNamespace>
-    <AssemblyName>POCOGenerator.SQLServer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <NoWarn>IDE1006</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>IDE1006</NoWarn>
+    <AssemblyTitle>POCOGenerator.SQLServer</AssemblyTitle>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SqlServer.Types, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Types.160.1000.6\lib\net462\Microsoft.SqlServer.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\Solution Items\SolutionAssemblyInfo.cs">
+    <Compile Include="..\Common\SolutionAssemblyInfo.cs">
       <Link>Properties\SolutionAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DbObjects\ComputedColumn.cs" />
-    <Compile Include="DbObjects\Database.cs" />
-    <Compile Include="DbObjects\SystemObject.cs" />
-    <Compile Include="DbObjects\DbObjectDescription.cs" />
-    <Compile Include="DbObjects\Function.cs" />
-    <Compile Include="DbObjects\IdentityColumn.cs" />
-    <Compile Include="DbObjects\Procedure.cs" />
-    <Compile Include="DbObjects\ProcedureColumn.cs" />
-    <Compile Include="DbObjects\ProcedureParameter.cs" />
-    <Compile Include="DbObjects\SQLServer.cs" />
-    <Compile Include="DbObjects\Table.cs" />
-    <Compile Include="DbObjects\TableColumn.cs" />
-    <Compile Include="DbObjects\TVP.cs" />
-    <Compile Include="DbObjects\TVPColumn.cs" />
-    <Compile Include="DbObjects\View.cs" />
-    <Compile Include="DbObjects\ViewColumn.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLServerConnectionStringParser.cs" />
-    <Compile Include="SQLServerHandler.cs" />
-    <Compile Include="SQLServerHelper.cs" />
-    <Compile Include="SQLServerIterator.cs" />
-    <Compile Include="SQLServerSupport.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\SQLServer_ComputedColumns.sql" />
@@ -88,39 +22,19 @@
     <EmbeddedResource Include="Scripts\SQLServer_Version.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj">
-      <Project>{1cc551e8-d88b-404f-a15d-25c3a590d15b}</Project>
-      <Name>POCOGenerator.DbHandlers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj">
-      <Project>{a5523067-8ed9-4ecc-bb40-37835890f193}</Project>
-      <Name>POCOGenerator.DbObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POCOGenerator.Db\POCOGenerator.Db.csproj">
-      <Project>{23b91f6a-9a25-47ce-8ee3-62c0f99750dd}</Project>
-      <Name>POCOGenerator.Db</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj">
-      <Project>{3e933ece-6386-4b0b-8335-ab0e46bc06ec}</Project>
-      <Name>POCOGenerator.POCOIterators</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj">
-      <Project>{c80d4ea0-c70a-4f47-b1cd-00e9231196c9}</Project>
-      <Name>POCOGenerator.POCOWriters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj">
-      <Project>{74e97281-c6ce-4241-a201-f3a8ca566a0e}</Project>
-      <Name>POCOGenerator.Utils</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj" />
+    <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
+    <ProjectReference Include="..\POCOGenerator.Db\POCOGenerator.Db.csproj" />
+    <ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj" />
+    <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
+    <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.SqlServer.Types">
+      <Version>160.1000.6</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SqlServer.Types.160.1000.6\build\net462\Microsoft.SqlServer.Types.props'))" />
-  </Target>
 </Project>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using POCOGenerator.DbObjects;
+using POCOGenerator.Utils;
 
 namespace POCOGenerator.SQLServer.DbObjects
 {
-    internal class TableColumn : ITableColumn
+	internal class TableColumn : ITableColumn
     {
         #region Database Properties
 

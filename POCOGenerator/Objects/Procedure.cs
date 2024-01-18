@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database stored procedure.</summary>
-    public sealed class Procedure : IDbRoutine
+	/// <summary>Represents a database stored procedure.</summary>
+	public sealed class Procedure : IDbRoutine
     {
         private readonly POCOGenerator.DbObjects.IProcedure procedure;
 

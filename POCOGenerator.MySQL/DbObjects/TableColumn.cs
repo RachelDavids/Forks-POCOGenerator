@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+
 using POCOGenerator.DbObjects;
+using POCOGenerator.Utils;
 
 namespace POCOGenerator.MySQL.DbObjects
 {
-    internal class TableColumn : ITableColumn, IEnumColumn
+	internal class TableColumn : ITableColumn, IEnumColumn
     {
         #region Database Properties
 

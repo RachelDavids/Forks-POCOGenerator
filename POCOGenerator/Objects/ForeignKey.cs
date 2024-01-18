@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database foreign key between database tables.</summary>
-    public sealed class ForeignKey
+	/// <summary>Represents a database foreign key between database tables.</summary>
+	public sealed class ForeignKey
     {
         private readonly POCOGenerator.DbObjects.IForeignKey foreignKey;
 

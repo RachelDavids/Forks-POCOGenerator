@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a RDBMS server.</summary>
-    public sealed class Server
+	/// <summary>Represents a RDBMS server.</summary>
+	public sealed class Server
     {
         private readonly POCOGenerator.DbObjects.IServer server;
         private readonly List<DatabaseAccessibleObjects> databasesAccessibleObjects;

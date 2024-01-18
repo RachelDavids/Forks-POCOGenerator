@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database table.</summary>
-    public sealed class Table : IDbObject
+	/// <summary>Represents a database table.</summary>
+	public sealed class Table : IDbObject
     {
         private readonly POCOGenerator.DbObjects.ITable table;
 

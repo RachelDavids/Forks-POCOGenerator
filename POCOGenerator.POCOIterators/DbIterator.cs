@@ -4,13 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+
 using POCOGenerator.DbObjects;
 using POCOGenerator.POCOWriters;
 using POCOGenerator.Utils;
 
 namespace POCOGenerator.POCOIterators
 {
-    public abstract class DbIterator : IDbIterator
+	public abstract class DbIterator : IDbIterator
     {
         #region Constructor
 

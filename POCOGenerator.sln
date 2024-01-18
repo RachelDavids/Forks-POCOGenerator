@@ -1,20 +1,18 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44EA7805-F94D-4681-AE3F-F9C6622DB8CF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{44EA7805-F94D-4681-AE3F-F9C6622DB8CF}"
 	ProjectSection(SolutionItems) = preProject
-		Solution Items\Dependencies.txt = Solution Items\Dependencies.txt
-		Solution Items\Disclaimer.txt = Solution Items\Disclaimer.txt
-		LICENSE = LICENSE
-		README.md = README.md
-		Solution Items\SolutionAssemblyInfo.cs = Solution Items\SolutionAssemblyInfo.cs
+		Common\Dependencies.txt = Common\Dependencies.txt
+		Common\Disclaimer.txt = Common\Disclaimer.txt
+		Common\SolutionAssemblyInfo.cs = Common\SolutionAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator", "POCOGenerator\POCOGenerator.csproj", "{8E9F1307-4DAD-4F02-97F0-C0BCE59B1B86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator", "POCOGenerator\POCOGenerator.csproj", "{8E9F1307-4DAD-4F02-97F0-C0BCE59B1B86}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{17F0A88F-B277-4EC6-9B82-943331DCC804}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "++Samples++", "++Samples++", "{17F0A88F-B277-4EC6-9B82-943331DCC804}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{8AFDCBC0-4DBE-4C72-A059-5CC60381015B}"
 EndProject
@@ -32,78 +30,103 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Text", "Text", "{1E4C9604-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RichTextBox", "RichTextBox", "{D4E1E196-880B-4FBE-97BE-C848E3CFBEFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleColorDarkThemeDemo", "Demos\Console\ConsoleColorDarkThemeDemo\ConsoleColorDarkThemeDemo.csproj", "{53935680-0C8C-4258-BF92-BBBB1C1F21D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleColorDarkThemeDemo", "Demos\Console\ConsoleColorDarkThemeDemo\ConsoleColorDarkThemeDemo.csproj", "{53935680-0C8C-4258-BF92-BBBB1C1F21D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleColorDemo", "Demos\Console\ConsoleColorDemo\ConsoleColorDemo.csproj", "{AE066629-0C8B-4D81-9D33-D567D01D388F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleColorDemo", "Demos\Console\ConsoleColorDemo\ConsoleColorDemo.csproj", "{AE066629-0C8B-4D81-9D33-D567D01D388F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleDemo", "Demos\Console\ConsoleDemo\ConsoleDemo.csproj", "{4F507183-8BEF-44DC-98EC-0EDC1B8280A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleDemo", "Demos\Console\ConsoleDemo\ConsoleDemo.csproj", "{4F507183-8BEF-44DC-98EC-0EDC1B8280A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsDemo", "Demos\Events\EventsDemo\EventsDemo.csproj", "{86A84EC2-6C92-4861-B1D3-07AF0A509AD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsDemo", "Demos\Events\EventsDemo\EventsDemo.csproj", "{86A84EC2-6C92-4861-B1D3-07AF0A509AD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleFilesDemo", "Demos\Events\MultipleFilesDemo\MultipleFilesDemo.csproj", "{D5D135CA-D5FA-4BFC-A878-FC2370B4541A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultipleFilesDemo", "Demos\Events\MultipleFilesDemo\MultipleFilesDemo.csproj", "{D5D135CA-D5FA-4BFC-A878-FC2370B4541A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratePOCOsDemo", "Demos\GeneratePOCOs\GeneratePOCOsDemo\GeneratePOCOsDemo.csproj", "{7FA69253-E846-4D5B-BCC0-817A21F69327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneratePOCOsDemo", "Demos\GeneratePOCOs\GeneratePOCOsDemo\GeneratePOCOsDemo.csproj", "{7FA69253-E846-4D5B-BCC0-817A21F69327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectingObjectsDemo", "Demos\SelectingObjects\SelectingObjectsDemo\SelectingObjectsDemo.csproj", "{F692826F-B6F8-4376-8FF2-14C9DE55DC8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelectingObjectsDemo", "Demos\SelectingObjects\SelectingObjectsDemo\SelectingObjectsDemo.csproj", "{F692826F-B6F8-4376-8FF2-14C9DE55DC8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkipAndStopDemo", "Demos\SelectingObjects\SkipAndStopDemo\SkipAndStopDemo.csproj", "{4818A76A-D9B2-4109-B731-F2352B654324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkipAndStopDemo", "Demos\SelectingObjects\SkipAndStopDemo\SkipAndStopDemo.csproj", "{4818A76A-D9B2-4109-B731-F2352B654324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WildcardsDemo", "Demos\SelectingObjects\WildcardsDemo\WildcardsDemo.csproj", "{EF62A907-016C-4888-A273-2C76D0C00012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildcardsDemo", "Demos\SelectingObjects\WildcardsDemo\WildcardsDemo.csproj", "{EF62A907-016C-4888-A273-2C76D0C00012}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DetailedServerTreeDemo", "Demos\ServerTree\DetailedServerTreeDemo\DetailedServerTreeDemo.csproj", "{1FA0F83F-22A0-4A04-BFFB-9926FDABDB56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DetailedServerTreeDemo", "Demos\ServerTree\DetailedServerTreeDemo\DetailedServerTreeDemo.csproj", "{1FA0F83F-22A0-4A04-BFFB-9926FDABDB56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerTreeDemo", "Demos\ServerTree\ServerTreeDemo\ServerTreeDemo.csproj", "{64351756-7532-4402-B882-75AB3309D8C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerTreeDemo", "Demos\ServerTree\ServerTreeDemo\ServerTreeDemo.csproj", "{64351756-7532-4402-B882-75AB3309D8C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStreamDemo", "Demos\Stream\FileStreamDemo\FileStreamDemo.csproj", "{C0B6AB15-A9DC-4D6D-848F-EFDD15ECCC7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileStreamDemo", "Demos\Stream\FileStreamDemo\FileStreamDemo.csproj", "{C0B6AB15-A9DC-4D6D-848F-EFDD15ECCC7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryStreamDemo", "Demos\Stream\MemoryStreamDemo\MemoryStreamDemo.csproj", "{3D7F33E6-848F-4D6E-8108-ED894219F534}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoryStreamDemo", "Demos\Stream\MemoryStreamDemo\MemoryStreamDemo.csproj", "{3D7F33E6-848F-4D6E-8108-ED894219F534}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringBuilderDemo", "Demos\Text\StringBuilderDemo\StringBuilderDemo.csproj", "{461FC508-CBD5-48FD-AEDB-28D667126924}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringBuilderDemo", "Demos\Text\StringBuilderDemo\StringBuilderDemo.csproj", "{461FC508-CBD5-48FD-AEDB-28D667126924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextWriterDemo", "Demos\Text\TextWriterDemo\TextWriterDemo.csproj", "{4E5EE695-498A-4E5E-A002-91B3B027D667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextWriterDemo", "Demos\Text\TextWriterDemo\TextWriterDemo.csproj", "{4E5EE695-498A-4E5E-A002-91B3B027D667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichTextBoxDemo", "Demos\RichTextBox\RichTextBoxDemo\RichTextBoxDemo.csproj", "{9E561CAC-5E32-4734-B678-16CE057265E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RichTextBoxDemo", "Demos\RichTextBox\RichTextBoxDemo\RichTextBoxDemo.csproj", "{9E561CAC-5E32-4734-B678-16CE057265E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGeneratorUI", "POCOGeneratorUI\POCOGeneratorUI.csproj", "{F2483CED-6566-4762-99B5-069E777B8A56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGeneratorUI", "POCOGeneratorUI\POCOGeneratorUI.csproj", "{F2483CED-6566-4762-99B5-069E777B8A56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.DbObjects", "POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj", "{A5523067-8ED9-4ECC-BB40-37835890F193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.DbObjects", "POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj", "{A5523067-8ED9-4ECC-BB40-37835890F193}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.Db", "POCOGenerator.Db\POCOGenerator.Db.csproj", "{23B91F6A-9A25-47CE-8EE3-62C0F99750DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.Db", "POCOGenerator.Db\POCOGenerator.Db.csproj", "{23B91F6A-9A25-47CE-8EE3-62C0F99750DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.DbFactories", "POCOGenerator.DbFactories\POCOGenerator.DbFactories.csproj", "{C303C478-61F6-47D0-B01E-7F3B92523682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.DbFactories", "POCOGenerator.DbFactories\POCOGenerator.DbFactories.csproj", "{C303C478-61F6-47D0-B01E-7F3B92523682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.DbHandlers", "POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj", "{1CC551E8-D88B-404F-A15D-25C3A590D15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.DbHandlers", "POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj", "{1CC551E8-D88B-404F-A15D-25C3A590D15B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.MySQL", "POCOGenerator.MySQL\POCOGenerator.MySQL.csproj", "{AAFFAE64-9956-41E9-8906-A1E7C0E350F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.MySQL", "POCOGenerator.MySQL\POCOGenerator.MySQL.csproj", "{AAFFAE64-9956-41E9-8906-A1E7C0E350F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.POCOIterators", "POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj", "{3E933ECE-6386-4B0B-8335-AB0E46BC06EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.POCOIterators", "POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj", "{3E933ECE-6386-4B0B-8335-AB0E46BC06EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.POCOWriters", "POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj", "{C80D4EA0-C70A-4F47-B1CD-00E9231196C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.POCOWriters", "POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj", "{C80D4EA0-C70A-4F47-B1CD-00E9231196C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.SQLServer", "POCOGenerator.SQLServer\POCOGenerator.SQLServer.csproj", "{72C68B48-8903-4C5E-A464-29FD45F3CB3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.SQLServer", "POCOGenerator.SQLServer\POCOGenerator.SQLServer.csproj", "{72C68B48-8903-4C5E-A464-29FD45F3CB3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POCOGenerator.Utils", "POCOGenerator.Utils\POCOGenerator.Utils.csproj", "{74E97281-C6CE-4241-A201-F3A8CA566A0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator.Utils", "POCOGenerator.Utils\POCOGenerator.Utils.csproj", "{74E97281-C6CE-4241-A201-F3A8CA566A0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavigationPropertiesDemo", "Demos\ServerTree\NavigationPropertiesDemo\NavigationPropertiesDemo.csproj", "{0D76D75D-1D22-4F25-9082-A598F9CA6B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NavigationPropertiesDemo", "Demos\ServerTree\NavigationPropertiesDemo\NavigationPropertiesDemo.csproj", "{0D76D75D-1D22-4F25-9082-A598F9CA6B4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplexTypesDemo", "Demos\GeneratePOCOs\ComplexTypesDemo\ComplexTypesDemo.csproj", "{7585CD83-7D6E-4D7E-B0BE-037137EB60DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexTypesDemo", "Demos\GeneratePOCOs\ComplexTypesDemo\ComplexTypesDemo.csproj", "{7585CD83-7D6E-4D7E-B0BE-037137EB60DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{177A5F2F-A12D-4C55-A06F-70B5C9AF18F7}"
 	ProjectSection(SolutionItems) = preProject
-		Solution Items\Images\ClassNameSettings.jpg = Solution Items\Images\ClassNameSettings.jpg
-		Solution Items\Images\ConsoleColorDarkThemeDemo.jpg = Solution Items\Images\ConsoleColorDarkThemeDemo.jpg
-		Solution Items\Images\ConsoleColorDemo.jpg = Solution Items\Images\ConsoleColorDemo.jpg
-		Solution Items\Images\EFAnnotationsSettings.jpg = Solution Items\Images\EFAnnotationsSettings.jpg
-		Solution Items\Images\ExportToFilesSettings.jpg = Solution Items\Images\ExportToFilesSettings.jpg
-		Solution Items\Images\FilterSettings.jpg = Solution Items\Images\FilterSettings.jpg
-		Solution Items\Images\NavigationPropertiesSettings.jpg = Solution Items\Images\NavigationPropertiesSettings.jpg
-		Solution Items\Images\PersonTableAndPOCO.jpg = Solution Items\Images\PersonTableAndPOCO.jpg
-		Solution Items\Images\POCOGeneratorUI.jpg = Solution Items\Images\POCOGeneratorUI.jpg
-		Solution Items\Images\POCOSettings.jpg = Solution Items\Images\POCOSettings.jpg
-		Solution Items\Images\RichTextBoxDemo.jpg = Solution Items\Images\RichTextBoxDemo.jpg
-		Solution Items\Images\RichTextBoxDemoDarkTheme.jpg = Solution Items\Images\RichTextBoxDemoDarkTheme.jpg
-		Solution Items\Images\TableContextMenu.jpg = Solution Items\Images\TableContextMenu.jpg
+		Common\Images\ClassNameSettings.jpg = Common\Images\ClassNameSettings.jpg
+		Common\Images\ConsoleColorDarkThemeDemo.jpg = Common\Images\ConsoleColorDarkThemeDemo.jpg
+		Common\Images\ConsoleColorDemo.jpg = Common\Images\ConsoleColorDemo.jpg
+		Common\Images\EFAnnotationsSettings.jpg = Common\Images\EFAnnotationsSettings.jpg
+		Common\Images\ExportToFilesSettings.jpg = Common\Images\ExportToFilesSettings.jpg
+		Common\Images\FilterSettings.jpg = Common\Images\FilterSettings.jpg
+		Common\Images\NavigationPropertiesSettings.jpg = Common\Images\NavigationPropertiesSettings.jpg
+		Common\Images\PersonTableAndPOCO.jpg = Common\Images\PersonTableAndPOCO.jpg
+		Common\Images\POCOGeneratorUI.jpg = Common\Images\POCOGeneratorUI.jpg
+		Common\Images\POCOSettings.jpg = Common\Images\POCOSettings.jpg
+		Common\Images\RichTextBoxDemo.jpg = Common\Images\RichTextBoxDemo.jpg
+		Common\Images\RichTextBoxDemoDarkTheme.jpg = Common\Images\RichTextBoxDemoDarkTheme.jpg
+		Common\Images\TableContextMenu.jpg = Common\Images\TableContextMenu.jpg
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level 0", "Level 0", "{510AAB0A-DCC0-465A-80F3-C8A086B2BA3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level 1", "Level 1", "{48E45B40-5AF0-470C-8391-D297A9828BC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level 2", "Level 2", "{1C4FFF79-1A7F-4965-BB1A-1BA071B71895}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level 3", "Level 3", "{C77058AD-9244-4030-A4E2-EBB08812936E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level 4", "Level 4", "{67B04A56-EC83-4A49-BFF1-6BCFE50E13C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{B9CE10C7-01D7-4B30-A2EC-3CBDCE727DEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "!!Solution!!", "!!Solution!!", "{647E52B0-BDFB-4784-8A34-ED812776A1CD}"
+	ProjectSection(SolutionItems) = preProject
+		.filenesting.json = .filenesting.json
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{18B7CFAA-EFB0-4CD4-807E-70CA08194953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -232,6 +255,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{44EA7805-F94D-4681-AE3F-F9C6622DB8CF} = {647E52B0-BDFB-4784-8A34-ED812776A1CD}
+		{8E9F1307-4DAD-4F02-97F0-C0BCE59B1B86} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
 		{8AFDCBC0-4DBE-4C72-A059-5CC60381015B} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
 		{79520FF1-E06A-4B25-AF57-6EA99C9688AF} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
 		{2E4F6DA4-908F-4DD3-85FB-BC5447213594} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
@@ -256,9 +281,25 @@ Global
 		{461FC508-CBD5-48FD-AEDB-28D667126924} = {1E4C9604-78EF-4142-95D6-0E54D19E955B}
 		{4E5EE695-498A-4E5E-A002-91B3B027D667} = {1E4C9604-78EF-4142-95D6-0E54D19E955B}
 		{9E561CAC-5E32-4734-B678-16CE057265E1} = {D4E1E196-880B-4FBE-97BE-C848E3CFBEFC}
+		{F2483CED-6566-4762-99B5-069E777B8A56} = {B9CE10C7-01D7-4B30-A2EC-3CBDCE727DEA}
+		{A5523067-8ED9-4ECC-BB40-37835890F193} = {510AAB0A-DCC0-465A-80F3-C8A086B2BA3F}
+		{23B91F6A-9A25-47CE-8EE3-62C0F99750DD} = {1C4FFF79-1A7F-4965-BB1A-1BA071B71895}
+		{C303C478-61F6-47D0-B01E-7F3B92523682} = {67B04A56-EC83-4A49-BFF1-6BCFE50E13C2}
+		{1CC551E8-D88B-404F-A15D-25C3A590D15B} = {1C4FFF79-1A7F-4965-BB1A-1BA071B71895}
+		{AAFFAE64-9956-41E9-8906-A1E7C0E350F7} = {C77058AD-9244-4030-A4E2-EBB08812936E}
+		{3E933ECE-6386-4B0B-8335-AB0E46BC06EC} = {48E45B40-5AF0-470C-8391-D297A9828BC0}
+		{C80D4EA0-C70A-4F47-B1CD-00E9231196C9} = {510AAB0A-DCC0-465A-80F3-C8A086B2BA3F}
+		{72C68B48-8903-4C5E-A464-29FD45F3CB3B} = {C77058AD-9244-4030-A4E2-EBB08812936E}
+		{74E97281-C6CE-4241-A201-F3A8CA566A0E} = {510AAB0A-DCC0-465A-80F3-C8A086B2BA3F}
 		{0D76D75D-1D22-4F25-9082-A598F9CA6B4F} = {B5934ED9-1AE4-4BFA-9F96-BFA91087CE1C}
 		{7585CD83-7D6E-4D7E-B0BE-037137EB60DB} = {2E4F6DA4-908F-4DD3-85FB-BC5447213594}
 		{177A5F2F-A12D-4C55-A06F-70B5C9AF18F7} = {44EA7805-F94D-4681-AE3F-F9C6622DB8CF}
+		{510AAB0A-DCC0-465A-80F3-C8A086B2BA3F} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
+		{48E45B40-5AF0-470C-8391-D297A9828BC0} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
+		{1C4FFF79-1A7F-4965-BB1A-1BA071B71895} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
+		{C77058AD-9244-4030-A4E2-EBB08812936E} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
+		{67B04A56-EC83-4A49-BFF1-6BCFE50E13C2} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
+		{18B7CFAA-EFB0-4CD4-807E-70CA08194953} = {647E52B0-BDFB-4784-8A34-ED812776A1CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B151279D-E4E7-4770-96DC-B5BBC39AA6B6}

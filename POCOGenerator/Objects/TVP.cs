@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database user-defined table type.</summary>
-    /// <remarks>
-    /// Table-valued parameters (TVPs) are declared by using user-defined table types and are scoped to stored procedures and functions. POCO Generator generates user-defined table types but uses the acronym TVP (table-valued parameter) interchangeably with user-defined table type although they are different things.
-    /// </remarks>
-    public sealed class TVP : IDbObject
+	/// <summary>Represents a database user-defined table type.</summary>
+	/// <remarks>
+	/// Table-valued parameters (TVPs) are declared by using user-defined table types and are scoped to stored procedures and functions. POCO Generator generates user-defined table types but uses the acronym TVP (table-valued parameter) interchangeably with user-defined table type although they are different things.
+	/// </remarks>
+	public sealed class TVP : IDbObject
     {
         private readonly POCOGenerator.DbObjects.ITVP tvp;
 

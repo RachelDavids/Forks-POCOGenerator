@@ -1,0 +1,9 @@
+<Project>
+        <PropertyGroup Label="Traceability">
+                <ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+        </PropertyGroup>
+        <PropertyGroup>
+                <NoWarn>1591;$(NoWarn)</NoWarn>
+        </PropertyGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<Product>POCO Generator</Product>
+		<Copyright>Copyright ©  2020</Copyright>
+		<Version>24.1.19</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
+	</PropertyGroup>
+
+</Project>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database index of a database table.</summary>
-    public sealed class TableIndex : Index
+	/// <summary>Represents a database index of a database table.</summary>
+	public sealed class TableIndex : Index
     {
         internal TableIndex(POCOGenerator.DbObjects.IIndex index, Table table)
             : base(index)

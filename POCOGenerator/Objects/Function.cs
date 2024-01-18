@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database table-valued function.</summary>
-    public sealed class Function : IDbRoutine
+	/// <summary>Represents a database table-valued function.</summary>
+	public sealed class Function : IDbRoutine
     {
         private readonly POCOGenerator.DbObjects.IFunction function;
 

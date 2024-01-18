@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using POCOGenerator.Utils;
+
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents entity framework complex type column.</summary>
-    public sealed class ComplexTypeTableColumn : IDbColumn
+	/// <summary>Represents entity framework complex type column.</summary>
+	public sealed class ComplexTypeTableColumn : IDbColumn
     {
         private readonly POCOGenerator.DbObjects.IComplexTypeTableColumn complexTypeTableColumn;
 

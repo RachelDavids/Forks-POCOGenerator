@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+
 using POCOGenerator.DbFactories;
 using POCOGenerator.DbHandlers;
 using POCOGenerator.DbObjects;
 using POCOGenerator.POCOIterators;
 using POCOGenerator.POCOWriters;
+using POCOGenerator.Utils;
 
 namespace POCOGenerator
 {
-    internal class Generator : IGenerator
+	internal class Generator : IGenerator
     {
         internal readonly object lockObject = new object();
 

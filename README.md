@@ -1,4 +1,4 @@
-﻿![POCO Generator UI](./Solution%20Items/Images/POCOGeneratorUI.jpg "POCO Generator UI")
+![POCO Generator UI](./Common/Images/POCOGeneratorUI.jpg "POCO Generator UI")
 
 # POCO Generator
 
@@ -21,6 +21,9 @@ Original article and previous version of [POCO Generator on CodeProject](https:/
 
 [^1]: Table-valued parameters (TVPs) are declared by using user-defined table types and are scoped to stored procedures and functions. POCO Generator generates user-defined table types but uses the acronym TVP (table-valued parameter) interchangeably with user-defined table type although they are different things.
 
+> [!NOTE]
+> I don't have much time to be actively involved with this project anymore, let alone deal with pull requests, so I'm making this repository archived and read-only. I'll try to continue develop this project in the future but no promises. Fork away.
+
 # Disclaimer
 
 > [!CAUTION]
@@ -33,11 +36,11 @@ The checkboxes on the tree are for picking specific database objects.
 The upper right side of the window shows the current generated POCOs, based on what is selected on the tree.
 The setting panels, at the bottom, manipulate how the POCOs are constructed and handle exporting them to files.
 
-![Person Table and POCO](./Solution%20Items/Images/PersonTableAndPOCO.jpg "Person Table and POCO")
+![Person Table and POCO](./Common/Images/PersonTableAndPOCO.jpg "Person Table and POCO")
 
 ## POCO Settings
 
-![POCO Settings](./Solution%20Items/Images/POCOSettings.jpg "POCO Settings")
+![POCO Settings](./Common/Images/POCOSettings.jpg "POCO Settings")
 
 These settings determine the structure of the POCO.
 
@@ -135,7 +138,7 @@ public enum Number : int        public enum Numbers : int
 
 ## Class Name Settings
 
-![Class Name Settings](./Solution%20Items/Images/ClassNameSettings.jpg "Class Name Settings")
+![Class Name Settings](./Common/Images/ClassNameSettings.jpg "Class Name Settings")
 
 The name of the POCO class is set to the name of the database object, whether it is a valid C# class name or not. These settings modify the initial class name.
 
@@ -174,7 +177,7 @@ The class name `Product_Category` has 2 words, `Product` & `Category`.
 
 ## Navigation Properties Settings
 
-![Navigation Properties Settings](./Solution%20Items/Images/NavigationPropertiesSettings.jpg "Navigation Properties Settings")
+![Navigation Properties Settings](./Common/Images/NavigationPropertiesSettings.jpg "Navigation Properties Settings")
 
 These settings enable navigation properties and determine how they are constructed.
 
@@ -192,7 +195,7 @@ These settings enable navigation properties and determine how they are construct
 
 ## EF Annotations Settings
 
-![EF Annotations Settings](./Solution%20Items/Images/EFAnnotationsSettings.jpg "EF Annotations Settings")
+![EF Annotations Settings](./Common/Images/EFAnnotationsSettings.jpg "EF Annotations Settings")
 
 These settings add Code-First Entity Framework attributes to POCO classes. More about EF annotations on this page [Code First Data Annotations](https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/data-annotations "Code First Data Annotations").
 
@@ -228,7 +231,7 @@ These settings add Code-First Entity Framework attributes to POCO classes. More 
 
 ## Export To Files Settings
 
-![Export To Files Settings](./Solution%20Items/Images/ExportToFilesSettings.jpg "Export To Files Settings")
+![Export To Files Settings](./Common/Images/ExportToFilesSettings.jpg "Export To Files Settings")
 
 Save POCOs to files. These settings determine how the POCOs will be grouped to files and what the directory structure, where the files are saved, will be.
 
@@ -289,7 +292,7 @@ namespace AdventureWorks2014.Tables.Sales
 
 The context menu of a table object shows several options for quickly selecting other tables that are referenced from or referencing to the selected table.
 
-![Table Context Menu](./Solution%20Items/Images/TableContextMenu.jpg "Table Context Menu")
+![Table Context Menu](./Common/Images/TableContextMenu.jpg "Table Context Menu")
 
 **Referenced From** select all other tables that are connected from the selected table by foreign keys.
 
@@ -301,7 +304,7 @@ The context menu of a table object shows several options for quickly selecting o
 
 The context menu of a database group (Tables, Views...) shows the filter settings. The filter selects, or excludes, specific database objects, within that database group, by their name and schema.
 
-![Filter Settings](./Solution%20Items/Images/FilterSettings.jpg "Filter Settings")
+![Filter Settings](./Common/Images/FilterSettings.jpg "Filter Settings")
 
 # Type Mapping
 
@@ -1237,7 +1240,7 @@ generator.Settings.EFAnnotations.Enable = true;
 generator.Generate();
 ```
 
-![ConsoleColor Demo](./Solution%20Items/Images/ConsoleColorDemo.jpg "ConsoleColor Demo")
+![ConsoleColor Demo](./Common/Images/ConsoleColorDemo.jpg "ConsoleColor Demo")
 
 These are the syntax highlight predefined colors.
 
@@ -1279,7 +1282,7 @@ generator.Settings.SyntaxHighlight.Background = Color.FromArgb(0, 0, 0);
 generator.Generate();
 ```
 
-![ConsoleColorDarkTheme Demo](./Solution%20Items/Images/ConsoleColorDarkThemeDemo.jpg "ConsoleColorDarkTheme Demo")
+![ConsoleColorDarkTheme Demo](./Common/Images/ConsoleColorDarkThemeDemo.jpg "ConsoleColorDarkTheme Demo")
 
 These are the syntax highlight dark theme colors.
 
@@ -1315,11 +1318,11 @@ generator.Settings.EFAnnotations.Enable = true;
 generator.Generate();
 ```
 
-![RichTextBox Demo](./Solution%20Items/Images/RichTextBoxDemo.jpg "RichTextBox Demo")
+![RichTextBox Demo](./Common/Images/RichTextBoxDemo.jpg "RichTextBox Demo")
 
 Dark theme syntax highlight colors are listed at [ConsoleColorDarkThemeDemo](#consolecolordarkthemedemo "ConsoleColorDarkThemeDemo").
 
-![RichTextBox Demo Dark Theme](./Solution%20Items/Images/RichTextBoxDemoDarkTheme.jpg "RichTextBox Demo Dark Theme")
+![RichTextBox Demo Dark Theme](./Common/Images/RichTextBoxDemoDarkTheme.jpg "RichTextBox Demo Dark Theme")
 
 ### Selecting Objects Demos
 

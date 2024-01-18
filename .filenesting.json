@@ -1,0 +1,30 @@
+{
+	"help": "https://go.microsoft.com/fwlink/?linkid=866610",
+	"root": true,
+
+	"dependentFileProviders": {
+		"add": {
+			"addedExtension": {},
+			"pathSegment": {
+				"add": {
+					".*": [
+						".cs",
+						".vb",
+						".json"
+					]
+				}
+			},
+			"extensionToExtension": {
+				"add": {
+					".designer.cs": [
+						".resx"
+					]
+				}
+			},
+			"allExtensions": {
+				"add": {
+				}
+			}
+		}
+	}
+}
