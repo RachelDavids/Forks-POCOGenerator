@@ -1,15 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <NoWarn>IDE1006</NoWarn>
     <AssemblyTitle>POCOGenerator.SQLServer</AssemblyTitle>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\Common\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\SQLServer_ComputedColumns.sql" />
     <EmbeddedResource Include="Scripts\SQLServer_Descriptions.sql" />
@@ -30,11 +24,9 @@
     <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.SqlServer.Types">
       <Version>160.1000.6</Version>
     </PackageReference>
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 </Project>

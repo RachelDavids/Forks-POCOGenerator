@@ -1,6 +1,6 @@
-﻿namespace POCOGeneratorUI
+namespace POCOGeneratorUI
 {
-    partial class POCOGeneratorForm
+	sealed partial class POCOGeneratorForm
     {
         /// <summary>
         /// Required designer variable.

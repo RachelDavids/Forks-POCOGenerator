@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
@@ -7,17 +7,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\POCOGenerator.xml</DocumentationFile>
-    <NoWarn>IDE1006</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DocumentationFile>bin\Release\POCOGenerator.xml</DocumentationFile>
-    <NoWarn>IDE1006</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\Common\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POCOGenerator.DbFactories\POCOGenerator.DbFactories.csproj" />
     <ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj" />
@@ -30,7 +23,5 @@
     <PackageReference Include="ILRepack.Lib.MSBuild.Task">
       <Version>2.0.22</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
 </Project>

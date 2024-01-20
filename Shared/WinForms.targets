@@ -1,0 +1,12 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup Label="Forms">
+		<ApplicationVisualStyles>true</ApplicationVisualStyles>
+		<ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+		<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+		<ApplicationDefaultFont>Lucida Console, 12.25pt</ApplicationDefaultFont>
+	</PropertyGroup>
+</Project>
+

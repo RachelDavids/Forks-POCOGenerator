@@ -1,19 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <NoWarn>IDE1006</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>RichTextBoxDemo.Program</StartupObject>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\Common\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
   </ItemGroup>
@@ -24,7 +18,5 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.22" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
 </Project>

@@ -1,20 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
     <AssemblyTitle>POCOGenerator.Db</AssemblyTitle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Common\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
     <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
-﻿namespace POCOGeneratorUI.ConnectionDialog
+namespace POCOGeneratorUI.ConnectionDialog
 {
-    partial class DataConnectionDialog
+	sealed partial class DataConnectionDialog
     {
         /// <summary>
         /// Required designer variable.

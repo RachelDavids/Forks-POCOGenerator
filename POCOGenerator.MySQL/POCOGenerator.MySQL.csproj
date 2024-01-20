@@ -1,15 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <NoWarn>IDE1006</NoWarn>
     <AssemblyTitle>POCOGenerator.MySQL</AssemblyTitle>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\Common\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\MySQL_ComputedColumns.sql" />
     <EmbeddedResource Include="Scripts\MySQL_Descriptions.sql" />
@@ -28,12 +22,10 @@
     <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="MySql.Data">
       <Version>8.0.33</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
