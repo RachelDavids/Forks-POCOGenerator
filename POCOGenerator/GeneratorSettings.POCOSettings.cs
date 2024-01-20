@@ -550,5 +550,33 @@ namespace POCOGenerator
 				}
 			}
 		}
+
+		#region Constructors
+
+		private void InitializePOCO(IPOCO pocoSettings)
+		{
+			POCO.Properties = pocoSettings.Properties;
+			POCO.Fields = pocoSettings.Fields;
+			POCO.VirtualProperties = pocoSettings.VirtualProperties;
+			POCO.OverrideProperties = pocoSettings.OverrideProperties;
+			POCO.PartialClass = pocoSettings.PartialClass;
+			POCO.StructTypesNullable = pocoSettings.StructTypesNullable;
+			POCO.Comments = pocoSettings.Comments;
+			POCO.CommentsWithoutNull = pocoSettings.CommentsWithoutNull;
+			POCO.Using = pocoSettings.Using;
+			POCO.UsingInsideNamespace = pocoSettings.UsingInsideNamespace;
+			POCO.Namespace = pocoSettings.Namespace;
+			POCO.WrapAroundEachClass = pocoSettings.WrapAroundEachClass;
+			POCO.Inherit = pocoSettings.Inherit;
+			POCO.ColumnDefaults = pocoSettings.ColumnDefaults;
+			POCO.NewLineBetweenMembers = pocoSettings.NewLineBetweenMembers;
+			POCO.ComplexTypes = pocoSettings.ComplexTypes;
+			POCO.EnumSQLTypeToString = pocoSettings.EnumSQLTypeToString;
+			POCO.EnumSQLTypeToEnumUShort = pocoSettings.EnumSQLTypeToEnumUShort;
+			POCO.EnumSQLTypeToEnumInt = pocoSettings.EnumSQLTypeToEnumInt;
+			POCO.Tab = pocoSettings.Tab;
+		}
+
+		#endregion
 	}
 }

@@ -1,63 +1,77 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using POCOGenerator;
 
 namespace ConsoleColorDarkThemeDemo
 {
-    class Program
-    {
-        static void Main()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
+	internal static class Program
+	{
+		private static void Main()
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
 
-            IGenerator generator = GeneratorFactory.GetConsoleColorGenerator();
-            try { generator.Settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt"); } catch { }
-            if (string.IsNullOrEmpty(generator.Settings.Connection.ConnectionString))
-                generator.Settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
-            generator.Settings.DatabaseObjects.Tables.IncludeAll = true;
-            generator.Settings.POCO.CommentsWithoutNull = true;
-            generator.Settings.ClassName.IncludeSchema = true;
-            generator.Settings.ClassName.SchemaSeparator = "_";
-            generator.Settings.ClassName.IgnoreDboSchema = true;
-            generator.Settings.EFAnnotations.Enable = true;
+			IGenerator generator = GeneratorFactory.GetConsoleColorGenerator();
+			ISettings settings = generator.Settings;
+			try
+			{
+				settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt");
+			}
+			catch { }
+			if (string.IsNullOrEmpty(settings.Connection.ConnectionString))
+			{
+				settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
+			}
 
-            generator.Settings.SyntaxHighlight.Text = Color.FromArgb(255, 255, 255);
-            generator.Settings.SyntaxHighlight.Keyword = Color.FromArgb(86, 156, 214);
-            generator.Settings.SyntaxHighlight.UserType = Color.FromArgb(78, 201, 176);
-            generator.Settings.SyntaxHighlight.String = Color.FromArgb(214, 157, 133);
-            generator.Settings.SyntaxHighlight.Comment = Color.FromArgb(96, 139, 78);
-            generator.Settings.SyntaxHighlight.Error = Color.FromArgb(255, 0, 0);
-            generator.Settings.SyntaxHighlight.Background = Color.FromArgb(0, 0, 0);
+			settings.DatabaseObjects.Tables.IncludeAll = true;
+			settings.POCO.CommentsWithoutNull = true;
+			settings.ClassName.IncludeSchema = true;
+			settings.ClassName.SchemaSeparator = "_";
+			settings.ClassName.IgnoreDboSchema = true;
+			settings.EFAnnotations.Enable = true;
 
-            GeneratorResults results = generator.Generate();
+			settings.SyntaxHighlight.Text = Color.FromArgb(255, 255, 255);
+			settings.SyntaxHighlight.Keyword = Color.FromArgb(86, 156, 214);
+			settings.SyntaxHighlight.UserType = Color.FromArgb(78, 201, 176);
+			settings.SyntaxHighlight.String = Color.FromArgb(214, 157, 133);
+			settings.SyntaxHighlight.Comment = Color.FromArgb(96, 139, 78);
+			settings.SyntaxHighlight.Error = Color.FromArgb(255, 0, 0);
+			settings.SyntaxHighlight.Background = Color.FromArgb(0, 0, 0);
 
-            PrintError(results, generator.Error);
+			GeneratorResults results = generator.Generate();
 
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue . . .");
-            Console.ReadKey(true);
-        }
+			PrintError(results, generator.Error);
 
-        private static void PrintError(GeneratorResults results, Exception Error)
-        {
-            bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
-            bool isWarning = (results & GeneratorResults.Warning) == GeneratorResults.Warning;
+			Console.WriteLine();
+			Console.WriteLine("Press any key to continue . . .");
+			Console.ReadKey(true);
+		}
 
-            if (results != GeneratorResults.None)
-                Console.WriteLine();
+		private static void PrintError(GeneratorResults results, Exception Error)
+		{
+			bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
+			bool isWarning = (results & GeneratorResults.Warning) == GeneratorResults.Warning;
 
-            if (isError)
-                Console.WriteLine("Error Result: {0}", results);
-            else if (isWarning)
-                Console.WriteLine("Warning Result: {0}", results);
+			if (results != GeneratorResults.None)
+			{
+				Console.WriteLine();
+			}
 
-            if (Error != null)
-            {
-                Console.WriteLine("Error: {0}", Error.Message);
-                Console.WriteLine("Error Stack Trace:");
-                Console.WriteLine(Error.StackTrace);
-            }
-        }
-    }
+			if (isError)
+			{
+				Console.WriteLine("Error Result: {0}", results);
+			}
+			else if (isWarning)
+			{
+				Console.WriteLine("Warning Result: {0}", results);
+			}
+
+			if (Error != null)
+			{
+				Console.WriteLine("Error: {0}", Error.Message);
+				Console.WriteLine("Error Stack Trace:");
+				Console.WriteLine(Error.StackTrace);
+			}
+		}
+	}
 }

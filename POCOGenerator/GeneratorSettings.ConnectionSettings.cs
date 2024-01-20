@@ -67,5 +67,15 @@ namespace POCOGenerator
 		}
 
 		#endregion
+
+		#region Constructors
+
+		private void InitializeConnection(IConnection connection)
+		{
+			Connection.ConnectionString = connection.ConnectionString;
+			Connection.RDBMS = connection.RDBMS;
+		}
+
+		#endregion
 	}
 }

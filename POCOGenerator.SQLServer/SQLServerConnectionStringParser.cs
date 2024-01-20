@@ -1,52 +1,49 @@
-﻿using System;
 using System.Data.SqlClient;
 using POCOGenerator.Db;
 
 namespace POCOGenerator.SQLServer
 {
-    internal sealed class SQLServerConnectionStringParser : ConnectionStringParser
-    {
-        private SQLServerConnectionStringParser() { }
+	internal sealed class SQLServerConnectionStringParser
+		: ConnectionStringParser
+	{
+		private static SQLServerConnectionStringParser _instance;
+		public static SQLServerConnectionStringParser Instance => _instance ??= new();
+		private SQLServerConnectionStringParser() { }
 
-        public static SQLServerConnectionStringParser Instance
-        {
-            get { return SingletonCreator.instance; }
-        }
+		public override void Parse(string connectionString,
+								   ref string serverName,
+								   ref string initialDatabase,
+								   ref string userId,
+								   ref bool integratedSecurity)
+		{
+			SqlConnectionStringBuilder conn = new(connectionString);
+			serverName = conn.DataSource;
+			initialDatabase = conn.InitialCatalog;
+			userId = conn.UserID;
+			integratedSecurity = conn.IntegratedSecurity;
+		}
 
-        private class SingletonCreator
-        {
-            static SingletonCreator() { }
-            internal static readonly SQLServerConnectionStringParser instance = new SQLServerConnectionStringParser();
-        }
+		public override bool Ping(string connectionString)
+		{
+			if (string.IsNullOrEmpty(connectionString))
+			{
+				return false;
+			}
 
-        public override void Parse(string connectionString, ref string serverName, ref string initialDatabase, ref string userId, ref bool integratedSecurity)
-        {
-            var conn = new SqlConnectionStringBuilder(connectionString);
-            serverName = conn.DataSource;
-            initialDatabase = conn.InitialCatalog;
-            userId = conn.UserID;
-            integratedSecurity = conn.IntegratedSecurity;
-        }
+			connectionString = SetConnectionTimeoutTo120Seconds(connectionString);
 
-        public override bool Ping(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString))
-                return false;
-
-            connectionString = SetConnectionTimeoutTo120Seconds(connectionString);
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-    }
+			using (SqlConnection connection = new(connectionString))
+			{
+				try
+				{
+					connection.Open();
+					return true;
+				}
+				catch
+				{
+					return false;
+				}
+			}
+		}
+	}
 }

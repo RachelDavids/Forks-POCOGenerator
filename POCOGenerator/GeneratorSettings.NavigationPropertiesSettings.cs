@@ -293,5 +293,18 @@ namespace POCOGenerator
 				}
 			}
 		}
+
+		private void InitializeNavigationProperties(INavigationProperties navigationProperties)
+		{
+			NavigationProperties.Enable = navigationProperties.Enable;
+			NavigationProperties.VirtualNavigationProperties = navigationProperties.VirtualNavigationProperties;
+			NavigationProperties.OverrideNavigationProperties = navigationProperties.OverrideNavigationProperties;
+			NavigationProperties.ManyToManyJoinTable = navigationProperties.ManyToManyJoinTable;
+			NavigationProperties.Comments = navigationProperties.Comments;
+			NavigationProperties.ListNavigationProperties = navigationProperties.ListNavigationProperties;
+			NavigationProperties.IListNavigationProperties = navigationProperties.IListNavigationProperties;
+			NavigationProperties.ICollectionNavigationProperties = navigationProperties.ICollectionNavigationProperties;
+			NavigationProperties.IEnumerableNavigationProperties = navigationProperties.IEnumerableNavigationProperties;
+		}
 	}
 }

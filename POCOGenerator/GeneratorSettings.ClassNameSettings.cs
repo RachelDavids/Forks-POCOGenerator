@@ -373,5 +373,25 @@ namespace POCOGenerator
 				}
 			}
 		}
+
+		private void InitializeClassName(IClassName className)
+		{
+			ClassName.Singular = className.Singular;
+			ClassName.IncludeDB = className.IncludeDB;
+			ClassName.DBSeparator = className.DBSeparator;
+			ClassName.IncludeSchema = className.IncludeSchema;
+			ClassName.IgnoreDboSchema = className.IgnoreDboSchema;
+			ClassName.SchemaSeparator = className.SchemaSeparator;
+			ClassName.WordsSeparator = className.WordsSeparator;
+			ClassName.CamelCase = className.CamelCase;
+			ClassName.UpperCase = className.UpperCase;
+			ClassName.LowerCase = className.LowerCase;
+			ClassName.Search = className.Search;
+			ClassName.Replace = className.Replace;
+			ClassName.SearchIgnoreCase = className.SearchIgnoreCase;
+			ClassName.FixedClassName = className.FixedClassName;
+			ClassName.Prefix = className.Prefix;
+			ClassName.Suffix = className.Suffix;
+		}
 	}
 }

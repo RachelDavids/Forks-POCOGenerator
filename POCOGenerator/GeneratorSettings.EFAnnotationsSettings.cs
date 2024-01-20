@@ -4,8 +4,6 @@ namespace POCOGenerator
 {
 	internal sealed partial class GeneratorSettings
 	{
-		#region EF Annotations Settings
-
 		private sealed class EFAnnotationsSettings : IEFAnnotations, IEFAnnotationsIteratorSettings
 		{
 			private readonly object lockObject;
@@ -278,6 +276,19 @@ namespace POCOGenerator
 			}
 		}
 
-		#endregion
+		private void InitializeEFAnnotations(IEFAnnotations efAnnotations)
+		{
+			EFAnnotations.Enable = efAnnotations.Enable;
+			EFAnnotations.Column = efAnnotations.Column;
+			EFAnnotations.Required = efAnnotations.Required;
+			EFAnnotations.RequiredWithErrorMessage = efAnnotations.RequiredWithErrorMessage;
+			EFAnnotations.ConcurrencyCheck = efAnnotations.ConcurrencyCheck;
+			EFAnnotations.StringLength = efAnnotations.StringLength;
+			EFAnnotations.Display = efAnnotations.Display;
+			EFAnnotations.Description = efAnnotations.Description;
+			EFAnnotations.ComplexType = efAnnotations.ComplexType;
+			EFAnnotations.Index = efAnnotations.Index;
+			EFAnnotations.ForeignKeyAndInverseProperty = efAnnotations.ForeignKeyAndInverseProperty;
+		}
 	}
 }
