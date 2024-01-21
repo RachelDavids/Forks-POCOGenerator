@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<!-- https://docs.microsoft.com/en-us/visualstudio/ide/file-nesting-solution-explorer?view=vs-2022 -->
+	<ItemGroup>
+		<ProjectCapability Include="ConfigurableFileNesting" />
+		<ProjectCapability Include="ConfigurableFileNestingFeatureEnabled" />
+	</ItemGroup>
+
+</Project>

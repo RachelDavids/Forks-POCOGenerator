@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using POCOGenerator.POCOWriters.Writers;
 
 namespace POCOGenerator.POCOWriters
@@ -15,7 +14,7 @@ namespace POCOGenerator.POCOWriters
 
 		public static Func<IWriter> GetCreateConsoleWriterHandler() => () => new ConsolePOCOWriter();
 		public static Func<IWriter> GetCreateConsoleColorWriterHandler() => () => new ConsoleColorPOCOWriter();
-		public static Func<IWriter> GetCreateWriterHandler(RichTextBox richTextBox) => () => new RichTextBoxPOCOWriter(richTextBox);
+		//public static Func<IWriter> GetCreateWriterHandler(RichTextBox richTextBox) => () => new RichTextBoxPOCOWriter(richTextBox);
 
 		public static Func<IWriter> GetCreateWriter<T>(T obj) => () => Factory.Create(obj);
 		public static Func<IWriter> GetCreateWriter() => () => new OutputEmptyPOCOWriter();

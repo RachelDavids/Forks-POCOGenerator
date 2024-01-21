@@ -1,0 +1,6 @@
+<Project>
+	<PropertyGroup>
+		<IsTrimmable>false</IsTrimmable>
+		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
+	</PropertyGroup>
+</Project>

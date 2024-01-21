@@ -1,0 +1,107 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:00:44 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.PreferTryParseRule
+M: POCOGenerator.DbObjects.Version POCOGenerator.DbObjects.Version::Parse(System.String)
+M: System.Boolean POCOGenerator.DbObjects.Version::TryParse(System.String,POCOGenerator.DbObjects.Version&)
+M: System.Int32 POCOGenerator.DbObjects.Version::CompareVersions(POCOGenerator.DbObjects.Version,System.Double)
+M: System.Int32 POCOGenerator.DbObjects.Version::CompareVersions(System.Double,POCOGenerator.DbObjects.Version)
+M: System.Void POCOGenerator.DbObjects.Version::.ctor(System.String)
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Void POCOGenerator.DbObjects.Version::.ctor(POCOGenerator.DbObjects.Version)
+
+R: Gendarme.Rules.Correctness.ProvideCorrectArgumentsToFormattingMethodsRule
+M: System.String POCOGenerator.DbObjects.Version::ToString(System.Int32)
+
+R: Gendarme.Rules.Design.AvoidDefaultParametersRule
+M: System.Boolean POCOGenerator.DbObjects.Version::Equals(System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Boolean POCOGenerator.DbObjects.Version::GreaterThan(System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Boolean POCOGenerator.DbObjects.Version::GreaterThanOrEqual(System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Boolean POCOGenerator.DbObjects.Version::LessThan(System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Boolean POCOGenerator.DbObjects.Version::LessThanOrEqual(System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Boolean POCOGenerator.DbObjects.Version::NotEqual(System.Int32,System.Int32,System.Int32,System.Int32)
+M: System.Void POCOGenerator.DbObjects.Version::.ctor(System.Int32,System.Int32,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Design.AvoidRefAndOutParametersRule
+M: System.Void POCOGenerator.DbObjects.IConnectionStringParser::Parse(System.String,System.String&,System.String&,System.String&,System.Boolean&)
+
+R: Gendarme.Rules.Design.ConsiderAddingInterfaceRule
+T: POCOGenerator.DbObjects.Version
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: POCOGenerator.DbObjects.IComplexTypeTable
+T: POCOGenerator.DbObjects.IComplexTypeTableColumn
+T: POCOGenerator.DbObjects.IDatabase
+T: POCOGenerator.DbObjects.IEnumColumn
+T: POCOGenerator.DbObjects.IForeignKey
+T: POCOGenerator.DbObjects.IIndex
+T: POCOGenerator.DbObjects.IPrimaryKey
+T: POCOGenerator.DbObjects.IProcedure
+T: POCOGenerator.DbObjects.IServer
+T: POCOGenerator.DbObjects.ITable
+T: POCOGenerator.DbObjects.ITableColumn
+T: POCOGenerator.DbObjects.ITVP
+T: POCOGenerator.DbObjects.IUniqueKey
+
+R: Gendarme.Rules.Design.ProvideAlternativeNamesForOperatorOverloadsRule
+T: POCOGenerator.DbObjects.Version
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Boolean POCOGenerator.DbObjects.Version::TryParse(System.String,POCOGenerator.DbObjects.Version&)
+
+R: Gendarme.Rules.Exceptions.InstantiateArgumentExceptionCorrectlyRule
+M: POCOGenerator.DbObjects.Version POCOGenerator.DbObjects.Version::Parse(System.String)
+
+R: Gendarme.Rules.Naming.AvoidNonAlphanumericIdentifierRule
+M: System.Boolean POCOGenerator.DbObjects.IForeignKey::get_Is_Cascade_Delete()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKey::get_Is_Cascade_Update()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKey::get_Is_Many_To_Many_Complete()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKey::get_Is_Many_To_Many()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKey::get_Is_One_To_Many()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKey::get_Is_One_To_One()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKeyColumn::get_Is_Foreign_Column_PK()
+M: System.Boolean POCOGenerator.DbObjects.IForeignKeyColumn::get_Is_Primary_Column_PK()
+M: System.Boolean POCOGenerator.DbObjects.IIndex::get_Is_Clustered()
+M: System.Boolean POCOGenerator.DbObjects.IIndex::get_Is_Unique()
+M: System.Boolean POCOGenerator.DbObjects.IIndexColumn::get_Is_Descending()
+M: System.String POCOGenerator.DbObjects.IComputedColumn::get_Column_Name()
+M: System.String POCOGenerator.DbObjects.IComputedColumn::get_Table_Name()
+M: System.String POCOGenerator.DbObjects.IDbObjectDescription::get_Minor_Name()
+M: System.String POCOGenerator.DbObjects.IIdentityColumn::get_Column_Name()
+M: System.String POCOGenerator.DbObjects.IIdentityColumn::get_Table_Name()
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: POCOGenerator.DbObjects
+
+R: Gendarme.Rules.Naming.ParameterNamesShouldMatchOverriddenMethodRule
+M: System.Boolean POCOGenerator.DbObjects.Version::Equals(POCOGenerator.DbObjects.Version,POCOGenerator.DbObjects.Version)
+M: System.Int32 POCOGenerator.DbObjects.Version::Compare(POCOGenerator.DbObjects.Version,POCOGenerator.DbObjects.Version)
+M: System.Int32 POCOGenerator.DbObjects.Version::Compare(System.Object,System.Object)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: POCOGenerator.DbObjects.Version POCOGenerator.DbObjects.Version::Parse(System.String)
+
+R: Gendarme.Rules.Smells.AvoidLongParameterListsRule
+T: POCOGenerator.DbObjects.IDbHelper
+
+# end extra entries generated from defects
+

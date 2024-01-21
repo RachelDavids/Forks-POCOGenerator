@@ -2,23 +2,42 @@
 	<PropertyGroup Label="Traceability">
 		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
 	</PropertyGroup>
-
 	<PropertyGroup>
-		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<Company Condition="'$(Company)' == ''">Rachel D</Company>
+		<CompanyIdentifier Condition="'$(CompanyIdentifier)' == ''">Rachel</CompanyIdentifier>
 		<Product>POCO Generator</Product>
 		<Copyright>Copyright ©  2020</Copyright>
-		<Version>24.1.19</Version>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateComVisible>true</GenerateComVisible>
+	</PropertyGroup>
+	<PropertyGroup>
+		<MarkCLSCompliant>AlwaysTrue</MarkCLSCompliant>
+		<ComVisible>false</ComVisible>
+	</PropertyGroup>
+	<PropertyGroup Label="Version">
+		<GenerateVersionForCurrentDate>true</GenerateVersionForCurrentDate>
+	</PropertyGroup>
+
+
+<!-- ===================================== -->
+	<PropertyGroup Condition=" '$(GenerateVersionForCurrentDate)' == 'true' ">
+		<_today>$([System.DateTime]::Now.ToString("y.M.d"))</_today>
+		<AssemblyBuildCycle Condition=" '$(AssemblyBuildCycle)' == ''">0</AssemblyBuildCycle>
+		<_generatedVersion>$(_today).$(AssemblyBuildCycle)</_generatedVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
+		<_generatedVersion Condition="'$(_generatedVersion)' == ''">1.0.0.0</_generatedVersion>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Include="$(SolutionDir)\Common\SolutionAssemblyInfo.cs">
-			<Link>Properties\SolutionAssemblyInfo.cs</Link>
-		</Compile>
-	</ItemGroup>
-
+	<PropertyGroup>
+		<!-- allow override (esp for main app) -->
+		<AssemblyVersion Condition="'$(AssemblyVersion)' == ''">$(_generatedVersion)</AssemblyVersion>
+		<_assemblyVersion Condition="'$(RequireAssemblyVersion)' != 'false'">$(AssemblyVersion)</_assemblyVersion>
+		<Version Condition=" '$(Version)' == '' OR '$(Version)' == '1.0.0' ">$(AssemblyVersion)</Version>
+		<VersionPrefix Condition=" '$(VersionPrefix)' == '' OR '$(VersionPrefix)' == '1.0.0' ">$(AssemblyVersion)</VersionPrefix>
+		<PackageVersion Condition=" '$(PackageVersion)' == '' OR '$(PackageVersion)' == '1.0.0' ">$(AssemblyVersion)</PackageVersion>
+	</PropertyGroup>
 
 </Project>

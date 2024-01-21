@@ -1,0 +1,42 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<ItemGroup Label="Code Generation">
+		<PackageReference Include="$(CompanyIdentifier).Generators.System"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="$(CompanyIdentifier).Generators.AssemblyAttributes"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="$(CompanyIdentifier).Generators.CheckDisposed"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="$(CompanyIdentifier).Generators.ApplicationConfiguration"
+		                  Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' "
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<!-- require opt-in by project -->
+	<ItemGroup Condition=" Exists('$(MSBuildProjectDirectory)\NativeMethods.txt') ">
+		<PackageReference Include="Microsoft.Windows.CsWin32" Version="*-*">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>

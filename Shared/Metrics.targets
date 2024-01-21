@@ -1,0 +1,17 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<Target Name="BuildMetrics"
+	        AfterTargets="Build"
+	        Inputs="@(Compile)"
+	        Outputs="$(MetricsOutputFile)"
+	        Condition=" '$(GenerateMetrics)' != 'false' ">
+		<CallTarget Targets="Metrics" />
+	</Target>
+	<ItemGroup>
+		<!--force exclusion from Project (and Source Control) -->
+		<None Remove="$(MSBuildProjectDirectory)\$(MSBuildProjectName).Metrics.xml" />
+	</ItemGroup>
+</Project>
+

@@ -1,0 +1,18 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+	        <ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(ApplyTransforms)' == 'true' ">
+		<VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
+		<VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+		<TextTemplatingTargets>$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets</TextTemplatingTargets>
+		<TransformOnBuild Condition=" '$(TransformOnBuild)' == '' ">true</TransformOnBuild>
+		<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+		<TransformOutOfDateOnly>true</TransformOutOfDateOnly>
+	</PropertyGroup>
+
+	<Import  Condition=" Exists('$(TextTemplatingTargets)') "
+	         Project="$(TextTemplatingTargets)" />
+
+</Project>

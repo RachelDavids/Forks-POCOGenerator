@@ -1,0 +1,9 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(CompanyIdentifier).$(MSBuildProjectName)' != 'Chaucer.Annotations' ">
+		<PackageReference Include="Chaucer.Annotations" Version="$(CorePackageRequiredVersion)" />
+	</ItemGroup>
+</Project>

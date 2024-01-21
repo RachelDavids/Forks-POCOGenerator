@@ -1,9 +1,10 @@
 <Project>
-        <PropertyGroup Label="Traceability">
-                <ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
-        </PropertyGroup>
-        <PropertyGroup>
-                <NoWarn>1591;$(NoWarn)</NoWarn>
-        </PropertyGroup>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(AssemblyVersion)' != '' " >
+		<Version>$(AssemblyVersion)</Version>
+		<PackageVersion>$(AssemblyVersion)</PackageVersion>
+	</PropertyGroup>
 
 </Project>

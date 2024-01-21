@@ -16,5 +16,5 @@
 	<Import Project="$(MSBuildThisFileDirectory)\Shared\*.props" />
 
 	<!-- common props are in this Sdk  -->
-	<!--<Import Project="Sdk.props" Sdk="Chaucer.Extended.Sdk" />-->
+	<Import Project="Sdk.props" Sdk="Chaucer.Extended.Sdk" />
 </Project>

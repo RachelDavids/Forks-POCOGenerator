@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(RunGendarmeAnalysis)' == 'true' AND '$(UsingChaucerAnnotations)' == 'true' ">
+		<AssemblyAttribute Include="Chaucer.Annotations.CodeAnalysis.RootNamespace">
+			<_Parameter1>$(CompanyIdentifier)</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+</Project>

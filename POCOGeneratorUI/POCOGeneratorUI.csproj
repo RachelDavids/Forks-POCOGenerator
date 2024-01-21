@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
+    <StartupObject>POCOGeneratorUI.Program</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <EnablePreSerializedResources>true</EnablePreSerializedResources>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>POCOGeneratorUI.Program</StartupObject>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Column.gif" />
     <Content Include="Images\Database.gif" />
@@ -27,11 +23,16 @@
     <Content Include="Images\View.gif" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.22" />
+    <ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.33" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="*" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Writers\" />
   </ItemGroup>
 </Project>

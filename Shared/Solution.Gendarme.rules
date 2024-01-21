@@ -1,0 +1,73 @@
+<gendarme>
+  <ruleset name="allrules">
+	<exclusions>
+	  <exclusion Type="namespace">Windows.Win32</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.Foundation</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.Graphics.Gdi</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.UI</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.UI.Controls</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.UI.WindowsAndMessaging</exclusion>
+	  <exclusion Type="namespace">Windows.Win32.System.Ole</exclusion>
+		<!-- TODO: modify Gendarme to handle "record" better-->
+	  <exclusion Type="type">Rachel.Charting.ZedGraph.HSBColor</exclusion>
+	  <exclusion Type="type">Rachel.Core.Games.CellIndexExtensions/KeyIndex</exclusion>
+	</exclusions>
+	<rules include="*" from="Gendarme.Rules.BadPractice.dll"/>
+	<rules include="*" from="Gendarme.Rules.Concurrency.dll" />
+	<rules include="*"
+	       exclude="NullDerefRule"
+	       from="Gendarme.Rules.Correctness.dll"/>
+	<rules include="*"
+		   exclude="ConsiderUsingNamedTypesRule"
+		   from="Gendarme.Rules.Design.dll">
+	  <parameter rule="MarkAssemblyWithAssemblyCompanyRule" property="CompanyName" value="Rachel D" />
+	  <parameter rule="AvoidSmallNamespaceRule" property="Minimum" value="1" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Design.Generic.dll"/>
+	<rules include="*" from="Gendarme.Rules.Design.Linq.dll"/>
+	<rules include="*"
+		   exclude="MissingExceptionConstructorsRule"
+		   from="Gendarme.Rules.Exceptions.dll" />
+	<rules include="*" from="Gendarme.Rules.Interoperability.dll"/>
+	<rules include="*"
+		   from="Gendarme.Rules.Naming.dll" >
+	  <parameter rule="AvoidDeepNamespaceHierarchyRule" property="MaxDepth" value="5" />
+	</rules>
+	<rules include="*"
+		   from="Gendarme.Rules.Performance.dll" >
+	  <parameter rule="AvoidLargeStructureRule" property="MaxSize" value="32" />
+	</rules>
+	<rules include="*"
+		   exclude="PreferTypeInfoOverTypeRule"
+		   from="Gendarme.Rules.Portability.dll" />
+	<rules include="*" from="Gendarme.Rules.Security.dll" />
+	<rules include="*" from="Gendarme.Rules.Security.Cas.dll" />
+	<rules include="*"
+		   exclude="MarkEnumerationsAsSerializableRule|MarkAllNonSerializableFieldsRule|MissingSerializationConstructorRule|MissingSerializableAttributeOnISerializableTypeRule"
+		   from="Gendarme.Rules.Serialization.dll">
+	  <parameter rule="UseCorrectSignatureForSerializationMethodsRule" property="RequireSerializableType" value="false" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Ui.dll" />
+	<rules include="*"
+			exclude ="AvoidLackOfCohesionOfMethodsRule"
+		   from="Gendarme.Rules.Maintainability.dll">
+	  <parameter rule="AvoidComplexMethodsRule" property="SuccessThreshold" value="21" />
+	</rules>
+	<rules include="*" from="Gendarme.Rules.Globalization.dll"/>
+	<rules include="*" from="Gendarme.Rules.Gendarme.dll" />
+	<rules include="*" from="Gendarme.Rules.Interoperability.Com.dll" />
+	<!--<rules include="*" from="Gendarme.Rules.NUnit.dll"/>-->
+	<!--<rules include="*" from="Gendarme.Rules.MSTest.dll"/>-->
+	<rules include="*" from="Gendarme.Rules.Smells.dll">
+	  <parameter rule="AvoidLongMethodsRule" property="MaxSourceLinesOfCode" value="35" />
+	  <parameter rule="AvoidLongParameterListsRule" property="ExposedMethodsOnly" value="true" />
+	  <parameter rule="AvoidLargeClassesRule" property="MaxDuplicatePrefixes" value="3" />
+	</rules>
+  </ruleset>
+  <ruleset name="unittestTests">
+	<rules include="*" from="Gendarme.Rules.NUnit.dll"/>
+	<rules include="*" from="Gendarme.Rules.MSTest.dll"/>
+	<rules include="*" from="Gendarme.Rules.Maintainability.dll"/>
+	<rules include="*" from="Gendarme.Rules.BadPractice.dll" />
+  </ruleset>
+</gendarme>

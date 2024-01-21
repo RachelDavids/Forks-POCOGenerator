@@ -1,0 +1,23 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<ItemGroup Label="Static Analysis"
+	           Condition=" '$(IncludeGendarmeAnalysis)' == 'true' ">
+		<PackageReference Include="Chaucer.CodeAnalysis.Gendarme" Version="$(GendarmePackageRequiredVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<!-- require opt-in by project -->
+	<ItemGroup Condition=" Exists('$(MSBuildProjectDirectory)\BannedSymbols.txt') ">
+		<PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers"
+		                  Version="$(LatestStablePackageRequiredVersion)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>

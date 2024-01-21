@@ -1,0 +1,123 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:02:29 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.PreferEmptyInstanceOverNullRule
+M: System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IColumn> POCOGenerator.MySQL.DbObjects.Procedure::get_Columns()
+M: System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IColumn> POCOGenerator.MySQL.DbObjects.Table::get_Columns()
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn> POCOGenerator.MySQL.MySQLIterator::GetEnumColumns(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.MySQL.MySQLIterator::GetTableColumnsWithEnumConstructor(POCOGenerator.DbObjects.IDbObjectTraverse,System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn>)
+M: System.Collections.Generic.List`1<System.String> POCOGenerator.MySQL.MySQLIterator::GetSetDataTypeLiteralsConstructorInitialization(POCOGenerator.DbObjects.IEnumColumn)
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureParameter::get_Direction()
+M: System.String POCOGenerator.MySQL.MySQLIterator::GetEnumDataTypeLiteralConstructorInitialization(POCOGenerator.DbObjects.IEnumColumn)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalIndex> POCOGenerator.MySQL.MySQLHelper::GetIndexes(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IComputedColumn> POCOGenerator.MySQL.MySQLHelper::GetComputedColumns(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IDbObjectDescription> POCOGenerator.MySQL.MySQLHelper::GetDbObjectDescriptions(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IIdentityColumn> POCOGenerator.MySQL.MySQLHelper::GetIdentityColumns(POCOGenerator.DbObjects.IDatabase)
+M: System.Tuple`3<System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalForeignKey>> POCOGenerator.MySQL.MySQLHelper::GetKeys(POCOGenerator.DbObjects.IDatabase)
+
+R: Gendarme.Rules.Design.ConsiderUsingStaticTypeRule
+T: POCOGenerator.MySQL.MySQLConnectionStringParser/SingletonCreator
+T: POCOGenerator.MySQL.MySQLHandler/SingletonCreator
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Boolean POCOGenerator.MySQL.MySQLConnectionStringParser::Ping(System.String)
+M: System.String POCOGenerator.MySQL.MySQLHelper::GetServerVersion()
+M: System.Void POCOGenerator.MySQL.MySQLHelper::SetRealAsFloat()
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteColumnDefaultConstructorInitializationDbGeometry(System.String,System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: System.Boolean POCOGenerator.MySQL.MySQLIterator::IsEFAttributeMaxLength(System.String)
+M: System.Boolean POCOGenerator.MySQL.MySQLIterator::IsEFAttributeStringLength(System.String)
+M: System.Boolean POCOGenerator.MySQL.MySQLIterator::IsSQLTypeMappedToDbGeometry(System.String)
+M: System.Boolean POCOGenerator.MySQL.MySQLIterator::IsSQLTypeMappedToString(System.String,System.Nullable`1<System.Int32>)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn> POCOGenerator.MySQL.MySQLIterator::GetEnumColumns(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Data.IDataParameter POCOGenerator.MySQL.MySQLHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureColumn::get_DataTypeName()
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureColumn::get_Precision()
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureParameter::get_Precision()
+M: System.String POCOGenerator.MySQL.DbObjects.TableColumn::get_Precision()
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteColumnDefaultConstructorInitializationDbGeometry(System.String,System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteDbColumnDataType(POCOGenerator.DbObjects.IColumn)
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: POCOGenerator.MySQL
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+P: System.String POCOGenerator.MySQL.DbObjects.Database::database_name()
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn> POCOGenerator.MySQL.MySQLIterator::GetEnumColumns(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<System.String> POCOGenerator.MySQL.MySQLIterator::GetSetDataTypeLiteralsConstructorInitialization(POCOGenerator.DbObjects.IEnumColumn)
+M: System.Data.IDataParameter POCOGenerator.MySQL.MySQLHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureColumn::get_Precision()
+M: System.String POCOGenerator.MySQL.DbObjects.TableColumn::get_Precision()
+M: System.String POCOGenerator.MySQL.MySQLIterator::GetEnumDataTypeLiteralConstructorInitialization(POCOGenerator.DbObjects.IEnumColumn)
+M: System.Tuple`3<System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalForeignKey>> POCOGenerator.MySQL.MySQLHelper::GetKeys(POCOGenerator.DbObjects.IDatabase)
+M: System.Void POCOGenerator.MySQL.MySQLHelper::GetServerConfiguration(POCOGenerator.DbObjects.IServer)
+M: System.Void POCOGenerator.MySQL.MySQLHelper::RemoveSystemDatabases(POCOGenerator.DbObjects.IServer)
+M: System.Void POCOGenerator.MySQL.MySQLHelper::SetRealAsFloat()
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteDbColumnDataType(POCOGenerator.DbObjects.IColumn)
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteEnumConstructorInitialization(POCOGenerator.DbObjects.ITableColumn,System.String)
+
+R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
+T: POCOGenerator.MySQL.DbObjects.ComputedColumnSchema
+T: POCOGenerator.MySQL.DbObjects.Database
+T: POCOGenerator.MySQL.DbObjects.DbObjectDescriptionSchema
+T: POCOGenerator.MySQL.DbObjects.IdentityColumnSchema
+T: POCOGenerator.MySQL.DbObjects.MySQL
+T: POCOGenerator.MySQL.DbObjects.Procedure
+T: POCOGenerator.MySQL.DbObjects.ProcedureColumn
+T: POCOGenerator.MySQL.DbObjects.ProcedureParameter
+T: POCOGenerator.MySQL.DbObjects.View
+T: POCOGenerator.MySQL.DbObjects.ViewColumn
+T: POCOGenerator.MySQL.MySQLConnectionStringParser/SingletonCreator
+T: POCOGenerator.MySQL.MySQLHandler/SingletonCreator
+T: POCOGenerator.MySQL.MySQLHelper
+T: POCOGenerator.MySQL.MySQLIterator
+
+R: Gendarme.Rules.Performance.PreferCharOverloadRule
+M: System.Boolean POCOGenerator.MySQL.MySQLIterator::IsSQLTypeMappedToBoolFalse(System.String,System.Boolean,System.Nullable`1<System.Int32>,System.String)
+M: System.Boolean POCOGenerator.MySQL.MySQLIterator::IsSQLTypeMappedToBoolTrue(System.String,System.Boolean,System.Nullable`1<System.Int32>,System.String)
+
+R: Gendarme.Rules.Performance.PreferInlineInitializationOfStaticFieldsRule
+M: System.Void POCOGenerator.MySQL.MySQLConnectionStringParser/SingletonCreator::.cctor()
+M: System.Void POCOGenerator.MySQL.MySQLHandler/SingletonCreator::.cctor()
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: POCOGenerator.MySQL.MySQLHelper
+T: POCOGenerator.MySQL.MySQLIterator
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Data.IDataParameter POCOGenerator.MySQL.MySQLHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureColumn::get_DataTypeName()
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureParameter::get_Precision()
+M: System.String POCOGenerator.MySQL.DbObjects.TableColumn::get_Precision()
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteColumnDefaultConstructorInitializationDbGeometry(System.String,System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.MySQL.MySQLIterator::WriteDbColumnDataType(POCOGenerator.DbObjects.IColumn)
+
+R: Gendarme.Rules.Smells.AvoidSwitchStatementsRule
+M: System.Data.IDataParameter POCOGenerator.MySQL.MySQLHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.String POCOGenerator.MySQL.DbObjects.ProcedureColumn::get_DataTypeName()
+
+# end extra entries generated from defects
+

@@ -1,0 +1,163 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:02:30 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.PreferEmptyInstanceOverNullRule
+M: System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IColumn> POCOGenerator.SQLServer.DbObjects.Procedure::get_Columns()
+M: System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IColumn> POCOGenerator.SQLServer.DbObjects.Table::get_Columns()
+M: System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IColumn> POCOGenerator.SQLServer.DbObjects.TVP::get_Columns()
+M: System.String POCOGenerator.SQLServer.DbObjects.ProcedureParameter::get_Direction()
+
+R: Gendarme.Rules.BadPractice.PreferTryParseRule
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalIndex> POCOGenerator.SQLServer.SQLServerHelper::GetIndexes(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IComputedColumn> POCOGenerator.SQLServer.SQLServerHelper::GetComputedColumns(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IDbObjectDescription> POCOGenerator.SQLServer.SQLServerHelper::GetDbObjectDescriptions(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IIdentityColumn> POCOGenerator.SQLServer.SQLServerHelper::GetIdentityColumns(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject> POCOGenerator.SQLServer.SQLServerHelper::GetSystemObjects(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITVP> POCOGenerator.SQLServer.SQLServerHelper::GetTVPs(POCOGenerator.DbObjects.IDatabase)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITVPColumn> POCOGenerator.SQLServer.SQLServerHelper::GetTVPColumns(POCOGenerator.DbObjects.ITVP)
+M: System.Data.DataTable POCOGenerator.SQLServer.SQLServerHelper::GetTVPDataTable(POCOGenerator.DbObjects.ITVP)
+M: System.Tuple`3<System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalForeignKey>> POCOGenerator.SQLServer.SQLServerHelper::GetKeys(POCOGenerator.DbObjects.IDatabase)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+
+R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::GetProcedureSchemaSecondTry(POCOGenerator.DbObjects.IProcedure,System.Data.Common.DbConnection,System.Exception)
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Boolean POCOGenerator.SQLServer.SQLServerConnectionStringParser::Ping(System.String)
+M: System.String POCOGenerator.SQLServer.SQLServerHelper::GetServerVersion()
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::GetProcedureSchemaSecondTry(POCOGenerator.DbObjects.IProcedure,System.Data.Common.DbConnection,System.Exception)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlHierarchyId(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: System.Data.DataTable POCOGenerator.SQLServer.SQLServerHelper::GetTVPDataTable(POCOGenerator.DbObjects.ITVP)
+M: System.Data.IDataParameter POCOGenerator.SQLServer.SQLServerHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteDbColumnDataType(POCOGenerator.DbObjects.IColumn)
+
+R: Gendarme.Rules.Maintainability.AvoidExcessiveClassCouplingRule
+T: POCOGenerator.SQLServer.SQLServerHelper
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: POCOGenerator.SQLServer
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+P: System.Boolean POCOGenerator.SQLServer.DbObjects.TableColumn::is_computed()
+P: System.Boolean POCOGenerator.SQLServer.DbObjects.TableColumn::is_identity()
+P: System.Boolean POCOGenerator.SQLServer.DbObjects.TVPColumn::is_computed()
+P: System.Boolean POCOGenerator.SQLServer.DbObjects.TVPColumn::is_identity()
+P: System.Byte POCOGenerator.SQLServer.DbObjects.TVPColumn::precision()
+P: System.Byte POCOGenerator.SQLServer.DbObjects.TVPColumn::scale()
+P: System.Int16 POCOGenerator.SQLServer.DbObjects.TVPColumn::max_length()
+P: System.Int32 POCOGenerator.SQLServer.DbObjects.TVP::type_table_object_id()
+P: System.Int32 POCOGenerator.SQLServer.DbObjects.TVPColumn::column_id()
+P: System.Nullable`1<System.Boolean> POCOGenerator.SQLServer.DbObjects.TVPColumn::is_nullable()
+P: System.Nullable`1<System.Byte> POCOGenerator.SQLServer.DbObjects.ProcedureParameter::numeric_precision()
+P: System.Nullable`1<System.Byte> POCOGenerator.SQLServer.DbObjects.TableColumn::numeric_precision()
+P: System.Nullable`1<System.DateTime> POCOGenerator.SQLServer.DbObjects.Database::create_date()
+P: System.Nullable`1<System.Int16> POCOGenerator.SQLServer.DbObjects.Database::dbid()
+P: System.Nullable`1<System.Int16> POCOGenerator.SQLServer.DbObjects.ProcedureParameter::datetime_precision()
+P: System.Nullable`1<System.Int16> POCOGenerator.SQLServer.DbObjects.TableColumn::datetime_precision()
+P: System.Nullable`1<System.Int32> POCOGenerator.SQLServer.DbObjects.ProcedureParameter::character_maximum_length()
+P: System.Nullable`1<System.Int32> POCOGenerator.SQLServer.DbObjects.ProcedureParameter::numeric_scale()
+P: System.Nullable`1<System.Int32> POCOGenerator.SQLServer.DbObjects.ProcedureParameter::ordinal_position()
+P: System.Nullable`1<System.Int32> POCOGenerator.SQLServer.DbObjects.TableColumn::character_maximum_length()
+P: System.Nullable`1<System.Int32> POCOGenerator.SQLServer.DbObjects.TableColumn::numeric_scale()
+P: System.Nullable`1<System.Int32> POCOGenerator.SQLServer.DbObjects.TableColumn::ordinal_position()
+P: System.String POCOGenerator.SQLServer.DbObjects.Database::database_name()
+P: System.String POCOGenerator.SQLServer.DbObjects.Procedure::routine_name()
+P: System.String POCOGenerator.SQLServer.DbObjects.Procedure::routine_schema()
+P: System.String POCOGenerator.SQLServer.DbObjects.ProcedureParameter::data_type()
+P: System.String POCOGenerator.SQLServer.DbObjects.ProcedureParameter::is_result()
+P: System.String POCOGenerator.SQLServer.DbObjects.ProcedureParameter::parameter_mode()
+P: System.String POCOGenerator.SQLServer.DbObjects.ProcedureParameter::parameter_name()
+P: System.String POCOGenerator.SQLServer.DbObjects.Table::table_name()
+P: System.String POCOGenerator.SQLServer.DbObjects.Table::table_schema()
+P: System.String POCOGenerator.SQLServer.DbObjects.TableColumn::column_default()
+P: System.String POCOGenerator.SQLServer.DbObjects.TableColumn::column_name()
+P: System.String POCOGenerator.SQLServer.DbObjects.TableColumn::data_type()
+P: System.String POCOGenerator.SQLServer.DbObjects.TableColumn::is_nullable()
+P: System.String POCOGenerator.SQLServer.DbObjects.TVP::tvp_name()
+P: System.String POCOGenerator.SQLServer.DbObjects.TVP::tvp_schema()
+P: System.String POCOGenerator.SQLServer.DbObjects.TVPColumn::data_type()
+P: System.String POCOGenerator.SQLServer.DbObjects.TVPColumn::name()
+
+R: Gendarme.Rules.Performance.AvoidLargeNumberOfLocalVariablesRule
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject> POCOGenerator.SQLServer.SQLServerHelper::GetSystemObjects(POCOGenerator.DbObjects.IDatabase)
+M: System.Data.DataTable POCOGenerator.SQLServer.SQLServerHelper::GetTVPDataTable(POCOGenerator.DbObjects.ITVP)
+M: System.Data.IDataParameter POCOGenerator.SQLServer.SQLServerHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.Tuple`3<System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalKey>,System.Collections.Generic.List`1<POCOGenerator.Db.DbObjects.IInternalForeignKey>> POCOGenerator.SQLServer.SQLServerHelper::GetKeys(POCOGenerator.DbObjects.IDatabase)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::RemoveSystemDatabases(POCOGenerator.DbObjects.IServer)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::RemoveSystemObjectsFromFunctions(POCOGenerator.DbObjects.IDatabase,System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject>)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::RemoveSystemObjectsFromProcedures(POCOGenerator.DbObjects.IDatabase,System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject>)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::RemoveSystemObjectsFromTables(POCOGenerator.DbObjects.IDatabase,System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject>)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::RemoveSystemObjectsFromTVPs(POCOGenerator.DbObjects.IDatabase,System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject>)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::RemoveSystemObjectsFromViews(POCOGenerator.DbObjects.IDatabase,System.Collections.Generic.List`1<POCOGenerator.DbObjects.ISystemObject>)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+
+R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
+T: POCOGenerator.SQLServer.DbObjects.ComputedColumnSchema
+T: POCOGenerator.SQLServer.DbObjects.Database
+T: POCOGenerator.SQLServer.DbObjects.DbObjectDescriptionSchema
+T: POCOGenerator.SQLServer.DbObjects.Function
+T: POCOGenerator.SQLServer.DbObjects.IdentityColumnSchema
+T: POCOGenerator.SQLServer.DbObjects.ProcedureColumn
+T: POCOGenerator.SQLServer.DbObjects.ProcedureParameter
+T: POCOGenerator.SQLServer.DbObjects.SQLServer
+T: POCOGenerator.SQLServer.DbObjects.SystemObjectSchema
+T: POCOGenerator.SQLServer.DbObjects.TVP
+T: POCOGenerator.SQLServer.DbObjects.TVPColumn
+T: POCOGenerator.SQLServer.DbObjects.View
+T: POCOGenerator.SQLServer.DbObjects.ViewColumn
+T: POCOGenerator.SQLServer.SQLServerHelper
+T: POCOGenerator.SQLServer.SQLServerIterator
+
+R: Gendarme.Rules.Performance.PreferCharOverloadRule
+M: System.Boolean POCOGenerator.SQLServer.SQLServerIterator::IsSQLTypeMappedToBoolFalse(System.String,System.Boolean,System.Nullable`1<System.Int32>,System.String)
+M: System.Boolean POCOGenerator.SQLServer.SQLServerIterator::IsSQLTypeMappedToBoolTrue(System.String,System.Boolean,System.Nullable`1<System.Int32>,System.String)
+
+R: Gendarme.Rules.Performance.ReviewLinqMethodRule
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IProcedureColumn> POCOGenerator.SQLServer.SQLServerHelper::GetProcedureWithTemporaryTablesSchema(POCOGenerator.DbObjects.IProcedure,System.Data.Common.DbConnection)
+M: System.String POCOGenerator.SQLServer.SQLServerHelper::GetFunctionCommandText(POCOGenerator.DbObjects.IFunction)
+
+R: Gendarme.Rules.Portability.NewLineLiteralRule
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IProcedureColumn> POCOGenerator.SQLServer.SQLServerHelper::GetProcedureWithTemporaryTablesSchema(POCOGenerator.DbObjects.IProcedure,System.Data.Common.DbConnection)
+M: System.Void POCOGenerator.SQLServer.SQLServerHelper::GetProcedureSchemaSecondTry(POCOGenerator.DbObjects.IProcedure,System.Data.Common.DbConnection,System.Exception)
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: POCOGenerator.SQLServer.DbObjects.TableColumn
+T: POCOGenerator.SQLServer.SQLServerHelper
+T: POCOGenerator.SQLServer.SQLServerIterator
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Data.DataTable POCOGenerator.SQLServer.SQLServerHelper::GetTVPDataTable(POCOGenerator.DbObjects.ITVP)
+M: System.Data.IDataParameter POCOGenerator.SQLServer.SQLServerHelper::GetParameter(POCOGenerator.DbObjects.IProcedureParameter,POCOGenerator.DbObjects.IDatabase)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlGeographySqlGeometry(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+M: System.Void POCOGenerator.SQLServer.SQLServerIterator::WriteColumnDefaultConstructorInitializationSqlHierarchyId(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+
+# end extra entries generated from defects
+

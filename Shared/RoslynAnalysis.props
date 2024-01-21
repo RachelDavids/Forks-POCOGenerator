@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<_analyzerStyleConfigFile>$(MSBuildThisFileDirectory)roslyn.globalconfig</_analyzerStyleConfigFile>
+	</PropertyGroup>
+	<ItemGroup Condition=" Exists('$(MSBuildThisFileDirectory)roslyn.globalconfig')">
+		<AnalyzerFile Include="$(MSBuildThisFileDirectory)roslyn.globalconfig" />
+	</ItemGroup>
+</Project>

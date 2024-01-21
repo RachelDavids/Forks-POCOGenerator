@@ -1,0 +1,269 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:01:20 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.EqualsShouldHandleNullArgRule
+M: System.Boolean <>f__AnonymousType0`2::Equals(System.Object)
+M: System.Boolean <>f__AnonymousType1`2::Equals(System.Object)
+M: System.Boolean <>f__AnonymousType2`2::Equals(System.Object)
+
+R: Gendarme.Rules.BadPractice.PreferEmptyInstanceOverNullRule
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn> POCOGenerator.POCOIterators.DbIterator::GetEnumColumns(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNull(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNullOrEmpty(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetTableColumnsWithEnumConstructor(POCOGenerator.DbObjects.IDbObjectTraverse,System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn>)
+M: System.Collections.Generic.List`1<System.String> POCOGenerator.POCOIterators.DbIterator::GetSetDataTypeLiteralsConstructorInitialization(POCOGenerator.DbObjects.IEnumColumn)
+M: System.String POCOGenerator.POCOIterators.DbIterator::GetEnumDataTypeLiteralConstructorInitialization(POCOGenerator.DbObjects.IEnumColumn)
+
+R: Gendarme.Rules.BadPractice.PreferTryParseRule
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationTimeSpan(POCOGenerator.DbObjects.ITableColumn,System.String,System.String)
+
+R: Gendarme.Rules.Concurrency.ProtectCallToEventDelegatesRule
+M: TEventArgs System.EventExtensions::Raise(System.EventHandler`1<TEventArgs>,System.Object,System.Func`1<TEventArgs>)
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IsCompositePrimaryKey(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IsNavigableObject(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::WriteDbObject(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler,POCOGenerator.POCOIterators.DbIterator/RaiseGeneratedEventHandler,System.Boolean&)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn> POCOGenerator.POCOIterators.DbIterator::GetEnumColumns(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNull(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNullOrEmpty(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.String POCOGenerator.POCOIterators.DbIterator::CleanBinaryDefault(System.String)
+M: System.String POCOGenerator.POCOIterators.DbIterator::CleanColumnDefault(System.String)
+M: System.String POCOGenerator.POCOIterators.DbIterator::CleanNumberDefault(System.String)
+M: System.String POCOGenerator.POCOIterators.DbIterator::CleanStringDefault(System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnComments(POCOGenerator.DbObjects.IColumn)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitialization(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationStart(POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnEnum(POCOGenerator.DbObjects.IEnumColumn)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteComplexTypeTableColumn(POCOGenerator.DbObjects.IColumn,System.Boolean,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDbColumn(POCOGenerator.DbObjects.IColumn,System.Boolean,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFClassAttributes(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttribute(POCOGenerator.DbObjects.ITableColumn,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttributes(POCOGenerator.DbObjects.IColumn,System.String,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFConcurrencyCheckAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFDatabaseGeneratedComputedAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFDatabaseGeneratedIdentityAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFDisplayAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFIndexAttribute(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFMaxLengthAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFNavigationPropertyAttributes(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFPrimaryKeyAttribute(POCOGenerator.DbObjects.ITableColumn,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFRequiredAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFStringLengthAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFTimestampAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEnum(POCOGenerator.DbObjects.IEnumColumn,System.Boolean,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEnumDeclaration(System.String,System.Collections.Generic.List`1<System.String>,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteError(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyCollection(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyComments(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyConstructorInitialization(POCOGenerator.DbObjects.INavigationProperty,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyForeignKeyAttribute(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyInversePropertyAttribute(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertySingular(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteSetDeclaration(System.String,System.Collections.Generic.List`1<System.String>,System.String)
+
+R: Gendarme.Rules.Design.AbstractTypesShouldNotHavePublicConstructorsRule
+M: System.Void POCOGenerator.POCOIterators.DbIterator::.ctor(POCOGenerator.POCOWriters.IWriter,POCOGenerator.DbObjects.IDbSupport,POCOGenerator.POCOIterators.IDbIteratorSettings)
+
+R: Gendarme.Rules.Design.AvoidDefaultParametersRule
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationEnd(System.Boolean)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationNumber(System.String,POCOGenerator.DbObjects.ITableColumn,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationStart(POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+
+R: Gendarme.Rules.Design.AvoidRefAndOutParametersRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateComplexTypeTables(System.Collections.Generic.List`1<POCOGenerator.DbObjects.IComplexTypeTable>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateDatabases(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IServer,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateFunctions(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateProcedures(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateServers(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateTables(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateTVPs(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateViews(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseComplexTypeTableGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseFunctionGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseProcedureGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseTableGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseTVPGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseViewGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::WriteDbObject(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler,POCOGenerator.POCOIterators.DbIterator/RaiseGeneratedEventHandler,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler::EndInvoke(System.String&,System.Boolean&,System.IAsyncResult)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler::Invoke(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.IAsyncResult POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler::BeginInvoke(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&,System.AsyncCallback,System.Object)
+
+R: Gendarme.Rules.Design.AvoidVisibleFieldsRule
+T: POCOGenerator.POCOIterators.DbIterator
+
+R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
+T: POCOGenerator.POCOIterators.DbIterator/RaiseGeneratedEventHandler
+T: POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler
+
+R: Gendarme.Rules.Design.Generic.AvoidDeclaringCustomDelegatesRule
+T: POCOGenerator.POCOIterators.DbIterator/RaiseGeneratedEventHandler
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: POCOGenerator.POCOIterators.DbIterator
+
+R: Gendarme.Rules.Design.PreferEventsOverMethodsRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseComplexTypeTableGeneratedEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseComplexTypeTableGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseFunctionGeneratedEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseFunctionGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseProcedureGeneratedEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseProcedureGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseTableGeneratedEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseTableGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseTVPGeneratedEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseTVPGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseViewGeneratedEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::RaiseViewGeneratingEvent(POCOGenerator.DbObjects.IDbObjectTraverse,System.String&,System.Boolean&)
+M: TEventArgs System.EventExtensions::Raise(System.EventHandler`1<TEventArgs>,System.Object,System.Func`1<TEventArgs>)
+M: TEventArgs System.EventExtensions::RaiseAsync(System.EventHandler`1<TEventArgs>,System.Object,System.Func`1<TEventArgs>)
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateTables(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty> POCOGenerator.POCOIterators.DbIterator::GetNavigationProperties(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.String POCOGenerator.POCOIterators.DbIterator::GetClassName(System.String,System.String,System.String,POCOGenerator.DbObjects.DbObjectType)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitialization(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteConstructor(System.String,System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn>,System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDbObjectClass(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String,System.String)
+
+R: Gendarme.Rules.Maintainability.AvoidExcessiveClassCouplingRule
+T: POCOGenerator.POCOIterators.DbIterator
+
+R: Gendarme.Rules.Maintainability.ExtensionModulesShouldBeMarkedWithAttributeRule
+T: System.EventExtensions
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+T: POCOGenerator.POCOIterators.DbIterator
+
+R: Gendarme.Rules.Naming.AvoidNonAlphanumericIdentifierRule
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNull(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNullOrEmpty(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationByteArray_Hex(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationByteArray_String(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTime_Now(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTime_OffsetNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTime_OffsetUtcNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTime_UtcNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTimeOffset_Now(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTimeOffset_OffsetNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTimeOffset_OffsetUtcNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationDateTimeOffset_UtcNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationTimeSpan_Now(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationTimeSpan_OffsetNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationTimeSpan_OffsetUtcNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationTimeSpan_UtcNow(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTime_Now()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTime_OffsetNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTime_OffsetUtcNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTime_UtcNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTimeOffset_Now()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTimeOffset_OffsetNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTimeOffset_OffsetUtcNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTimeOffset_UtcNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteTimeSpan_Now()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteTimeSpan_OffsetNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteTimeSpan_OffsetUtcNow()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteTimeSpan_UtcNow()
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IsEFAttributeStringLength(System.String)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IsSQLTypeMappedToString(System.String,System.Nullable`1<System.Int32>)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationByteArray_String(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationString(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTime(System.DateTime)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTimeOffset(System.DateTime)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDateTimeOffset(System.DateTimeOffset)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteTimeSpan(System.TimeSpan)
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: POCOGenerator.POCOIterators
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::WriteDbObject(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,POCOGenerator.POCOIterators.DbIterator/RaiseGeneratingEventHandler,POCOGenerator.POCOIterators.DbIterator/RaiseGeneratedEventHandler,System.Boolean&)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::HasSpecialSQLTypes(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IsCompositePrimaryKey(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateTables(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn> POCOGenerator.POCOIterators.DbIterator::GetEnumColumns(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty> POCOGenerator.POCOIterators.DbIterator::GetNavigationProperties(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNull(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.ITableColumn> POCOGenerator.POCOIterators.DbIterator::GetColumnDefaults_NotNullOrEmpty(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.String POCOGenerator.POCOIterators.DbIterator::GetClassName(System.String,System.String,System.String,POCOGenerator.DbObjects.DbObjectType)
+M: System.String POCOGenerator.POCOIterators.DbIterator::ItereatorStart(System.Boolean,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::IteratorEnd(System.Boolean)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::RenameDuplicateNavigationProperties(System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty>)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteClassStart(System.String,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnComments(POCOGenerator.DbObjects.IColumn)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitialization(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationByteArray_Hex(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationStart(POCOGenerator.DbObjects.ITableColumn,System.String,System.Boolean)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationTimeSpan(POCOGenerator.DbObjects.ITableColumn,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnEnd()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnEnum(POCOGenerator.DbObjects.IEnumColumn)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnStart(System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteComplexTypeTableColumn(POCOGenerator.DbObjects.IColumn,System.Boolean,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteConstructorStart(System.String,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDbObjectClass(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFClassAttributes(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttribute(POCOGenerator.DbObjects.ITableColumn,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttributes(POCOGenerator.DbObjects.IColumn,System.String,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFDescriptionAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFIndexAttribute(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFNavigationPropertyAttributes(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFPrimaryKeyAttribute(POCOGenerator.DbObjects.ITableColumn,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFRequiredAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFStringLengthAttribute(POCOGenerator.DbObjects.IColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFTable(POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFUsingClause(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEnumLiteral(System.String,System.String,System.Boolean,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEnumStart(System.String,System.Boolean,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyCollection(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyComments(POCOGenerator.DbObjects.INavigationProperty,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyConstructorInitialization(POCOGenerator.DbObjects.INavigationProperty,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyEnd()
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteNavigationPropertyStart(System.String)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCastsRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateTables(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDbObjectClass(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttributes(POCOGenerator.DbObjects.IColumn,System.String,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+
+R: Gendarme.Rules.Performance.ReviewLinqMethodRule
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteConstructor(System.String,System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn>,System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDbObjectClass(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFIndexAttribute(POCOGenerator.DbObjects.ITableColumn,System.String)
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: POCOGenerator.POCOIterators.DbIterator
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateTables(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IDatabase,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty> POCOGenerator.POCOIterators.DbIterator::GetNavigationProperties(POCOGenerator.DbObjects.IDbObjectTraverse)
+M: System.String POCOGenerator.POCOIterators.DbIterator::GetClassName(System.String,System.String,System.String,POCOGenerator.DbObjects.DbObjectType)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitialization(POCOGenerator.DbObjects.ITableColumn,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteConstructor(System.String,System.Collections.Generic.List`1<POCOGenerator.DbObjects.IEnumColumn>,System.Collections.Generic.List`1<POCOGenerator.DbObjects.INavigationProperty>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteDbObjectClass(System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,POCOGenerator.DbObjects.IDbObjectTraverse,System.String,System.String,System.String)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttributes(POCOGenerator.DbObjects.IColumn,System.String,POCOGenerator.DbObjects.IDbObjectTraverse,System.String)
+
+# end extra entries generated from defects
+

@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyCompany>Rachel D</AssemblyCompany>
+		<Company>$(AssemblyCompany)</Company>
+		<CompanyName>Rachel D</CompanyName>
+		<CompanyIdentifier>Rachel</CompanyIdentifier>
+	</PropertyGroup>
+</Project>

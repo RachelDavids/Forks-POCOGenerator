@@ -1,0 +1,47 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:05:00 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.UseFileOpenOnlyWithFileAccessRule
+M: System.Void FileStreamDemo.Program::Main()
+
+R: Gendarme.Rules.Design.ConsiderUsingStaticTypeRule
+T: FileStreamDemo.Program
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: System.Void FileStreamDemo.Program::Main()
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: FileStreamDemo
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: System.Void FileStreamDemo.Program::PrintError(POCOGenerator.GeneratorResults,System.Exception)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: System.Void FileStreamDemo.Program::Main()
+
+R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
+T: FileStreamDemo.Program
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Void FileStreamDemo.Program::Main()
+
+# end extra entries generated from defects
+

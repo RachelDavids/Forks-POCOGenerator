@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
@@ -18,10 +18,5 @@
     <ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj" />
     <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
     <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild.Task">
-      <Version>2.0.22</Version>
-    </PackageReference>
   </ItemGroup>
 </Project>

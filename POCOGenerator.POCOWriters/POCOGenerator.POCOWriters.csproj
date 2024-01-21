@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <OutputType>Library</OutputType>
-    <UseWindowsForms>true</UseWindowsForms>
-	  <!--<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>-->
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="*" />
-    <PackageReference Include="TrueColorConsole" Version="1.0.2" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<!--<UseWindowsForms>true</UseWindowsForms>-->
+		<!--<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>-->
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Drawing.Common" Version="*" />
+		<PackageReference Include="TrueColorConsole" Version="1.0.2" />
+	</ItemGroup>
 </Project>

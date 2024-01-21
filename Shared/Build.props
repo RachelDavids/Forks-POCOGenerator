@@ -1,0 +1,19 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup Label="Build">
+		<IsPackable>false</IsPackable>
+		<PackageOutputPath>$(SolutionDir)PkgOut</PackageOutputPath>
+	</PropertyGroup>
+	<PropertyGroup Label="net6.0 (and above) enables auto import a.l.a. VisualBasic - we can't use this yet">
+		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+	</PropertyGroup>
+	<PropertyGroup Label="Frameworks">
+		<EnableNet48>false</EnableNet48>
+		<EnableNet6>false</EnableNet6>
+	</PropertyGroup>
+	<PropertyGroup Label="Version">
+		<GeneratePackageOnBuild>$(IsPackable)</GeneratePackageOnBuild>
+	</PropertyGroup>
+</Project>

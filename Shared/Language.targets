@@ -1,0 +1,12 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Language)' == 'C#' ">
+		<LangVersion>preview</LangVersion>
+		<Nullable Condition=" '$(Nullable)' == '' ">disable</Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Language)' == 'VB' ">
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+</Project>

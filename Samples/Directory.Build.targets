@@ -1,0 +1,9 @@
+<Project>
+        <PropertyGroup Label="Traceability">
+                <ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+        </PropertyGroup>
+	<!-- this works recursively with the deepest file having the last word -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..))"
+		Condition=" Exists($([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..)))"/>
+
+</Project>

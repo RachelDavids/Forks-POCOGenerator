@@ -1,0 +1,401 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:05:00 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.AvoidVisibleConstantFieldRule
+T: System.Windows.Forms.TreeNodeExtensions
+
+R: Gendarme.Rules.BadPractice.PreferEmptyInstanceOverNullRule
+M: System.String System.ExceptionExtensions::GetExceptionErrorMessage(System.Exception,System.String)
+
+R: Gendarme.Rules.BadPractice.PreferOnEventOverrideRule
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionPropertiesDialog::DataConnectionPropertiesDialog_Load(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.DbObjectsForm::DbObjectsForm_Shown(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.Filtering.FilterSettingsForm::FilterSettingsForm_Shown(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::POCOGeneratorForm_Load(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::POCOGeneratorForm_Shown(System.Object,System.EventArgs)
+
+R: Gendarme.Rules.BadPractice.PreferSafeHandleRule
+T: POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader
+T: System.Windows.Forms.TreeNodeExtensions/TVITEM
+
+R: Gendarme.Rules.BadPractice.UseFileOpenOnlyWithFileAccessRule
+M: POCOGeneratorUI.UISettings POCOGeneratorUI.POCOGeneratorForm::DeserializeUISettings()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::Export_SingleFile(System.String)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::SerializeUISettings()
+
+R: Gendarme.Rules.Correctness.CheckParametersNullityInVisibleMethodsRule
+M: System.Boolean System.Collections.Generic.CollectionExtensions::HasSingle(System.Collections.Generic.IEnumerable`1<TSource>,System.Func`2<TSource,System.Boolean>)
+M: System.String System.Reflection.MethodInfoExtensions::GetSignature(System.Reflection.PropertyInfo)
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
+M: System.Void System.Windows.Forms.TreeNodeExtensions::AddSorted(System.Windows.Forms.TreeNodeCollection,System.Windows.Forms.TreeNode)
+M: System.Void System.Windows.Forms.TreeNodeExtensions::HideAll(System.Windows.Forms.TreeNode)
+M: System.Void System.Windows.Forms.TreeNodeExtensions::HideCheckBox(System.Windows.Forms.TreeNode)
+M: System.Void System.Windows.Forms.TreeNodeExtensions::ShowPlus(System.Windows.Forms.TreeNode)
+
+R: Gendarme.Rules.Correctness.DisposableFieldsShouldBeDisposedRule
+T: POCOGeneratorUI.POCOGeneratorForm
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: POCOGenerator.IGenerator POCOGeneratorUI.POCOGeneratorForm::GetGenerator(POCOGenerator.RDBMS,System.String)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::GetConnectionString(POCOGenerator.RDBMS&,System.String&,System.Exception&)
+M: System.String[] POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::GetDatabases(System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog/InstanceCollector::collectInstances()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::filterSettingsToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: POCOGeneratorUI.UISettings POCOGeneratorUI.POCOGeneratorForm::DeserializeUISettings()
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::SetCheckBox(System.Windows.Forms.CheckBox,System.EventHandler,System.Boolean)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::SetRadioButton(System.Windows.Forms.RadioButton,System.EventHandler,System.Boolean)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::SetTextBox(System.Windows.Forms.TextBox,System.EventHandler,System.String)
+M: System.Collections.Generic.List`1<POCOGeneratorUI.TypesMapping.TypeMapping> POCOGeneratorUI.POCOGeneratorForm::GetMySQLTypesMapping()
+M: System.Collections.Generic.List`1<POCOGeneratorUI.TypesMapping.TypeMapping> POCOGeneratorUI.POCOGeneratorForm::GetSQLServerTypesMapping()
+M: System.String POCOGeneratorUI.POCOGeneratorForm::Export_MultipleFiles_RelativeFolders_GetNamespace(System.String,POCOGenerator.Objects.Database,System.String,System.String)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildColumnsNode(System.Windows.Forms.TreeNode,System.Collections.Generic.IEnumerable`1<POCOGenerator.Objects.IDbColumn>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildDbObjectsNode(System.Windows.Forms.TreeNode,System.String,System.Collections.Generic.IEnumerable`1<POCOGenerator.Objects.IDbObject>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildForeignKeysNode(System.Windows.Forms.TreeNode,System.Collections.Generic.IEnumerable`1<POCOGenerator.Objects.ForeignKey>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildIndexesNode(System.Windows.Forms.TreeNode,System.Collections.Generic.IEnumerable`1<POCOGenerator.Objects.Index>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildParametersNode(System.Windows.Forms.TreeNode,System.Collections.Generic.IEnumerable`1<POCOGenerator.Objects.IDbParameter>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildPrimaryKeyNode(System.Windows.Forms.TreeNode,POCOGenerator.Objects.PrimaryKey)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildUniqueKeysNode(System.Windows.Forms.TreeNode,System.Collections.Generic.IEnumerable`1<POCOGenerator.Objects.UniqueKey>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::GetCheckedDbObjects(System.Windows.Forms.TreeNode,System.Collections.Generic.List`1<T>)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildDatabaseNode(POCOGenerator.Objects.Database)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildFunctionColumnNode(POCOGenerator.Objects.FunctionColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildFunctionParameterNode(POCOGenerator.Objects.FunctionParameter)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildProcedureColumnNode(POCOGenerator.Objects.ProcedureColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildProcedureParameterNode(POCOGenerator.Objects.ProcedureParameter)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildServerNode(POCOGenerator.Objects.Server)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableColumnNode(POCOGenerator.Objects.TableColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableForeignKeyColumnNode(POCOGenerator.Objects.ForeignKeyColumn,POCOGenerator.Objects.ForeignKey)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableForeignKeyNode(POCOGenerator.Objects.ForeignKey)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableIndexColumnNode(POCOGenerator.Objects.TableIndexColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableIndexNode(POCOGenerator.Objects.TableIndex)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTablePrimaryKeyColumnNode(POCOGenerator.Objects.PrimaryKeyColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTablePrimaryKeyNode(POCOGenerator.Objects.PrimaryKey)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableUniqueKeyColumnNode(POCOGenerator.Objects.UniqueKeyColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableUniqueKeyNode(POCOGenerator.Objects.UniqueKey)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTVPColumnNode(POCOGenerator.Objects.TVPColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildViewColumnNode(POCOGenerator.Objects.ViewColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildViewIndexColumnNode(POCOGenerator.Objects.ViewIndexColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildViewIndexNode(POCOGenerator.Objects.ViewIndex)
+
+R: Gendarme.Rules.Correctness.ProvideCorrectArgumentsToFormattingMethodsRule
+M: System.Void POCOGeneratorUI.TypesMapping.TypesMappingForm::AppendParts(System.Collections.Generic.IEnumerable`1<POCOGeneratorUI.TypesMapping.TypeMappingPart>,System.String,System.Int32)
+M: System.Void POCOGeneratorUI.TypesMapping.TypesMappingForm::InitForm(System.String,System.Collections.Generic.List`1<POCOGeneratorUI.TypesMapping.TypeMapping>,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Design.AbstractTypesShouldNotHavePublicConstructorsRule
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::.ctor(POCOGenerator.RDBMS)
+
+R: Gendarme.Rules.Design.AvoidDefaultParametersRule
+M: POCOGenerator.GeneratorResults POCOGeneratorUI.POCOGeneratorForm::GeneratePOCOs(System.Boolean,System.Boolean,System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.Data.Common.DbConnection POCOGeneratorUI.ConnectionDialog.IRDBMSHandler::GetConnection(System.String)
+M: System.Data.Common.DbConnection POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::GetConnection(System.String)
+M: System.Data.Common.DbConnectionStringBuilder POCOGeneratorUI.ConnectionDialog.IRDBMSHandler::GetConnectionStringBuilder(System.String)
+M: System.Data.Common.DbConnectionStringBuilder POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::GetConnectionStringBuilder(System.String)
+M: System.String System.ExceptionExtensions::GetExceptionErrorMessage(System.Exception,System.String)
+M: System.String System.Reflection.MethodInfoExtensions::GetSignature(System.Reflection.MethodInfo,System.Boolean)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::.ctor(POCOGenerator.RDBMS,System.String)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::ExportPOCOs(System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.Void System.Reflection.MethodInfoExtensions::BuildReturnSignature(System.Text.StringBuilder,System.Reflection.MethodInfo,System.Boolean)
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.FontStyle)
+
+R: Gendarme.Rules.Design.AvoidVisibleFieldsRule
+T: System.Windows.Forms.TreeNodeExtensions/TVITEM
+
+R: Gendarme.Rules.Design.AvoidVisibleNestedTypesRule
+T: System.Windows.Forms.TreeNodeExtensions/TVITEM
+
+R: Gendarme.Rules.Design.ConsiderConvertingMethodToPropertyRule
+M: System.Collections.Generic.IEnumerable`1<POCOGeneratorUI.ConnectionDialog.IRDBMSHandler> POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory::GetRDBMSHandlers()
+
+R: Gendarme.Rules.Design.Generic.AvoidMethodWithUnusedGenericTypeRule
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildDbGroup(System.Windows.Forms.TreeNode,POCOGeneratorUI.POCOGeneratorForm/ImageType,System.Boolean)
+
+R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
+M: System.Int32 System.Reflection.MethodInfoExtensions::VisibilityValue(System.Reflection.MethodInfo)
+M: System.String System.Reflection.MethodInfoExtensions::Visibility(System.Reflection.MethodInfo)
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: POCOGeneratorUI.UISettings POCOGeneratorUI.POCOGeneratorForm::DeserializeUISettings()
+M: System.Boolean POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::TestConnection(System.String)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::Export_MultipleFiles_RelativeFolders_WritePOCOToFile(System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List`1<System.Tuple`2<System.String,System.Exception>>)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::Export_MultipleFiles_SingleFolder_WritePOCOToFile(System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List`1<System.Tuple`2<System.String,System.Exception>>)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::GetConnectionString(POCOGenerator.RDBMS&,System.String&,System.Exception&)
+M: System.String[] POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::GetDatabases(System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::.ctor(POCOGenerator.RDBMS,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::btnRefreshDatabases_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::btnRefreshServers_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::btnTestConnection_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::SetConnectionStringBuilder()
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::SetControlsFromConnectionStringBuilder()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::btnExport_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildServerTree()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::Export_SingleFile(System.String)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::SerializeUISettings()
+M: System.Void POCOGeneratorUI.Program::Main()
+M: System.Void POCOGeneratorUI.Program::UnhandledException(System.Exception)
+
+R: Gendarme.Rules.Interoperability.CentralizePInvokesIntoNativeMethodsTypeRule
+M: System.Int32 POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader::RegOpenKeyEx(System.UIntPtr,System.String,System.UInt32,System.Int32,System.IntPtr&)
+M: System.Int32 POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader::RegQueryValueEx(System.IntPtr,System.String,System.Int32,System.UInt32&,System.IntPtr,System.UInt32&)
+M: System.IntPtr System.Windows.Forms.TreeNodeExtensions::SendMessage(System.IntPtr,System.UInt32,System.IntPtr,System.IntPtr)
+
+R: Gendarme.Rules.Interoperability.MarshalStringsInPInvokeDeclarationsRule
+M: System.Int32 POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader::RegQueryValueEx(System.IntPtr,System.String,System.Int32,System.UInt32&,System.IntPtr,System.UInt32&)
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: POCOGenerator.GeneratorResults POCOGeneratorUI.POCOGeneratorForm::GeneratePOCOs(System.Boolean,System.Boolean,System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.String System.Reflection.MethodInfoExtensions::TypeName(System.Type)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::checkAccessibleTablesToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_AfterCheck(System.Object,System.Windows.Forms.TreeViewEventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_BeforeExpand(System.Object,System.Windows.Forms.TreeViewCancelEventArgs)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::GetSelectedNode()
+
+R: Gendarme.Rules.Maintainability.AvoidExcessiveClassCouplingRule
+M: POCOGenerator.GeneratorResults POCOGeneratorUI.POCOGeneratorForm::GeneratePOCOs(System.Boolean,System.Boolean,System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::Export_MultipleFiles_RelativeFolders()
+T: POCOGeneratorUI.POCOGeneratorForm
+
+R: Gendarme.Rules.Maintainability.AvoidUnnecessarySpecializationRule
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
+
+R: Gendarme.Rules.Maintainability.ExtensionModulesShouldBeMarkedWithAttributeRule
+T: System.Collections.Generic.CollectionExtensions
+T: System.ExceptionExtensions
+T: System.Reflection.MethodInfoExtensions
+T: System.Windows.Forms.GroupBoxExtensions
+T: System.Windows.Forms.TreeNodeExtensions
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+T: POCOGeneratorUI.ConnectionDialog.DataConnectionDialog
+T: POCOGeneratorUI.ConnectionDialog.DataConnectionPropertiesDialog
+
+R: Gendarme.Rules.Naming.AvoidNonAlphanumericIdentifierRule
+T: POCOGeneratorUI.Filtering.FilterType
+T: System.Windows.Forms.TreeNodeExtensions
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
+M: System.Data.Common.DbConnectionStringBuilder POCOGeneratorUI.ConnectionDialog.IRDBMSHandler::GetConnectionStringBuilder(System.String)
+M: System.Data.Common.DbConnectionStringBuilder POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::GetConnectionStringBuilder(System.String)
+M: System.Int32 POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader::GetRegistryHiveKey(POCOGeneratorUI.ConnectionDialog.RegistryHive)
+M: System.String System.ExceptionExtensions::GetExceptionErrorMessage(System.Exception,System.String)
+M: System.String System.ExceptionExtensions::GetUnhandledExceptionErrorMessage(System.Exception)
+M: System.Void POCOGeneratorUI.Program::UnhandledException(System.Exception)
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.FontStyle)
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: POCOGeneratorUI
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: POCOGenerator.GeneratorResults POCOGeneratorUI.POCOGeneratorForm::GeneratePOCOs(System.Boolean,System.Boolean,System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::rdbAuthentication_CheckedChanged(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog/InstanceCollector::collectInstances()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::ExportPOCOs(System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_DisableEvent(System.Object,System.Windows.Forms.TreeViewCancelEventArgs)
+P: System.Boolean POCOGeneratorUI.UISettings::chkCamelCase_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkColumnDefaults_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkComments_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkCommentsWithoutNull_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkComplexTypes_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEF_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFColumn_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFComplexType_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFConcurrencyCheck_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFDescription_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFDisplay_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFForeignKeyAndInverseProperty_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFIndex_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFRequired_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFRequiredWithErrorMessage_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkEFStringLength_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkIgnoreDboSchema_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkIncludeDB_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkIncludeSchema_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkLowerCase_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkManyToManyJoinTable_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkNavigationPropertiesComments_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkNewLineBetweenMembers_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkOverrideNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkOverrideProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkPartialClass_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkSearchIgnoreCase_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkSingular_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkStructTypesNullable_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkUpperCase_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkUsing_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkUsingInsideNamespace_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkVirtualNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::chkVirtualProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::dbObjectsForm_IsEnableFunctions()
+P: System.Boolean POCOGeneratorUI.UISettings::dbObjectsForm_IsEnableProcedures()
+P: System.Boolean POCOGeneratorUI.UISettings::dbObjectsForm_IsEnableTables()
+P: System.Boolean POCOGeneratorUI.UISettings::dbObjectsForm_IsEnableTVPs()
+P: System.Boolean POCOGeneratorUI.UISettings::dbObjectsForm_IsEnableViews()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbEnumSQLTypeToEnumInt_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbEnumSQLTypeToEnumUShort_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbEnumSQLTypeToString_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbFields_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbFileNameDatabaseName_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbFileNameDatabaseSchemaName_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbFileNameName_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbFileNameSchemaName_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbICollectionNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbIEnumerableNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbIListNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbListNavigationProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbMultipleFilesRelativeFolders_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbMultipleFilesSingleFolder_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbProperties_Checked()
+P: System.Boolean POCOGeneratorUI.UISettings::rdbSingleFile_Checked()
+P: System.String POCOGeneratorUI.UISettings::txtDBSeparator_Text()
+P: System.String POCOGeneratorUI.UISettings::txtFixedClassName_Text()
+P: System.String POCOGeneratorUI.UISettings::txtFolder_Text()
+P: System.String POCOGeneratorUI.UISettings::txtInherit_Text()
+P: System.String POCOGeneratorUI.UISettings::txtNamespace_Text()
+P: System.String POCOGeneratorUI.UISettings::txtPrefix_Text()
+P: System.String POCOGeneratorUI.UISettings::txtReplace_Text()
+P: System.String POCOGeneratorUI.UISettings::txtSchemaSeparator_Text()
+P: System.String POCOGeneratorUI.UISettings::txtSearch_Text()
+P: System.String POCOGeneratorUI.UISettings::txtSuffix_Text()
+P: System.String POCOGeneratorUI.UISettings::txtWordsSeparator_Text()
+
+R: Gendarme.Rules.Performance.AvoidLargeStructureRule
+T: System.Windows.Forms.TreeNodeExtensions/TVITEM
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: POCOGenerator.IGenerator POCOGeneratorUI.POCOGeneratorForm::GetGenerator(POCOGenerator.RDBMS,System.String)
+M: POCOGeneratorUI.UISettings POCOGeneratorUI.POCOGeneratorForm::GetUISettings()
+M: System.String System.ExceptionExtensions::GetExceptionErrorMessage(System.Exception,System.String)
+M: System.String System.ExceptionExtensions::GetFormattedStackTrace(System.Exception)
+M: System.String System.Reflection.MethodInfoExtensions::GetSignature(System.Reflection.MethodInfo,System.Boolean)
+M: System.String System.Reflection.MethodInfoExtensions::TypeName(System.Type)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::btnRefreshDatabases_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::ddlRDBMS_SelectedIndexChanged(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::btnFolder_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildServerTree()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::checkAccessibleTablesToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::HandleGeneratorError(POCOGenerator.GeneratorResults)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::PrintDatabaseErrors()
+M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableColumnNode(POCOGenerator.Objects.TableColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableIndexColumnNode(POCOGenerator.Objects.TableIndexColumn)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::BuildTableUniqueKeyColumnNode(POCOGenerator.Objects.UniqueKeyColumn)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCastsRule
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler::SetConnectionTimeout(System.Data.Common.DbConnectionStringBuilder,System.Nullable`1<System.Int32>)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler::SetDatabase(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler::SetIntegratedSecurity(System.Data.Common.DbConnectionStringBuilder,System.Boolean)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler::SetPassword(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler::SetServer(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler::SetUserID(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler::SetConnectionTimeout(System.Data.Common.DbConnectionStringBuilder,System.Nullable`1<System.Int32>)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler::SetDatabase(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler::SetIntegratedSecurity(System.Data.Common.DbConnectionStringBuilder,System.Boolean)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler::SetPassword(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler::SetServer(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler::SetUserID(System.Data.Common.DbConnectionStringBuilder,System.String)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::CheckDbObjectsNodeAfterFilter(System.Windows.Forms.TreeNode)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_AfterCheck(System.Object,System.Windows.Forms.TreeViewEventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_DrawNode(System.Object,System.Windows.Forms.DrawTreeNodeEventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: POCOGeneratorUI.ConnectionDialog.IRDBMSHandler POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory::GetRDBMSHandler(POCOGenerator.RDBMS)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog/InstanceCollector::collectInstances()
+
+R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::.ctor(POCOGenerator.RDBMS,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionPropertiesDialog::.ctor(System.Data.Common.DbConnectionStringBuilder)
+M: System.Void POCOGeneratorUI.DbObjectsForm::.ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+M: System.Void POCOGeneratorUI.Disclaimer.DisclaimerForm::.ctor(System.String)
+M: System.Void POCOGeneratorUI.Filtering.FilterSettingsForm::.ctor(POCOGeneratorUI.Filtering.FilterSettings,System.Boolean)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::.ctor()
+M: System.Void POCOGeneratorUI.TypesMapping.TypesMappingForm::.ctor(System.String,System.Collections.Generic.List`1<POCOGeneratorUI.TypesMapping.TypeMapping>,System.Int32,System.Int32)
+
+R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
+T: POCOGeneratorUI.ConnectionDialog.DataConnectionPropertiesDialog
+T: POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/MySQLHandler
+T: POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/SQLServerHandler
+T: POCOGeneratorUI.Filtering.FilterSettingsForm/FilterItem
+T: POCOGeneratorUI.TypesMapping.TypeMapping
+T: POCOGeneratorUI.TypesMapping.TypeMappingPart
+T: POCOGeneratorUI.UISettings
+
+R: Gendarme.Rules.Performance.CompareWithEmptyStringEfficientlyRule
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::SetTextBox(System.Windows.Forms.TextBox,System.EventHandler,System.String)
+
+R: Gendarme.Rules.Performance.OverrideValueTypeDefaultsRule
+T: System.Windows.Forms.TreeNodeExtensions/TVITEM
+
+R: Gendarme.Rules.Performance.PreferInlineInitializationOfStaticFieldsRule
+M: System.Void POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory::.cctor()
+
+R: Gendarme.Rules.Performance.PreferLiteralOverInitOnlyFieldsRule
+T: POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader
+
+R: Gendarme.Rules.Portability.NewLineLiteralRule
+M: System.String System.ExceptionExtensions::GetExceptionErrorMessage(System.Exception,System.String)
+M: System.String System.ExceptionExtensions::GetFormattedStackTrace(System.Exception)
+M: System.String System.ExceptionExtensions::GetUnhandledExceptionErrorMessage(System.Exception)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::InitializeComponent()
+
+R: Gendarme.Rules.Security.NativeFieldsShouldNotBeVisibleRule
+T: System.Windows.Forms.TreeNodeExtensions/TVITEM
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: POCOGeneratorUI.ConnectionDialog.DataConnectionDialog
+T: POCOGeneratorUI.POCOGeneratorForm
+
+R: Gendarme.Rules.Smells.AvoidLargeClassesRule
+T: POCOGeneratorUI.POCOGeneratorForm
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: POCOGenerator.GeneratorResults POCOGeneratorUI.POCOGeneratorForm::GeneratePOCOs(System.Boolean,System.Boolean,System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::IsMatchFilter(POCOGenerator.Objects.IDbObject,POCOGeneratorUI.Filtering.FilterSettings)
+M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::LoadUISettings()
+M: System.String POCOGeneratorUI.POCOGeneratorForm::Export_SingleFile_GetFileName(System.Int32,POCOGenerator.Objects.IDbObject)
+M: System.String System.ExceptionExtensions::GetFormattedStackTrace(System.Exception)
+M: System.String System.Reflection.MethodInfoExtensions::GetSignature(System.Reflection.MethodInfo,System.Boolean)
+M: System.String System.Reflection.MethodInfoExtensions::TypeName(System.Type)
+M: System.String[] POCOGeneratorUI.ConnectionDialog.RegistryValueDataReader::ReadRegistryValueData(POCOGeneratorUI.ConnectionDialog.RegistryHive,Microsoft.Win32.RegistryKey,System.String,System.String)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::btnRefreshDatabases_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::btnRefreshServers_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::btnExport_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildServerTree()
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::checkAccessibleTablesToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::clearCheckBoxesToolStripMenuItem_Click(System.Object,System.EventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::HandleGeneratorError(POCOGenerator.GeneratorResults)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::SetFilteredNodesVisibility(System.Windows.Forms.TreeNode,POCOGeneratorUI.Filtering.FilterSettings)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::SetFormControls(System.Boolean,System.Boolean,System.Boolean)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_AfterCheck(System.Object,System.Windows.Forms.TreeViewEventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_BeforeExpand(System.Object,System.Windows.Forms.TreeViewCancelEventArgs)
+M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)
+M: System.Void POCOGeneratorUI.TypesMapping.TypesMappingForm::InitForm(System.String,System.Collections.Generic.List`1<POCOGeneratorUI.TypesMapping.TypeMapping>,System.Int32,System.Int32)
+M: System.Windows.Forms.TreeNode POCOGeneratorUI.POCOGeneratorForm::GetSelectedNode()
+
+R: Gendarme.Rules.Smells.AvoidLongParameterListsRule
+T: POCOGeneratorUI.DbObjectsForm
+
+# end extra entries generated from defects
+

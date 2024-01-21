@@ -10,7 +10,7 @@
         </PropertyGroup>
 
         <!-- common targets are in this Sdk  -->
-        <!--<Import Project="Sdk.targets" Sdk="Chaucer.Extended.Sdk" />-->
+        <Import Project="Sdk.targets" Sdk="Chaucer.Extended.Sdk" />
 
         <!-- "our" targets are all in Shared folder to reduce noise in SolutionRoot -->
         <Import Project="$(MSBuildThisFileDirectory)\Shared\*.targets" />

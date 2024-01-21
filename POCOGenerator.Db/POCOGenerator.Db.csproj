@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>Library</OutputType>
     <AssemblyTitle>POCOGenerator.Db</AssemblyTitle>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
     <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
 </Project>

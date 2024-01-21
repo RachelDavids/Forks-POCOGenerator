@@ -10,7 +10,7 @@ namespace POCOGenerator
 	{
 		#region Get Generator
 
-		/// <summary>Gets an output-empty generator. The generator doesn't write to any underline output source.</summary>
+		/// <summary>Gets an output-empty generator. The generator doesn't write to any underlying output source.</summary>
 		/// <returns>The output-empty generator.</returns>
 		public static IGenerator GetGenerator() => new Generator(WriterFactory.GetCreateWriter());
 
@@ -54,12 +54,13 @@ namespace POCOGenerator
 
 		#region Redirect To
 
-		/// <summary>Clears the generator underline output source.</summary>
-		/// <param name="generator">The generator to clear its underline output source.</param>
+		/// <summary>Clears the generator underlying output source.</summary>
+		/// <param name="generator">The generator to clear its underlying output source.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="generator" /> is <see langword="null" />.</exception>
 		public static void RedirectToOutputEmpty(this IGenerator generator)
 		{
-			ArgumentNullException.ThrowIfNull(generator);
+			if(generator is null)
+				throw new ArgumentNullException(nameof(generator));
 
 			Generator g = (Generator)generator;
 			lock (g.lockObject)
@@ -68,8 +69,8 @@ namespace POCOGenerator
 			}
 		}
 
-		/// <summary>Redirects the generator underline output source to an instance of <see cref="StringBuilder" />.</summary>
-		/// <param name="generator">The generator to redirect its underline output source.</param>
+		/// <summary>Redirects the generator underlying output source to an instance of <see cref="StringBuilder" />.</summary>
+		/// <param name="generator">The generator to redirect its underlying output source.</param>
 		/// <param name="stringBuilder">The instance of <see cref="StringBuilder" /> that the generator is redirected to.</param>
 		/// <exception cref="ArgumentNullException">
 		///   <paramref name="generator" /> is <see langword="null" /> or
@@ -94,8 +95,8 @@ namespace POCOGenerator
 			}
 		}
 
-		/// <summary>Redirects the generator underline output source to an instance of <see cref="TextWriter" />.</summary>
-		/// <param name="generator">The generator to redirect its underline output source.</param>
+		/// <summary>Redirects the generator underlying output source to an instance of <see cref="TextWriter" />.</summary>
+		/// <param name="generator">The generator to redirect its underlying output source.</param>
 		/// <param name="textWriter">The instance of <see cref="TextWriter" /> that the generator is redirected to.</param>
 		/// <exception cref="ArgumentNullException">
 		///   <paramref name="generator" /> is <see langword="null" /> or
@@ -120,8 +121,8 @@ namespace POCOGenerator
 			}
 		}
 
-		/// <summary>Redirects the generator underline output source to an instance of <see cref="Stream" />.</summary>
-		/// <param name="generator">The generator to redirect its underline output source.</param>
+		/// <summary>Redirects the generator underlying output source to an instance of <see cref="Stream" />.</summary>
+		/// <param name="generator">The generator to redirect its underlying output source.</param>
 		/// <param name="stream">The instance of <see cref="Stream" /> that the generator is redirected to.</param>
 		/// <exception cref="ArgumentNullException">
 		///   <paramref name="generator" /> is <see langword="null" /> or
@@ -146,8 +147,8 @@ namespace POCOGenerator
 			}
 		}
 
-		/// <summary>Redirects the generator underline output source to the <see cref="Console" />.</summary>
-		/// <param name="generator">The generator to redirect its underline output source.</param>
+		/// <summary>Redirects the generator underlying output source to the <see cref="Console" />.</summary>
+		/// <param name="generator">The generator to redirect its underlying output source.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="generator" /> is <see langword="null" />.</exception>
 		public static void RedirectToConsole(this IGenerator generator)
 		{
@@ -163,8 +164,8 @@ namespace POCOGenerator
 			}
 		}
 
-		/// <summary>Redirects the generator underline output source to the <see cref="Console" /> with syntax highlight colors.</summary>
-		/// <param name="generator">The generator to redirect its underline output source.</param>
+		/// <summary>Redirects the generator underlying output source to the <see cref="Console" /> with syntax highlight colors.</summary>
+		/// <param name="generator">The generator to redirect its underlying output source.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="generator" /> is <see langword="null" />.</exception>
 		public static void RedirectToConsoleColor(this IGenerator generator)
 		{

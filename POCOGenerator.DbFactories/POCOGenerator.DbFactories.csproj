@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>Library</OutputType>
     <AssemblyTitle>POCOGenerator.DbFactories</AssemblyTitle>
   </PropertyGroup>
@@ -8,7 +8,5 @@
     <ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj" />
     <ProjectReference Include="..\POCOGenerator.MySQL\POCOGenerator.MySQL.csproj" />
     <ProjectReference Include="..\POCOGenerator.SQLServer\POCOGenerator.SQLServer.csproj" />
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
 </Project>

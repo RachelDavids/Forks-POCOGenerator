@@ -1,0 +1,32 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup Label="Gendarme Analysis Settings">
+		<RunGendarmeAnalysis Condition=" '$(RunGendarmeAnalysis)' == '' ">true</RunGendarmeAnalysis>
+		<AutoGenerateGendarmeAnalysisExclusionFile>true</AutoGenerateGendarmeAnalysisExclusionFile>
+		<GendarmeRuleset>allrules</GendarmeRuleset>
+		<GendarmeSeverity>All</GendarmeSeverity>
+		<GendarmeConfidence>All</GendarmeConfidence>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AutoGenerateGendarmeAnalysisExclusionFile Condition="'$(AutoGenerateGendarmeAnalysisExclusionFile)' == ''">$(RunGendarmeAnalysis)</AutoGenerateGendarmeAnalysisExclusionFile>
+		<IncludeGendarmeAnalysis Condition="'$(IncludeGendarmeAnalysis)' == ''">$(RunGendarmeAnalysis)</IncludeGendarmeAnalysis>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(GendarmeConfig)' == '' ">
+		<!-- Global Level File -->
+		<DefaultConfigPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Default.Gendarme.rules))</DefaultConfigPath>
+		<GendarmeConfig Condition=" Exists('$(DefaultConfigPath)\Default.Gendarme.rules')">$(DefaultConfigPath)\Default.Gendarme.rules</GendarmeConfig>
+		<CompamyGendarmeConfigPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), $(CompanyName).Gendarme.rules))</CompamyGendarmeConfigPath>
+		<GendarmeConfig Condition=" Exists('$(CompamyGendarmeConfigPath)\$(CompanyName).Gendarme.rules')">$(CompamyGendarmeConfigPath)\$(CompanyName).Gendarme.rules</GendarmeConfig>
+		<!-- Solution Level File -->
+		<GendarmeConfig Condition=" Exists('$(SolutionDir)\Shared\Solution.Gendarme.rules') ">$(SolutionDir)\Shared\Solution.Gendarme.rules</GendarmeConfig>
+		<!-- Project Level File -->
+		<GendarmeConfig Condition=" Exists('$(MSBuildProjectDirectory)$(MSBuildProjectName).Gendarme.rules') ">$(MSBuildProjectDirectory)$(MSBuildProjectName).Gendarme.rules</GendarmeConfig>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<GendarmeAnalysisExclusionFile Include="$(MSBuildProjectDirectory)\Gendarme.Exclusions.txt" />
+	</ItemGroup>
+
+</Project>

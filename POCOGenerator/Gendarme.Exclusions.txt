@@ -1,0 +1,399 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 21/01/2024 10:03:36 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.PreferEmptyInstanceOverNullRule
+M: System.Collections.Generic.List`1<T> POCOGenerator.Generator::GetDatabaseObjects(System.Collections.Generic.List`1<T>,System.Boolean,System.Boolean,System.Collections.Generic.IList`1<System.String>,System.Boolean,System.Collections.Generic.IList`1<System.String>)
+M: System.String POCOGenerator.Objects.ComplexTypeTable::get_Description()
+M: System.String POCOGenerator.Objects.ComplexTypeTable::get_Error()
+M: System.String POCOGenerator.Objects.ComplexTypeTable::get_Schema()
+M: System.String POCOGenerator.Objects.Function::get_Error()
+M: System.String POCOGenerator.Objects.Function::get_Schema()
+M: System.String POCOGenerator.Objects.Procedure::get_Error()
+M: System.String POCOGenerator.Objects.Procedure::get_Schema()
+M: System.String POCOGenerator.Objects.Table::get_Error()
+M: System.String POCOGenerator.Objects.Table::get_Schema()
+M: System.String POCOGenerator.Objects.TVP::get_Error()
+M: System.String POCOGenerator.Objects.TVP::get_Schema()
+M: System.String POCOGenerator.Objects.View::get_Error()
+M: System.String POCOGenerator.Objects.View::get_Schema()
+
+R: Gendarme.Rules.Concurrency.ProtectCallToEventDelegatesRule
+M: System.Void System.EventExtensions::Raise(System.EventHandler`1<TEventArgs>,System.Object,TEventArgs)
+M: TEventArgs System.EventExtensions::Raise(System.EventHandler`1<TEventArgs>,System.Object,System.Func`1<TEventArgs>)
+
+R: Gendarme.Rules.Concurrency.ReviewLockUsedOnlyForOperationsOnVariablesRule
+M: POCOGenerator.ISettings POCOGenerator.Generator::get_Settings()
+M: POCOGenerator.RDBMS POCOGenerator.GeneratorSettings/ConnectionSettings::get_RDBMS()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_CamelCase()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_IgnoreDboSchema()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_IncludeDB()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_IncludeSchema()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_LowerCase()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_SearchIgnoreCase()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_Singular()
+M: System.Boolean POCOGenerator.GeneratorSettings/ClassNameSettings::get_UpperCase()
+M: System.Boolean POCOGenerator.GeneratorSettings/DatabaseObjectsSettings::get_IncludeAll()
+M: System.Boolean POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::get_ExcludeAll()
+M: System.Boolean POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::get_IncludeAll()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_Column()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_ComplexType()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_ConcurrencyCheck()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_Description()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_Display()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_Enable()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_ForeignKeyAndInverseProperty()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_Index()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_Required()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_RequiredWithErrorMessage()
+M: System.Boolean POCOGenerator.GeneratorSettings/EFAnnotationsSettings::get_StringLength()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_Comments()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_Enable()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_ICollectionNavigationProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_IEnumerableNavigationProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_IListNavigationProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_ListNavigationProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_ManyToManyJoinTable()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_OverrideNavigationProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::get_VirtualNavigationProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_ColumnDefaults()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_Comments()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_CommentsWithoutNull()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_ComplexTypes()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_EnumSQLTypeToEnumInt()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_EnumSQLTypeToEnumUShort()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_EnumSQLTypeToString()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_Fields()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_NewLineBetweenMembers()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_OverrideProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_PartialClass()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_Properties()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_StructTypesNullable()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_Using()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_UsingInsideNamespace()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_VirtualProperties()
+M: System.Boolean POCOGenerator.GeneratorSettings/POCOSettings::get_WrapAroundEachClass()
+M: System.Collections.Generic.IList`1<System.String> POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::get_Exclude()
+M: System.Collections.Generic.IList`1<System.String> POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::get_Include()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_Background()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_Comment()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_Error()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_Keyword()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_String()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_Text()
+M: System.Drawing.Color POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::get_UserType()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_DBSeparator()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_FixedClassName()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_Prefix()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_Replace()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_SchemaSeparator()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_Search()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_Suffix()
+M: System.String POCOGenerator.GeneratorSettings/ClassNameSettings::get_WordsSeparator()
+M: System.String POCOGenerator.GeneratorSettings/ConnectionSettings::get_ConnectionString()
+M: System.String POCOGenerator.GeneratorSettings/POCOSettings::get_Inherit()
+M: System.String POCOGenerator.GeneratorSettings/POCOSettings::get_Namespace()
+M: System.String POCOGenerator.GeneratorSettings/POCOSettings::get_Tab()
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_CamelCase(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_DBSeparator(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_FixedClassName(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_IgnoreDboSchema(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_IncludeDB(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_IncludeSchema(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_LowerCase(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_Prefix(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_Replace(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_SchemaSeparator(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_Search(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_SearchIgnoreCase(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_Singular(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_Suffix(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_UpperCase(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/ClassNameSettings::set_WordsSeparator(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ConnectionSettings::set_ConnectionString(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/ConnectionSettings::set_RDBMS(POCOGenerator.RDBMS)
+M: System.Void POCOGenerator.GeneratorSettings/DatabaseObjectsSettings::set_IncludeAll(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::set_ExcludeAll(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::set_IncludeAll(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_Column(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_ComplexType(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_ConcurrencyCheck(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_Description(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_Display(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_Enable(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_ForeignKeyAndInverseProperty(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_Index(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/EFAnnotationsSettings::set_StringLength(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::set_Comments(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::set_Enable(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/NavigationPropertiesSettings::set_ManyToManyJoinTable(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_ColumnDefaults(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_ComplexTypes(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_Inherit(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_Namespace(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_NewLineBetweenMembers(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_PartialClass(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_StructTypesNullable(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_Tab(System.String)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_Using(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_UsingInsideNamespace(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/POCOSettings::set_WrapAroundEachClass(System.Boolean)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_Background(System.Drawing.Color)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_Comment(System.Drawing.Color)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_Error(System.Drawing.Color)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_Keyword(System.Drawing.Color)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_String(System.Drawing.Color)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_Text(System.Drawing.Color)
+M: System.Void POCOGenerator.GeneratorSettings/SyntaxHighlightSettings::set_UserType(System.Drawing.Color)
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::ValidateConnectionString(POCOGenerator.DbHandlers.IDbHandler&,System.String&,System.String&,System.String&,System.String&)
+
+R: Gendarme.Rules.Correctness.MethodCanBeMadeStaticRule
+M: POCOGenerator.DbHandlers.IDbHandler POCOGenerator.Generator::GetDbHandler(POCOGenerator.RDBMS)
+M: System.Boolean POCOGenerator.Generator::IsEnableDbObjects(System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.IList`1<System.String>)
+M: System.Collections.Generic.List`1<T> POCOGenerator.Generator::GetDatabaseObjects(System.Collections.Generic.List`1<T>,System.Boolean,System.Boolean,System.Collections.Generic.IList`1<System.String>,System.Boolean,System.Collections.Generic.IList`1<System.String>)
+M: System.Void POCOGenerator.Generator::SetDatabaseAccessibleTables(System.Collections.Generic.List`1<POCOGenerator.DatabaseAccessibleObjects>)
+
+R: Gendarme.Rules.Design.AvoidEmptyInterfaceRule
+T: POCOGenerator.IGeneratedEventArgs
+T: POCOGenerator.IGeneratingEventArgs
+T: POCOGenerator.IObjectsGeneratedEventArgs
+T: POCOGenerator.IObjectsGeneratingEventArgs
+
+R: Gendarme.Rules.Design.ConsiderAddingInterfaceRule
+T: POCOGenerator.ComplexTypeTableGeneratedAsyncEventArgs
+T: POCOGenerator.ComplexTypeTableGeneratedEventArgs
+T: POCOGenerator.ComplexTypeTableGeneratingAsyncEventArgs
+T: POCOGenerator.ComplexTypeTableGeneratingEventArgs
+T: POCOGenerator.FunctionGeneratedAsyncEventArgs
+T: POCOGenerator.FunctionGeneratedEventArgs
+T: POCOGenerator.FunctionGeneratingAsyncEventArgs
+T: POCOGenerator.FunctionGeneratingEventArgs
+T: POCOGenerator.GeneratorSettings/DbObjectsSettingsBase
+T: POCOGenerator.GeneratorSettings/POCOSettings
+T: POCOGenerator.IFunctions
+T: POCOGenerator.IObjectGeneratedEventArgs
+T: POCOGenerator.IObjectGeneratingEventArgs
+T: POCOGenerator.IPOCO
+T: POCOGenerator.IStoredProcedures
+T: POCOGenerator.ITables
+T: POCOGenerator.ITVPs
+T: POCOGenerator.IViews
+T: POCOGenerator.Objects.ComplexTypeTable
+T: POCOGenerator.Objects.ComplexTypeTableColumn
+T: POCOGenerator.Objects.Database
+T: POCOGenerator.Objects.Function
+T: POCOGenerator.Objects.FunctionColumn
+T: POCOGenerator.Objects.FunctionParameter
+T: POCOGenerator.Objects.IDbObject
+T: POCOGenerator.Objects.PrimaryKey
+T: POCOGenerator.Objects.Procedure
+T: POCOGenerator.Objects.ProcedureColumn
+T: POCOGenerator.Objects.ProcedureParameter
+T: POCOGenerator.Objects.Table
+T: POCOGenerator.Objects.TableColumn
+T: POCOGenerator.Objects.TableIndex
+T: POCOGenerator.Objects.TVP
+T: POCOGenerator.Objects.TVPColumn
+T: POCOGenerator.Objects.UniqueKey
+T: POCOGenerator.Objects.View
+T: POCOGenerator.Objects.ViewColumn
+T: POCOGenerator.Objects.ViewIndex
+T: POCOGenerator.ProcedureGeneratedAsyncEventArgs
+T: POCOGenerator.ProcedureGeneratedEventArgs
+T: POCOGenerator.ProcedureGeneratingAsyncEventArgs
+T: POCOGenerator.ProcedureGeneratingEventArgs
+T: POCOGenerator.TableGeneratedAsyncEventArgs
+T: POCOGenerator.TableGeneratedEventArgs
+T: POCOGenerator.TableGeneratingAsyncEventArgs
+T: POCOGenerator.TableGeneratingEventArgs
+T: POCOGenerator.TVPGeneratedAsyncEventArgs
+T: POCOGenerator.TVPGeneratedEventArgs
+T: POCOGenerator.TVPGeneratingAsyncEventArgs
+T: POCOGenerator.TVPGeneratingEventArgs
+T: POCOGenerator.ViewGeneratedAsyncEventArgs
+T: POCOGenerator.ViewGeneratedEventArgs
+T: POCOGenerator.ViewGeneratingAsyncEventArgs
+T: POCOGenerator.ViewGeneratingEventArgs
+
+R: Gendarme.Rules.Design.ConsiderConvertingMethodToPropertyRule
+M: POCOGenerator.IGenerator POCOGenerator.GeneratorFactory::GetConsoleColorGenerator()
+M: POCOGenerator.IGenerator POCOGenerator.GeneratorFactory::GetConsoleGenerator()
+
+R: Gendarme.Rules.Design.FlagsShouldNotDefineAZeroValueRule
+T: POCOGenerator.GeneratorResults
+
+R: Gendarme.Rules.Design.PreferEventsOverMethodsRule
+M: System.Void System.EventExtensions::Raise(System.EventHandler`1<TEventArgs>,System.Object,TEventArgs)
+M: System.Void System.EventExtensions::RaiseAsync(System.EventHandler`1<TEventArgs>,System.Object,TEventArgs)
+M: TEventArgs System.EventExtensions::Raise(System.EventHandler`1<TEventArgs>,System.Object,System.Func`1<TEventArgs>)
+M: TEventArgs System.EventExtensions::RaiseAsync(System.EventHandler`1<TEventArgs>,System.Object,System.Func`1<TEventArgs>)
+
+R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::Generate()
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::GeneratePOCOs()
+
+R: Gendarme.Rules.Maintainability.AvoidComplexMethodsRule
+M: System.Void POCOGenerator.Generator::SetPOCOIteratorEvents(POCOGenerator.POCOIterators.IDbIterator,POCOGenerator.Objects.Server)
+M: System.Void POCOGenerator.GeneratorSettings::InitializeDatabaseObjects(POCOGenerator.IDatabaseObjects)
+
+R: Gendarme.Rules.Maintainability.AvoidExcessiveClassCouplingRule
+M: System.Void POCOGenerator.Generator::SetPOCOIteratorEvents(POCOGenerator.POCOIterators.IDbIterator,POCOGenerator.Objects.Server)
+T: POCOGenerator.Generator
+
+R: Gendarme.Rules.Maintainability.ExtensionModulesShouldBeMarkedWithAttributeRule
+T: POCOGenerator.GeneratorFactory
+T: POCOGenerator.GeneratorWinFormsFactory
+T: System.EventExtensions
+
+R: Gendarme.Rules.Maintainability.VariableNamesShouldNotMatchFieldNamesRule
+T: POCOGenerator.Generator
+T: POCOGenerator.GeneratorSettings/ConnectionSettings
+T: POCOGenerator.GeneratorSettings/DatabaseObjectsSettings
+T: POCOGenerator.GeneratorSettings/EFAnnotationsSettings
+T: POCOGenerator.GeneratorSettings/NavigationPropertiesSettings
+T: POCOGenerator.GeneratorSettings/POCOSettings
+T: POCOGenerator.GeneratorSettings/SyntaxHighlightSettings
+T: POCOGenerator.GeneratorSupport
+T: POCOGenerator.Objects.ComplexTypeTable
+T: POCOGenerator.Objects.ComplexTypeTableColumn
+T: POCOGenerator.Objects.Database
+T: POCOGenerator.Objects.ForeignKey
+T: POCOGenerator.Objects.ForeignKeyColumn
+T: POCOGenerator.Objects.Function
+T: POCOGenerator.Objects.FunctionColumn
+T: POCOGenerator.Objects.FunctionParameter
+T: POCOGenerator.Objects.Index
+T: POCOGenerator.Objects.IndexColumn
+T: POCOGenerator.Objects.NavigationProperty
+T: POCOGenerator.Objects.PrimaryKey
+T: POCOGenerator.Objects.PrimaryKeyColumn
+T: POCOGenerator.Objects.Procedure
+T: POCOGenerator.Objects.ProcedureColumn
+T: POCOGenerator.Objects.ProcedureParameter
+T: POCOGenerator.Objects.Server
+T: POCOGenerator.Objects.Table
+T: POCOGenerator.Objects.TableColumn
+T: POCOGenerator.Objects.TVP
+T: POCOGenerator.Objects.TVPColumn
+T: POCOGenerator.Objects.UniqueKey
+T: POCOGenerator.Objects.UniqueKeyColumn
+T: POCOGenerator.Objects.Version
+T: POCOGenerator.Objects.View
+T: POCOGenerator.Objects.ViewColumn
+T: System.Collections.Generic.CachedEnumerable`2
+
+R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
+A: POCOGenerator
+
+R: Gendarme.Rules.Naming.UseCorrectPrefixRule
+T: POCOGenerator.Support
+
+R: Gendarme.Rules.Naming.UseCorrectSuffixRule
+T: POCOGenerator.IComplexTypeTableEventArgs
+T: POCOGenerator.IDatabaseEventArgs
+T: POCOGenerator.IFunctionEventArgs
+T: POCOGenerator.IGeneratedEventArgs
+T: POCOGenerator.IGeneratingEventArgs
+T: POCOGenerator.IObjectGeneratedEventArgs
+T: POCOGenerator.IObjectGeneratingEventArgs
+T: POCOGenerator.IObjectsGeneratedEventArgs
+T: POCOGenerator.IObjectsGeneratingEventArgs
+T: POCOGenerator.IPOCOEventArgs
+T: POCOGenerator.IProcedureEventArgs
+T: POCOGenerator.IServerEventArgs
+T: POCOGenerator.ITableEventArgs
+T: POCOGenerator.ITVPEventArgs
+T: POCOGenerator.IViewEventArgs
+
+R: Gendarme.Rules.Naming.UseSingularNameInEnumsUnlessAreFlagsRule
+T: POCOGenerator.RDBMS
+
+R: Gendarme.Rules.Performance.AvoidLargeNumberOfLocalVariablesRule
+M: System.Void POCOGenerator.Generator::SetPOCOIteratorEvents(POCOGenerator.POCOIterators.IDbIterator,POCOGenerator.Objects.Server)
+
+R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::Generate()
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::ValidateConnectionString(POCOGenerator.DbHandlers.IDbHandler&,System.String&,System.String&,System.String&,System.String&)
+M: POCOGenerator.Objects.PrimaryKey POCOGenerator.Objects.Table::get_PrimaryKey()
+M: POCOGenerator.Objects.Version POCOGenerator.Objects.Server::get_Version()
+M: System.Void POCOGenerator.Generator::SetDatabaseAccessibleTables(System.Collections.Generic.List`1<POCOGenerator.DatabaseAccessibleObjects>)
+M: System.Void POCOGenerator.GeneratorSettings::InitializeDatabaseObjects(POCOGenerator.IDatabaseObjects)
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Boolean POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::get_ExcludeAll()
+M: System.Boolean POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::get_IncludeAll()
+M: System.Boolean POCOGenerator.Objects.FunctionColumn::InternalEquals(POCOGenerator.DbObjects.IProcedureColumn)
+M: System.Boolean POCOGenerator.Objects.FunctionParameter::InternalEquals(POCOGenerator.DbObjects.IProcedureParameter)
+M: System.Boolean POCOGenerator.Objects.Index::InternalEquals(POCOGenerator.DbObjects.IIndex)
+M: System.Boolean POCOGenerator.Objects.PrimaryKey::InternalEquals(POCOGenerator.DbObjects.IPrimaryKey)
+M: System.Boolean POCOGenerator.Objects.ProcedureColumn::InternalEquals(POCOGenerator.DbObjects.IProcedureColumn)
+M: System.Boolean POCOGenerator.Objects.ProcedureParameter::InternalEquals(POCOGenerator.DbObjects.IProcedureParameter)
+M: System.Boolean POCOGenerator.Objects.Server::InternalEquals(POCOGenerator.DbObjects.IServer)
+M: System.Boolean POCOGenerator.Objects.TVPColumn::InternalEquals(POCOGenerator.DbObjects.ITVPColumn)
+M: System.Boolean POCOGenerator.Objects.UniqueKey::InternalEquals(POCOGenerator.DbObjects.IUniqueKey)
+M: System.Void POCOGenerator.GeneratorSettings/DbObjectsSettingsBase::Reset()
+
+R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
+M: System.Void POCOGenerator.GeneratorSettings/ConnectionSettings::.ctor(System.Object)
+
+R: Gendarme.Rules.Performance.AvoidUnsealedUninheritedInternalTypeRule
+T: POCOGenerator.DatabaseAccessibleObjects
+T: POCOGenerator.Generator
+
+R: Gendarme.Rules.Performance.PreferCharOverloadRule
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::ValidateConnectionString(POCOGenerator.DbHandlers.IDbHandler&,System.String&,System.String&,System.String&,System.String&)
+
+R: Gendarme.Rules.Performance.PreferLiteralOverInitOnlyFieldsRule
+T: POCOGenerator.Disclaimer
+
+R: Gendarme.Rules.Portability.NewLineLiteralRule
+M: System.Void POCOGenerator.Disclaimer::.cctor()
+
+R: Gendarme.Rules.Smells.AvoidCodeDuplicatedInSameClassRule
+T: POCOGenerator.GeneratorFactory
+T: POCOGenerator.GeneratorSettings/ClassNameSettings
+T: POCOGenerator.GeneratorSettings/ConnectionSettings
+T: POCOGenerator.GeneratorSettings/DatabaseObjectsSettings
+T: POCOGenerator.GeneratorSettings/DbObjectsSettingsBase
+T: POCOGenerator.GeneratorSettings/DbObjectsSettingsBase/SyncList`1
+T: POCOGenerator.GeneratorSettings/EFAnnotationsSettings
+T: POCOGenerator.GeneratorSettings/NavigationPropertiesSettings
+T: POCOGenerator.GeneratorSettings/POCOSettings
+T: POCOGenerator.GeneratorSettings/SyntaxHighlightSettings
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::Generate()
+M: POCOGenerator.GeneratorResults POCOGenerator.Generator::ValidateConnectionString(POCOGenerator.DbHandlers.IDbHandler&,System.String&,System.String&,System.String&,System.String&)
+M: System.Void POCOGenerator.Generator::ClearInternalSettingsAndEvents()
+M: System.Void POCOGenerator.Generator::SetDatabaseAccessibleTables(System.Collections.Generic.List`1<POCOGenerator.DatabaseAccessibleObjects>)
+M: System.Void POCOGenerator.Generator::SetInternalSettingsAndEvents()
+M: System.Void POCOGenerator.Generator::SetPOCOIteratorEvents(POCOGenerator.POCOIterators.IDbIterator,POCOGenerator.Objects.Server)
+M: System.Void POCOGenerator.GeneratorSettings::InitializeDatabaseObjects(POCOGenerator.IDatabaseObjects)
+
+R: Gendarme.Rules.Smells.AvoidUnnecessaryDelegationRule
+T: POCOGenerator.Objects.ForeignKey
+T: POCOGenerator.Objects.Index
+T: POCOGenerator.Objects.IndexColumn
+T: POCOGenerator.Objects.Version
+
+# end extra entries generated from defects
+

@@ -1,0 +1,184 @@
+# Top level entry required to mark this as a global AnalyzerConfig file
+is_global = true
+
+# Restrict the analyzed API surface for certain analyzers to 'public' (public APIs only).
+# CA1043: Use integral or string argument for indexers
+dotnet_diagnostic.CA1043.api_surface                           = public
+# CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.api_surface                           = public
+# CA1720: Identifiers should not contain type names
+dotnet_diagnostic.CA1720.api_surface                           = public
+
+# Exclude single letter type parameter names
+# CA1715: Identifiers should have correct prefix
+dotnet_diagnostic.CA1715.exclude_single_letter_type_parameters = true
+
+# Do not declare static members on generic types
+dotnet_diagnostic.CA1000.severity                              = none
+# Collections should implement generic interface
+dotnet_diagnostic.CA1010.severity                              = none
+# Use properties where appropriate
+dotnet_diagnostic.CA1024.severity                              = none
+# Mark enums with FlagsAttribute
+;dotnet_diagnostic.CA1027.severity                             = none
+# Override methods on comparable types
+dotnet_diagnostic.CA1036.severity                              = none
+# Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity                              = none
+# Implement IDisposable Correctly
+dotnet_diagnostic.CA1063.severity                              = none
+# Do not raise exceptions in unexpected locations
+dotnet_diagnostic.CA1065.severity                              = none
+# Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity                              = none
+# Specify CultureInfo
+dotnet_diagnostic.CA1304.severity                              = none
+# Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity                              = none
+# Specify StringComparison
+dotnet_diagnostic.CA1307.severity                              = none
+# Use ordinal StringComparison
+dotnet_diagnostic.CA1309.severity                              = none
+# Avoid excessive complexity
+dotnet_diagnostic.CA1502.severity                              = none
+# Use nameof to express symbol names
+dotnet_diagnostic.CA1507.severity                              = none
+# Avoid dead conditional code
+dotnet_diagnostic.CA1508.severity                              = none
+# Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity                              = none
+# Identifiers should have correct suffix
+dotnet_diagnostic.CA1710.severity                              = none
+# Identifiers should not have incorrect suffix
+dotnet_diagnostic.CA1711.severity                              = none
+# Flags enums should have plural names
+;dotnet_diagnostic.CA1714.severity                              = none
+# Identifiers should not match keywords
+dotnet_diagnostic.CA1716.severity                              = none
+# Only FlagsAttribute enums should have plural names
+;dotnet_diagnostic.CA1717.severity                              = none
+# Property names should not match get methods
+dotnet_diagnostic.CA1721.severity                              = none
+# Type names should not match namespaces
+dotnet_diagnostic.CA1724.severity                              = none
+# Parameter names should match base declaration
+dotnet_diagnostic.CA1725.severity = error
+# Review unused parameters
+dotnet_diagnostic.CA1801.severity                              = none
+# Use literals where appropriate
+dotnet_diagnostic.CA1802.severity                              = none
+# Avoid un-instantiated internal classes
+dotnet_diagnostic.CA1812.severity                              = none
+# Mark members as static
+dotnet_diagnostic.CA1822.severity                              = none
+# Avoid unused private fields
+dotnet_diagnostic.CA1823.severity                              = none
+# Avoid zero-length array allocations.
+dotnet_diagnostic.CA1825.severity                              = none
+# Use Length/Count property instead of Count() when available
+dotnet_diagnostic.CA1829.severity                              = none
+# Avoid 'StringBuilder' parameters for P/Invokes
+dotnet_diagnostic.CA1838.severity                              = none
+# Dispose objects before losing scope
+dotnet_diagnostic.CA2000.severity                              = none
+# Do not raise reserved exception types
+dotnet_diagnostic.CA2201.severity                              = none
+# Instantiate argument exceptions correctly
+dotnet_diagnostic.CA2208.severity                              = none
+# Non-constant fields should not be visible
+dotnet_diagnostic.CA2211.severity                              = none
+# Disposable fields should be disposed
+dotnet_diagnostic.CA2213.severity                              = none
+# Disposable types should declare finalizer
+dotnet_diagnostic.CA2216.severity                              = none
+# Operator overloads have named alternates
+dotnet_diagnostic.CA2225.severity                              = none
+# Pass system uri objects instead of strings
+dotnet_diagnostic.CA2234.severity                              = none
+# Mark ISerializable types with serializable
+dotnet_diagnostic.CA2237.severity                              = none
+# Do not assign a property to itself.
+dotnet_diagnostic.CA2245.severity                              = none
+# Use XmlReader For DataSet Read Xml
+dotnet_diagnostic.CA5366.severity                              = none
+# Review code for SQL injection vulnerabilities
+dotnet_diagnostic.CA3001.severity                              = none
+# Review code for XSS vulnerabilities
+dotnet_diagnostic.CA3002.severity                              = none
+# Review code for file path injection vulnerabilities
+dotnet_diagnostic.CA3003.severity                              = none
+# Review code for information disclosure vulnerabilities
+dotnet_diagnostic.CA3004.severity                              = none
+# Review code for LDAP injection vulnerabilities
+dotnet_diagnostic.CA3005.severity                              = none
+# Review code for process command injection vulnerabilities
+dotnet_diagnostic.CA3006.severity                              = none
+# Review code for open redirect vulnerabilities
+dotnet_diagnostic.CA3007.severity                              = none
+# Review code for XPath injection vulnerabilities
+dotnet_diagnostic.CA3008.severity                              = none
+# Review code for XML injection vulnerabilities
+dotnet_diagnostic.CA3009.severity                              = none
+# Review code for XAML injection vulnerabilities
+dotnet_diagnostic.CA3010.severity                              = none
+# Review code for DLL injection vulnerabilities
+dotnet_diagnostic.CA3011.severity                              = none
+# Review code for regex injection vulnerabilities
+dotnet_diagnostic.CA3012.severity                              = none
+# Do Not Add Schema By URL
+dotnet_diagnostic.CA3061.severity                              = none
+# Insecure DTD processing in XML
+dotnet_diagnostic.CA3075.severity                              = none
+# Insecure XSLT script processing.
+dotnet_diagnostic.CA3076.severity                              = none
+# Insecure Processing in API Design, XmlDocument and XmlTextReader
+dotnet_diagnostic.CA3077.severity                              = none
+# Mark Verb Handlers With Validate Antiforgery Token
+dotnet_diagnostic.CA3147.severity                              = none
+# Use XmlReader For Validating Reader
+dotnet_diagnostic.CA5370.severity                              = none
+# Do Not Use Weak Key Derivation Function Algorithm
+dotnet_diagnostic.CA5379.severity                              = none
+# Do Not Add Archive Item's Path To The Target File System Path
+dotnet_diagnostic.CA5389.severity                              = none
+# Do not hard-code encryption key
+dotnet_diagnostic.CA5390.severity                              = none
+# Do not hard-code certificate
+dotnet_diagnostic.CA5403.severity                              = none
+
+# Review visible event handlers
+dotnet_diagnostic.CA2109.severity                              = none
+# Events should not have 'Before' or 'After' prefix
+dotnet_diagnostic.CA1713.severity                              = none
+
+# TODO: The following should all be reviewd periodically
+
+# The following rules are broken my a lot of the .NET Framework/Core classes
+# Interface methods should be callable by child types
+dotnet_diagnostic.CA1033.severity                              = none
+
+# general design of "Charisma" requires these
+# Do not catch general exception types
+dotnet_diagnostic.CA1031.severity                              = none
+
+# see also https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1501
+# Avoid excessive inheritance
+dotnet_diagnostic.CA1501.severity                              = none
+
+# see .editorconfig in current directory
+# Identifier contains type name
+dotnet_diagnostic.CA1720.severity                              = none
+
+
+
+
+# Do not declare visible instance fields
+dotnet_code_quality.CA1051.severity = none
+# Nested types should not be visible
+dotnet_code_quality.CA1034.severity = none
+# Properties should not return arrays
+dotnet_code_quality.CA1819.severity = none
+# Specify StringComparison for correctness
+dotnet_code_quality.CA1310.severity = none
+# Parameter names should match base declaration
+dotnet_code_quality.CA1725.severity = none

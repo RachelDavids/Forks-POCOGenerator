@@ -2,7 +2,7 @@ using System.Text;
 
 namespace POCOGenerator.POCOWriters
 {
-	internal abstract class POCOWriter
+	public abstract class POCOWriter
 	{
 		private StringBuilder snapshot;
 

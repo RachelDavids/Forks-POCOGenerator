@@ -1,0 +1,25 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$([MSBuild]::VersionGreaterThanOrEquals($(MSBuildVersion), '17.0'))">
+		<DisableNet6Analyzers>false</DisableNet6Analyzers>
+	</PropertyGroup>
+	<PropertyGroup Condition="!$([MSBuild]::VersionGreaterThanOrEquals($(MSBuildVersion), '17.0'))">
+		<DisableNet6Analyzers>true</DisableNet6Analyzers>
+	</PropertyGroup>
+	<!-- https://github.com/dotnet/sdk/issues/21006 -->
+	<Target Name="DisableAnalyzers"
+		Condition=" '$(DisableNet6Analyzers)' == 'true' "
+	        BeforeTargets="CoreCompile">
+		<ItemGroup>
+			<Analyzer Remove="@(Analyzer)"
+			          Condition="'%(Filename)' == 'System.Text.Json.SourceGeneration'" />
+			<Analyzer Remove="@(Analyzer)"
+			          Condition="'%(Filename)' == 'System.Windows.Forms.Analyzers'" />
+			<Analyzer Remove="@(Analyzer)"
+			          Condition="'%(Filename)' == 'System.Windows.Forms.Analyzers.CSharp'" />
+		</ItemGroup>
+	</Target>
+</Project>

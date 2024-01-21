@@ -1,0 +1,18 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+
+	<Target Name="DisableAnalyzers"
+	        Condition="'$(TargetFrameworksIdentifier)' == '.NETCoreApp' and !$([MSBuild]::VersionGreaterThanOrEquals($(TargetFrameworksVersion), '6.0'))"
+	        BeforeTargets="CoreCompile">
+		<ItemGroup>
+			<Analyzer Remove="@(Analyzer)"
+			          Condition="'%(Filename)' == 'System.Text.Json.SourceGeneration'" />
+			<Analyzer Remove="@(Analyzer)"
+			          Condition="'%(Filename)' == 'System.Windows.Forms.Analyzers'" />
+			<Analyzer Remove="@(Analyzer)"
+			          Condition="'%(Filename)' == 'System.Windows.Forms.Analyzers.CSharp'" />
+		</ItemGroup>
+	</Target>
+</Project>
