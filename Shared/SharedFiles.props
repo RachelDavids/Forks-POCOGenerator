@@ -6,9 +6,9 @@
 		<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
 		<Compile Include="$(SolutionDir)\Common\SolutionAssemblyInfo.cs">
 			<Link>Properties\SolutionAssemblyInfo.cs</Link>
 		</Compile>
-	</ItemGroup>
+	</ItemGroup>-->
 </Project>

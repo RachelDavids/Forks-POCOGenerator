@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AssemblyTitle>POCOGenerator.Forms</AssemblyTitle>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
+		<ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
+	</ItemGroup>
+</Project>

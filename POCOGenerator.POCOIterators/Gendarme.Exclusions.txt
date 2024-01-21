@@ -267,3 +267,12 @@ M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteEFColumnAttributes(P
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 21/01/2024 13:55:39 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.Boolean POCOGenerator.POCOIterators.DbIterator::IterateDatabases(System.Linq.IGrouping`2<POCOGenerator.DbObjects.IServer,POCOGenerator.DbObjects.IDbObjectTraverse>,System.Collections.Generic.IEnumerable`1<POCOGenerator.DbObjects.IDbObjectTraverse>,System.String,System.Boolean&,System.Boolean)
+M: System.Void POCOGenerator.POCOIterators.DbIterator::WriteColumnDefaultConstructorInitializationByteArray_Hex(System.String,POCOGenerator.DbObjects.ITableColumn,System.String)
+
+# end extra entries generated from defects
+

@@ -9,6 +9,7 @@
     <StartupObject>RichTextBoxDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\POCOGenerator.Forms\POCOGenerator.Forms.csproj" />
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,6 @@
     <AssemblyTitle>POCOGenerator.DbHandlers</AssemblyTitle>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
     <ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj" />
-    <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
   </ItemGroup>
 </Project>

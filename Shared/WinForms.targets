@@ -6,7 +6,7 @@
 		<ApplicationVisualStyles>true</ApplicationVisualStyles>
 		<ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
 		<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
-		<ApplicationDefaultFont>Lucida Console, 12.25pt</ApplicationDefaultFont>
+		<ApplicationDefaultFont>Lucida Console, 11.25pt</ApplicationDefaultFont>
 	</PropertyGroup>
 </Project>
 

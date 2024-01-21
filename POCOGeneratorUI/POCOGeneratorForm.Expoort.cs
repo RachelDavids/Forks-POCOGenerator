@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using POCOGenerator;
+using POCOGenerator.Forms;
 using POCOGenerator.Objects;
 
 namespace POCOGeneratorUI
@@ -108,10 +109,8 @@ namespace POCOGeneratorUI
 			{
 				using (FileStream stream = File.Open(path, FileMode.Create))
 				{
-					ExportPOCOs(
-								g => g.RedirectTo(stream),
-								g => g.RedirectTo(txtPocoEditor)
-							   );
+					ExportPOCOs(g => g.RedirectTo(stream),
+								g => g.RedirectTo(txtPocoEditor));
 				}
 			}
 			catch (Exception ex)

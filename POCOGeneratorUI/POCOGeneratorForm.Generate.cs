@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using JetBrains.Annotations;
 using POCOGenerator;
 using POCOGenerator.Objects;
 
@@ -123,12 +124,13 @@ namespace POCOGeneratorUI
 			}
 		}
 
-		private void ExportPOCOs(Action<IGenerator> BeforeGeneratePOCOs = null, Action<IGenerator> AfterGeneratePOCOs = null) =>
+		private void ExportPOCOs([InstantHandle] Action<IGenerator> BeforeGeneratePOCOs = null,
+								 [InstantHandle] Action<IGenerator> AfterGeneratePOCOs = null) =>
 			GeneratePOCOs(false, true, BeforeGeneratePOCOs, AfterGeneratePOCOs);
 
 		private GeneratorResults GeneratePOCOs(bool forceGeneratingPOCOs = false, bool isExport = false,
-											   Action<IGenerator> BeforeGeneratePOCOs = null,
-											   Action<IGenerator> AfterGeneratePOCOs = null)
+											   [InstantHandle] Action<IGenerator> BeforeGeneratePOCOs = null,
+											   [InstantHandle] Action<IGenerator> AfterGeneratePOCOs = null)
 		{
 			generatePOCOsFromCheckedTreeNodes =
 				this.selectedTables.HasAny() ||
@@ -539,45 +541,43 @@ namespace POCOGeneratorUI
 			{
 				return selectedNode.Parent;
 			}
-			else if (selectedNode.Tag is TableIndex)
-			{
-				return selectedNode.Parent.Parent;
-			}
 			else
 			{
-				return selectedNode.Tag is TableIndexColumn
-					? selectedNode.Parent.Parent.Parent
-					: selectedNode.Tag is IEnumerable<ViewColumn>
-										   ? selectedNode.Parent
-										   : selectedNode.Tag is ViewColumn
-											   ? selectedNode.Parent.Parent
-											   : selectedNode.Tag is IEnumerable<ViewIndex>
-												   ? selectedNode.Parent
-												   : selectedNode.Tag is ViewIndex
-													   ? selectedNode.Parent.Parent
-													   : selectedNode.Tag is ViewIndexColumn
-														   ? selectedNode.Parent.Parent.Parent
-														   : selectedNode.Tag is IEnumerable<ProcedureParameter>
-															   ? selectedNode.Parent
-															   : selectedNode.Tag is ProcedureParameter
-																   ? selectedNode.Parent.Parent
-																   : selectedNode.Tag is IEnumerable<ProcedureColumn>
-																	   ? selectedNode.Parent
-																	   : selectedNode.Tag is ProcedureColumn
-																		   ? selectedNode.Parent.Parent
-																		   : selectedNode.Tag is IEnumerable<FunctionParameter>
+				return selectedNode.Tag is TableIndex
+					? selectedNode.Parent.Parent
+					: selectedNode.Tag is TableIndexColumn
+									? selectedNode.Parent.Parent.Parent
+									: selectedNode.Tag is IEnumerable<ViewColumn>
+														   ? selectedNode.Parent
+														   : selectedNode.Tag is ViewColumn
+															   ? selectedNode.Parent.Parent
+															   : selectedNode.Tag is IEnumerable<ViewIndex>
+																   ? selectedNode.Parent
+																   : selectedNode.Tag is ViewIndex
+																	   ? selectedNode.Parent.Parent
+																	   : selectedNode.Tag is ViewIndexColumn
+																		   ? selectedNode.Parent.Parent.Parent
+																		   : selectedNode.Tag is IEnumerable<ProcedureParameter>
 																			   ? selectedNode.Parent
-																			   : selectedNode.Tag is FunctionParameter
+																			   : selectedNode.Tag is ProcedureParameter
 																				   ? selectedNode.Parent.Parent
-																				   : selectedNode.Tag is IEnumerable<FunctionColumn>
+																				   : selectedNode.Tag is IEnumerable<ProcedureColumn>
 																					   ? selectedNode.Parent
-																					   : selectedNode.Tag is FunctionColumn
+																					   : selectedNode.Tag is ProcedureColumn
 																						   ? selectedNode.Parent.Parent
-																						   : selectedNode.Tag is IEnumerable<TVPColumn>
+																						   : selectedNode.Tag is IEnumerable<FunctionParameter>
 																							   ? selectedNode.Parent
-																							   : selectedNode.Tag is TVPColumn
+																							   : selectedNode.Tag is FunctionParameter
 																								   ? selectedNode.Parent.Parent
-																								   : null;
+																								   : selectedNode.Tag is IEnumerable<FunctionColumn>
+																									   ? selectedNode.Parent
+																									   : selectedNode.Tag is FunctionColumn
+																										   ? selectedNode.Parent.Parent
+																										   : selectedNode.Tag is IEnumerable<TVPColumn>
+																											   ? selectedNode.Parent
+																											   : selectedNode.Tag is TVPColumn
+																												   ? selectedNode.Parent.Parent
+																												   : null;
 			}
 		}
 

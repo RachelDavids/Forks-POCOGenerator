@@ -6,8 +6,4 @@
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..))"
 		Condition=" Exists($([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', $(MSBuildThisFileDirectory)..)))"/>
 
-	<PropertyGroup>
-		<UseWindowsForms>true</UseWindowsForms>
-	</PropertyGroup>
-
 </Project>

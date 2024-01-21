@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using POCOGenerator.POCOWriters;
 using POCOGenerator.POCOWriters.Writers;
 
-namespace POCOGenerator
+namespace POCOGenerator.Forms
 {
 	/// <summary>Creates instances of the POCO Generator, suitable for WinForms, and provides redirection to other WinForms output sources.</summary>
 	public static class GeneratorWinFormsFactory
@@ -23,7 +23,7 @@ namespace POCOGenerator
 
 			EnsureRegistration();
 
-			return new Generator(WriterFactory.GetCreateWriter(richTextBox));
+			return GeneratorFactory.GetGenerator(WriterFactory.GetCreateWriter(richTextBox));
 		}
 
 		private static bool _isRegistered = false;
@@ -54,17 +54,12 @@ namespace POCOGenerator
 			{
 				throw new ArgumentNullException(nameof(generator));
 			}
-
 			if (richTextBox == null)
 			{
 				throw new ArgumentNullException(nameof(richTextBox));
 			}
-
-			Generator g = (Generator)generator;
-			lock (g.lockObject)
-			{
-				g.createWriter = WriterFactory.GetCreateWriter(richTextBox);
-			}
+			EnsureRegistration();
+			GeneratorFactory.ChangeWriter(generator, WriterFactory.GetCreateWriter(richTextBox));
 		}
 
 		#endregion

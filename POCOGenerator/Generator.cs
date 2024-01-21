@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
-
 using POCOGenerator.DbFactories;
 using POCOGenerator.DbHandlers;
 using POCOGenerator.DbObjects;
@@ -463,7 +462,7 @@ namespace POCOGenerator
 				return GeneratorResults.ConnectionStringMalformed;
 			}
 
-			int index = serverName.LastIndexOf("\\");
+			int index = serverName.LastIndexOf('\\');
 			if (index != -1)
 			{
 				instanceName = serverName[(index + 1)..];
@@ -472,7 +471,9 @@ namespace POCOGenerator
 
 			if (integratedSecurity)
 			{
-				userId = WindowsIdentity.GetCurrent().Name;
+				userId = OperatingSystem.IsWindows()
+							 ? WindowsIdentity.GetCurrent().Name
+							 : "unknown";
 			}
 
 			return GeneratorResults.None;

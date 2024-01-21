@@ -1,8 +1,3 @@
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
@@ -14,7 +9,7 @@ using System.Runtime.Versioning;
 //[assembly: ComVisible(false)]
 
 // CLS Compliant
-[assembly: CLSCompliant(true)]
+//[assembly: CLSCompliant(true)]
 
 // Version information for an assembly consists of the following four values:
 //

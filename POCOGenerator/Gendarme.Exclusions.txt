@@ -397,3 +397,11 @@ T: POCOGenerator.Objects.Version
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 21/01/2024 11:52:29 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Concurrency.ReviewLockUsedOnlyForOperationsOnVariablesRule
+M: POCOGenerator.IGenerator POCOGenerator.GeneratorFactory::ChangeWriter(POCOGenerator.IGenerator,System.Func`1<POCOGenerator.POCOWriters.IWriter>)
+
+# end extra entries generated from defects
+

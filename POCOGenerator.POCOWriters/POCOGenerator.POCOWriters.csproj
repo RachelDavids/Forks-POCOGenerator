@@ -2,8 +2,6 @@
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
 		<OutputType>Library</OutputType>
-		<!--<UseWindowsForms>true</UseWindowsForms>-->
-		<!--<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>-->
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="System.Drawing.Common" Version="*" />

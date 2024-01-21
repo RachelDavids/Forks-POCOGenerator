@@ -1,22 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\POCOGenerator.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DocumentationFile>bin\Release\POCOGenerator.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\POCOGenerator.DbFactories\POCOGenerator.DbFactories.csproj" />
-    <ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj" />
-    <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
-    <ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj" />
-    <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
-    <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\POCOGenerator.DbFactories\POCOGenerator.DbFactories.csproj" />
+	</ItemGroup>
 </Project>

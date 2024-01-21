@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows.Forms;
 
 using POCOGenerator;
+using POCOGenerator.Forms;
 using POCOGenerator.Objects;
 
 namespace POCOGeneratorUI
@@ -50,8 +51,7 @@ namespace POCOGeneratorUI
 			bool isSupportTableFunctions = rdbms == RDBMS.SQLServer;
 			bool isSupportTVPs = rdbms == RDBMS.SQLServer;
 
-			DbObjectsForm dbObjectsForm = new(
-											  isSupportTableFunctions,
+			DbObjectsForm dbObjectsForm = new(isSupportTableFunctions,
 											  isSupportTVPs,
 											  dbObjectsForm_IsEnableTables,
 											  dbObjectsForm_IsEnableViews,
@@ -66,15 +66,17 @@ namespace POCOGeneratorUI
 					dbObjectsForm.IsEnableFunctions || dbObjectsForm.IsEnableTVPs)
 				{
 					IGenerator generator = GeneratorWinFormsFactory.GetGenerator(txtPocoEditor);
-					generator.Settings.Connection.ConnectionString = connectionString;
-					generator.Settings.Connection.RDBMS = rdbms;
-
-					generator.Settings.DatabaseObjects.IncludeAll = false;
-					generator.Settings.DatabaseObjects.Tables.IncludeAll = dbObjectsForm.IsEnableTables;
-					generator.Settings.DatabaseObjects.Views.IncludeAll = dbObjectsForm.IsEnableViews;
-					generator.Settings.DatabaseObjects.StoredProcedures.IncludeAll = dbObjectsForm.IsEnableProcedures;
-					generator.Settings.DatabaseObjects.Functions.IncludeAll = dbObjectsForm.IsEnableFunctions;
-					generator.Settings.DatabaseObjects.TVPs.IncludeAll = dbObjectsForm.IsEnableTVPs;
+					ISettings settings = generator.Settings;
+					IConnection connection = settings.Connection;
+					connection.ConnectionString = connectionString;
+					connection.RDBMS = rdbms;
+					IDatabaseObjects databaseObjects = settings.DatabaseObjects;
+					databaseObjects.IncludeAll = false;
+					databaseObjects.Tables.IncludeAll = dbObjectsForm.IsEnableTables;
+					databaseObjects.Views.IncludeAll = dbObjectsForm.IsEnableViews;
+					databaseObjects.StoredProcedures.IncludeAll = dbObjectsForm.IsEnableProcedures;
+					databaseObjects.Functions.IncludeAll = dbObjectsForm.IsEnableFunctions;
+					databaseObjects.TVPs.IncludeAll = dbObjectsForm.IsEnableTVPs;
 
 					dbObjectsForm_IsEnableTables = dbObjectsForm.IsEnableTables;
 					dbObjectsForm_IsEnableViews = dbObjectsForm.IsEnableViews;
@@ -84,15 +86,8 @@ namespace POCOGeneratorUI
 
 					return generator;
 				}
-				else
-				{
-					return null;
-				}
 			}
-			else
-			{
-				return null;
-			}
+			return null;
 		}
 
 		private void SetGeneratorSettings()
