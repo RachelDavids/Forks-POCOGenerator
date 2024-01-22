@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-windows</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+    <ProjectReference Include="..\..\Data\Sql\Data.Sql.csproj" />
+    <ProjectReference Include="..\..\POCOGenerator\POCOGenerator.csproj" />
+  </ItemGroup>
+
+</Project>

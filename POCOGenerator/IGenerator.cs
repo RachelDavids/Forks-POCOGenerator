@@ -14,7 +14,7 @@ namespace POCOGenerator
 		Support Support { get; }
 
 		/// <summary>Gets the unexpected error that the generator encountered.
-		/// <para>Returns <see langword="null" /> if the generator didn't encountered any unexpected error.</para></summary>
+		/// <para>Returns <see langword="null" /> if the generator didn't encounter any unexpected error.</para></summary>
 		/// <value>The unexpected error that the generator encountered.</value>
 		Exception Error { get; }
 

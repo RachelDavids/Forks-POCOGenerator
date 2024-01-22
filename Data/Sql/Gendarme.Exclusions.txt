@@ -1,0 +1,54 @@
+#
+# This file is used by Gendarme to maintain exclusion items that
+# are applied to this project.
+#
+# Project-level suppressions either have no target or are given
+# a specific target and scoped to a namespace, type, member, etc.
+#
+#
+# Alternatively, certain rules will recognise the matching FxCop suppression
+# Suppressions can also be made in source where appropriate.
+#
+# Notes:
+#   R = rule name
+#   A = Applies to given assembly
+#   T = Applies to specified type
+#   M = Applies to fully qualified method.
+#   # = Comment line
+#
+# begin extra entries generated from defects
+# added on 22/01/2024 09:03:34 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.BadPractice.PreferSafeHandleRule
+T: Rachel.Core.Win32.RegistryValueDataReader
+
+R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
+M: System.Void Rachel.Data.Sql.InstanceLocator::collectInstances()
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: Rachel.Data.Sql.InstanceLocator
+
+R: Gendarme.Rules.Interoperability.CentralizePInvokesIntoNativeMethodsTypeRule
+M: System.Int32 Rachel.Core.Win32.RegistryValueDataReader::RegOpenKeyEx(System.UIntPtr,System.String,System.UInt32,System.Int32,System.IntPtr&)
+M: System.Int32 Rachel.Core.Win32.RegistryValueDataReader::RegQueryValueEx(System.IntPtr,System.String,System.Int32,System.UInt32&,System.IntPtr,System.UInt32&)
+
+R: Gendarme.Rules.Interoperability.MarshalStringsInPInvokeDeclarationsRule
+M: System.Int32 Rachel.Core.Win32.RegistryValueDataReader::RegQueryValueEx(System.IntPtr,System.String,System.Int32,System.UInt32&,System.IntPtr,System.UInt32&)
+
+R: Gendarme.Rules.Naming.AvoidRedundancyInMethodNameRule
+M: System.Int32 Rachel.Core.Win32.RegistryValueDataReader::GetRegistryHiveKey(Rachel.Core.Win32.RegistryHive)
+
+R: Gendarme.Rules.Naming.UseCorrectCasingRule
+M: System.Void Rachel.Data.Sql.InstanceLocator::collectInstances()
+
+R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
+M: System.Void Rachel.Data.Sql.InstanceLocator::collectInstances()
+
+R: Gendarme.Rules.Performance.PreferLiteralOverInitOnlyFieldsRule
+T: Rachel.Core.Win32.RegistryValueDataReader
+
+R: Gendarme.Rules.Smells.AvoidLongMethodsRule
+M: System.String[] Rachel.Core.Win32.RegistryValueDataReader::ReadRegistryValueData(Rachel.Core.Win32.RegistryHive,Microsoft.Win32.RegistryKey,System.String,System.String)
+
+# end extra entries generated from defects
+

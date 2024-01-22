@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>Exe</OutputType>
@@ -8,6 +8,7 @@
     <StartupObject>ComplexTypesDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\Sql\Data.Sql.csproj" />
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
   </ItemGroup>
   <ItemGroup>

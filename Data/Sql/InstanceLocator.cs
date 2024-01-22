@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Versioning;
 using Microsoft.Data.Sql;
 using Microsoft.Win32;
+using Rachel.Core.Win32;
+using RegistryHive = Rachel.Core.Win32.RegistryHive;
 
-namespace POCOGeneratorUI.ConnectionDialog
+namespace Rachel.Data.Sql
 {
 	/// <summary>
 	/// Class InstanceCollector. This class cannot be inherited.
@@ -13,6 +16,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 	/// <remarks>
 	/// See <see href="https://stackoverflow.com/a/13993652/4694175">HERE</see> for further details
 	/// </remarks>
+	[SupportedOSPlatform("windows")]
 	public sealed class InstanceLocator
 	{
 		private List<string> sqlInstances = [];
@@ -41,7 +45,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 				List<string> lclInstances = GetLocalSqlServerInstanceNames();
 				foreach (string lclInstance in lclInstances)
 				{
-					string instanceName = string.Format(@"{0}\{1}", Environment.MachineName, lclInstance);
+					string instanceName = $@"{Environment.MachineName}\{lclInstance}";
 					if (!sqlInstances.Contains(instanceName))
 					{
 						sqlInstances.Add(instanceName);

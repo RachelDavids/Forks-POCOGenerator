@@ -5,6 +5,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Windows.Forms;
 using POCOGenerator;
+using Rachel.Data.Sql;
 
 namespace POCOGeneratorUI.ConnectionDialog
 {

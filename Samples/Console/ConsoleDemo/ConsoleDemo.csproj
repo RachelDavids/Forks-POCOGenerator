@@ -7,7 +7,9 @@
 		<StartupObject>ConsoleDemo.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\Data\Sql\Data.Sql.csproj" />
 		<ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
+		<ProjectReference Include="..\..\Support\Samples.Support.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="ConnectionString.txt">

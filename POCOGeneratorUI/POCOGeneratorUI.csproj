@@ -23,6 +23,7 @@
     <Content Include="Images\View.gif" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Sql\Data.Sql.csproj" />
     <ProjectReference Include="..\POCOGenerator.Forms\POCOGenerator.Forms.csproj" />
     <ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
   </ItemGroup>
