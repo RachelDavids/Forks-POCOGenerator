@@ -1,18 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0-windows</TargetFrameworks>
-    <OutputType>Exe</OutputType>
-    <AssemblyTitle>ConsoleDemo</AssemblyTitle>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>ConsoleDemo.Program</StartupObject>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ConnectionString.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks Condition="'$(TargetFrameworks)' == ''">net8.0</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+		<StartupObject>ConsoleDemo.Program</StartupObject>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="ConnectionString.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>

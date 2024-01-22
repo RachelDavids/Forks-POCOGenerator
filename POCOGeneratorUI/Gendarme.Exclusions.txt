@@ -16,8 +16,9 @@
 #   M = Applies to fully qualified method.
 #   # = Comment line
 #
+
 # begin extra entries generated from defects
-# added on 21/01/2024 10:05:00 by DESKTOP-1O03T0G/rache
+# added on 22/01/2024 08:26:00 by DESKTOP-1O03T0G/rache
 
 R: Gendarme.Rules.BadPractice.AvoidVisibleConstantFieldRule
 T: System.Windows.Forms.TreeNodeExtensions
@@ -57,7 +58,7 @@ R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
 M: POCOGenerator.IGenerator POCOGeneratorUI.POCOGeneratorForm::GetGenerator(POCOGenerator.RDBMS,System.String)
 M: System.Boolean POCOGeneratorUI.POCOGeneratorForm::GetConnectionString(POCOGenerator.RDBMS&,System.String&,System.Exception&)
 M: System.String[] POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory/RDBMSHandler`2::GetDatabases(System.String)
-M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog/InstanceCollector::collectInstances()
+M: System.Void POCOGeneratorUI.ConnectionDialog.InstanceLocator::collectInstances()
 M: System.Void POCOGeneratorUI.POCOGeneratorForm::filterSettingsToolStripMenuItem_Click(System.Object,System.EventArgs)
 M: System.Void System.Windows.Forms.GroupBoxExtensions::DrawGroupBox(System.Windows.Forms.GroupBox,System.Drawing.Graphics,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.FontStyle)
 
@@ -129,6 +130,9 @@ M: System.Collections.Generic.IEnumerable`1<POCOGeneratorUI.ConnectionDialog.IRD
 
 R: Gendarme.Rules.Design.Generic.AvoidMethodWithUnusedGenericTypeRule
 M: System.Void POCOGeneratorUI.POCOGeneratorForm::BuildDbGroup(System.Windows.Forms.TreeNode,POCOGeneratorUI.POCOGeneratorForm/ImageType,System.Boolean)
+
+R: Gendarme.Rules.Design.Generic.DoNotExposeGenericListsRule
+T: POCOGeneratorUI.ConnectionDialog.InstanceLocator
 
 R: Gendarme.Rules.Exceptions.AvoidThrowingBasicExceptionsRule
 M: System.Int32 System.Reflection.MethodInfoExtensions::VisibilityValue(System.Reflection.MethodInfo)
@@ -209,7 +213,7 @@ A: POCOGeneratorUI
 R: Gendarme.Rules.Naming.UseCorrectCasingRule
 M: POCOGenerator.GeneratorResults POCOGeneratorUI.POCOGeneratorForm::GeneratePOCOs(System.Boolean,System.Boolean,System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
 M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::rdbAuthentication_CheckedChanged(System.Object,System.EventArgs)
-M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog/InstanceCollector::collectInstances()
+M: System.Void POCOGeneratorUI.ConnectionDialog.InstanceLocator::collectInstances()
 M: System.Void POCOGeneratorUI.POCOGeneratorForm::ExportPOCOs(System.Action`1<POCOGenerator.IGenerator>,System.Action`1<POCOGenerator.IGenerator>)
 M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_DisableEvent(System.Object,System.Windows.Forms.TreeViewCancelEventArgs)
 P: System.Boolean POCOGeneratorUI.UISettings::chkCamelCase_Checked()
@@ -284,7 +288,6 @@ R: Gendarme.Rules.Performance.AvoidLargeStructureRule
 T: System.Windows.Forms.TreeNodeExtensions/TVITEM
 
 R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
-M: POCOGenerator.IGenerator POCOGeneratorUI.POCOGeneratorForm::GetGenerator(POCOGenerator.RDBMS,System.String)
 M: POCOGeneratorUI.UISettings POCOGeneratorUI.POCOGeneratorForm::GetUISettings()
 M: System.String System.ExceptionExtensions::GetExceptionErrorMessage(System.Exception,System.String)
 M: System.String System.ExceptionExtensions::GetFormattedStackTrace(System.Exception)
@@ -322,7 +325,7 @@ M: System.Void POCOGeneratorUI.POCOGeneratorForm::trvServer_MouseUp(System.Objec
 
 R: Gendarme.Rules.Performance.AvoidUncalledPrivateCodeRule
 M: POCOGeneratorUI.ConnectionDialog.IRDBMSHandler POCOGeneratorUI.ConnectionDialog.RDBMSHandlerFactory::GetRDBMSHandler(POCOGenerator.RDBMS)
-M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog/InstanceCollector::collectInstances()
+M: System.Void POCOGeneratorUI.ConnectionDialog.InstanceLocator::collectInstances()
 
 R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
 M: System.Void POCOGeneratorUI.ConnectionDialog.DataConnectionDialog::.ctor(POCOGenerator.RDBMS,System.String)

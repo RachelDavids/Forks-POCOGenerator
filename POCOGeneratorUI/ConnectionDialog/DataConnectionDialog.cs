@@ -296,7 +296,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 					//		}
 					//	}
 					//}
-					List<string> servers = InstanceCollector.GetLocalServerQualifiedInstanceNames();
+					List<string> servers = InstanceLocator.GetLocalServerQualifiedInstanceNames();
 
 					if (servers.Count > 0)
 					{

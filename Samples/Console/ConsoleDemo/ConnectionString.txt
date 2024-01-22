@@ -1,1 +1,1 @@
-Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True
+Data Source=(LocalDB);Initial Catalog=AdventureWorks;Integrated Security=True
