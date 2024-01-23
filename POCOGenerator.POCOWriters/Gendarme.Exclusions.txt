@@ -67,3 +67,11 @@ T: POCOGenerator.POCOWriters.WriterFactory/Factory
 
 # end extra entries generated from defects
 
+# begin extra entries generated from defects
+# added on 23/01/2024 08:13:28 by DESKTOP-1O03T0G/rache
+
+R: Gendarme.Rules.Design.AvoidDefaultParametersRule
+M: System.Void POCOGenerator.POCOWriters.ISnapshot::SnapshotWriteLine(System.String)
+
+# end extra entries generated from defects
+

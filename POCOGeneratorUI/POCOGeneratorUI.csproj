@@ -2,9 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
-    <StartupObject>POCOGeneratorUI.Program</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <EnablePreSerializedResources>true</EnablePreSerializedResources>
   </PropertyGroup>
   <ItemGroup>
@@ -28,7 +26,7 @@
     <ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.33" />
+    <PackageReference Include="MySql.Data" Version="8.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="*" />
     <PackageReference Include="System.Management" Version="8.0.0" />

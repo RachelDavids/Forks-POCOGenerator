@@ -27,6 +27,6 @@
     <PackageReference Include="Microsoft.SqlServer.Types">
       <Version>160.1000.6</Version>
     </PackageReference>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 </Project>

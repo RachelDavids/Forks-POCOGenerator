@@ -5,7 +5,6 @@
     <AssemblyTitle>MultipleFilesDemo</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>MultipleFilesDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />

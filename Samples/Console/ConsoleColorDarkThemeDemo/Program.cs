@@ -11,8 +11,10 @@ namespace ConsoleColorDarkThemeDemo
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
 			POCORunner runner = new(GeneratorFactory.GetConsoleColorGenerator, "AdventureWorks");
-			IGenerator generator = runner.Initialize(ApplySettings);
-			runner.Run(generator);
+			Action<ISettings> update = POCORunner.ApplyDefaults;
+			update += ApplySettings;
+			runner.Initialize(update);
+			runner.Run();
 		}
 
 		private static void ApplySettings(ISettings s)

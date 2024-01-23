@@ -2,13 +2,17 @@ using System.Text;
 
 namespace POCOGenerator.POCOWriters
 {
-	public interface IWriter
+	public interface ISnapshot
 	{
 		void StartSnapshot();
 		void SnapshotClear();
 		void SnapshotWrite(string text);
 		void SnapshotWriteLine(string text = null);
 		StringBuilder EndSnapshot();
+	}
+	public interface IWriter
+		: ISnapshot
+	{
 
 		void Clear();
 		void Write(string text);

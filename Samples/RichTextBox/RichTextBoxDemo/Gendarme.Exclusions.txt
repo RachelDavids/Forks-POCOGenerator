@@ -16,23 +16,15 @@
 #   M = Applies to fully qualified method.
 #   # = Comment line
 #
+
 # begin extra entries generated from defects
-# added on 21/01/2024 10:05:00 by DESKTOP-1O03T0G/rache
-
-R: Gendarme.Rules.BadPractice.PreferOnEventOverrideRule
-M: System.Void RichTextBoxDemo.DemoForm::DemoForm_Load(System.Object,System.EventArgs)
-
-R: Gendarme.Rules.Correctness.EnsureLocalDisposalRule
-M: System.Void RichTextBoxDemo.Program::Main()
-
-R: Gendarme.Rules.Exceptions.DoNotSwallowErrorsCatchingNonSpecificExceptionsRule
-M: System.Void RichTextBoxDemo.DemoForm::DemoForm_Load(System.Object,System.EventArgs)
+# added on 23/01/2024 08:41:10 by DESKTOP-1O03T0G/rache
 
 R: Gendarme.Rules.Naming.NamespaceShouldStartWithValidRootRule
 A: RichTextBoxDemo
 
 R: Gendarme.Rules.Performance.AvoidRepetitiveCallsToPropertiesRule
-M: System.Void RichTextBoxDemo.DemoForm::btnGenerate_Click(System.Object,System.EventArgs)
+M: System.Void RichTextBoxDemo.DemoForm::OnGenerateClick(System.Object,System.EventArgs)
 
 R: Gendarme.Rules.Performance.AvoidUnneededFieldInitializationRule
 M: System.Void RichTextBoxDemo.DemoForm::.ctor()

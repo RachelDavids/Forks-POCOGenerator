@@ -5,7 +5,6 @@
     <AssemblyTitle>TextWriterDemo</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TextWriterDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />

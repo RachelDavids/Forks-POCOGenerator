@@ -5,7 +5,6 @@
     <AssemblyTitle>DetailedServerTreeDemo</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>DetailedServerTreeDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />

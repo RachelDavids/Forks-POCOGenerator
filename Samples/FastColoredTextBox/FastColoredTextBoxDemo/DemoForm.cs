@@ -1,12 +1,13 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 using POCOGenerator;
-using POCOGenerator.Forms;
 using Samples.Support;
+using ISyntaxHighlight = POCOGenerator.ISyntaxHighlight;
 
-namespace RichTextBoxDemo
+namespace FastColoredTextBoxDemo
 {
 	public sealed partial class DemoForm
 		: Form
@@ -24,40 +25,55 @@ namespace RichTextBoxDemo
 			txtConnectionString.Text = POCORunner.FindLocalDb("AdventureWorks");
 		}
 
+		private readonly StringBuilder generatedCode = new();
 		private void OnGenerateClick(object sender, EventArgs e)
 		{
 			Clear();
 
-			IGenerator generator = GeneratorWinFormsFactory.GetGenerator(txtPocoEditor);
-			generator.Settings.Connection.ConnectionString = txtConnectionString.Text;
-			generator.Settings.DatabaseObjects.Tables.IncludeAll = true;
-			generator.Settings.POCO.CommentsWithoutNull = true;
-			generator.Settings.ClassName.IncludeSchema = true;
-			generator.Settings.ClassName.SchemaSeparator = "_";
-			generator.Settings.ClassName.IgnoreDboSchema = true;
-			generator.Settings.EFAnnotations.Enable = true;
-
-			if (rdbLightTheme.Checked)
-			{
-				generator.Settings.SyntaxHighlight.Reset();
-			}
-			else if (rdbDarkTheme.Checked)
-			{
-				generator.Settings.SyntaxHighlight.Text = Color.FromArgb(255, 255, 255);
-				generator.Settings.SyntaxHighlight.Keyword = Color.FromArgb(86, 156, 214);
-				generator.Settings.SyntaxHighlight.UserType = Color.FromArgb(78, 201, 176);
-				generator.Settings.SyntaxHighlight.String = Color.FromArgb(214, 157, 133);
-				generator.Settings.SyntaxHighlight.Comment = Color.FromArgb(96, 139, 78);
-				generator.Settings.SyntaxHighlight.Error = Color.FromArgb(255, 0, 0);
-				generator.Settings.SyntaxHighlight.Background = Color.FromArgb(0, 0, 0);
-			}
-
+			IGenerator generator = CreateGenerator();
 			Stopwatch sw = Stopwatch.StartNew();
 			GeneratorResults results = generator.Generate();
 			TimeSpan elapsed = sw.Elapsed;
 			Debug.WriteLine(elapsed);
-
+			sw.Restart();
+			txtPocoEditor.Text = generatedCode.ToString();
+			elapsed = sw.Elapsed;
+			Debug.WriteLine(elapsed);
 			AlertError(results);
+		}
+
+		private IGenerator CreateGenerator()
+		{
+			// Approx 30 seconds to AppendText directly to Control
+			// Approx 2 seconds to do so via StringBuilder with C# Syntax set on control.
+			// where almost all of this is the Write to the StringBuilder
+			//IGenerator generator = Factory.GetGenerator(txtPocoEditor);
+			IGenerator generator = GeneratorFactory.GetGenerator(generatedCode);
+			ISettings settings = generator.Settings;
+			settings.Connection.ConnectionString = txtConnectionString.Text;
+			settings.DatabaseObjects.Tables.IncludeAll = true;
+			settings.POCO.CommentsWithoutNull = true;
+			IClassName className = settings.ClassName;
+			className.IncludeSchema = true;
+			className.SchemaSeparator = "_";
+			className.IgnoreDboSchema = true;
+			settings.EFAnnotations.Enable = true;
+			ISyntaxHighlight highlight = settings.SyntaxHighlight;
+			if (rdbLightTheme.Checked)
+			{
+				highlight.Reset();
+			}
+			else if (rdbDarkTheme.Checked)
+			{
+				highlight.Text = Color.FromArgb(255, 255, 255);
+				highlight.Keyword = Color.FromArgb(86, 156, 214);
+				highlight.UserType = Color.FromArgb(78, 201, 176);
+				highlight.String = Color.FromArgb(214, 157, 133);
+				highlight.Comment = Color.FromArgb(96, 139, 78);
+				highlight.Error = Color.FromArgb(255, 0, 0);
+				highlight.Background = Color.FromArgb(0, 0, 0);
+			}
+			return generator;
 		}
 
 		private void AlertError(GeneratorResults results)

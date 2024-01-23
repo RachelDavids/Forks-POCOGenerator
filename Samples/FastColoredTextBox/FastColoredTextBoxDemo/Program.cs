@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace RichTextBoxDemo
+namespace FastColoredTextBoxDemo
 {
 	internal static class Program
 	{

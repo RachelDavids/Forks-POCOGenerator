@@ -162,7 +162,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level Forms", "Level Forms"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Sql", "Data\Sql\Data.Sql.csproj", "{B0540E18-DBD1-42A0-88A5-752CADBD554B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Support", "Samples\Support\Samples.Support.csproj", "{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Support", "Samples\Support\Samples.Support.csproj", "{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastColoredTextBoxDemo", "Samples\FastColoredTextBox\FastColoredTextBoxDemo\FastColoredTextBoxDemo.csproj", "{48744FA4-1A1B-4727-8230-C77B68C850D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FastColoredTextBox", "FastColoredTextBox", "{3AFA66BB-76DD-4603-B488-7D6AEFE3D997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -298,6 +302,10 @@ Global
 		{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48744FA4-1A1B-4727-8230-C77B68C850D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48744FA4-1A1B-4727-8230-C77B68C850D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48744FA4-1A1B-4727-8230-C77B68C850D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48744FA4-1A1B-4727-8230-C77B68C850D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -352,6 +360,8 @@ Global
 		{B65556C9-C68B-4345-A4CB-C4776B436145} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
 		{B6FD14E7-0CD6-4576-9D72-C51FE156828A} = {0A84C36A-831A-43F1-9E20-7E0AAC5AB4DD}
 		{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
+		{48744FA4-1A1B-4727-8230-C77B68C850D4} = {3AFA66BB-76DD-4603-B488-7D6AEFE3D997}
+		{3AFA66BB-76DD-4603-B488-7D6AEFE3D997} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B151279D-E4E7-4770-96DC-B5BBC39AA6B6}

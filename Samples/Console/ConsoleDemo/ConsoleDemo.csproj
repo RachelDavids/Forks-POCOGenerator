@@ -4,7 +4,6 @@
 		<OutputType>Exe</OutputType>
 		<AssemblyTitle>$(MSBuildProjectName)</AssemblyTitle>
 		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
-		<StartupObject>ConsoleDemo.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Data\Sql\Data.Sql.csproj" />

@@ -1,11 +1,20 @@
+using System;
 using System.Drawing;
-using Console = TrueColorConsole.VTConsole;
+using PavelTorgashov.Forms;
+using POCOGenerator.POCOWriters;
 
-namespace POCOGenerator.POCOWriters.Writers
+namespace FastColoredTextBoxDemo
 {
-	internal sealed class ConsoleColorPOCOWriter
+	internal sealed class FCTBPOCOWriter
 		: POCOWriter, IWriter, ISyntaxHighlight
 	{
+		private readonly FastColoredTextBox _richTextBox;
+
+		internal FCTBPOCOWriter(FastColoredTextBox richTextBox)
+		{
+			_richTextBox = richTextBox;
+		}
+
 		public Color Text { get; set; }
 		public Color Keyword { get; set; }
 		public Color UserType { get; set; }
@@ -16,86 +25,100 @@ namespace POCOGenerator.POCOWriters.Writers
 
 		public void Clear()
 		{
-			Console.SetColorBackground(Background);
-			Console.EraseInDisplay(TrueColorConsole.VTEraseMode.Entirely);
+			_richTextBox.BackColor = Background;
+			_richTextBox.Clear();
 			SnapshotClear();
+		}
+
+		private void AppendText(string text, Color _)
+		{
+			if (string.IsNullOrEmpty(text) == false)
+			{
+				_richTextBox.AppendText(text);
+			}
 		}
 
 		public void Write(string text)
 		{
-			Console.Write(text, Text);
+			AppendText(text, Text);
 			SnapshotWrite(text);
 		}
 
 		public void WriteKeyword(string text)
 		{
-			Console.Write(text, Keyword);
+			AppendText(text, Keyword);
 			SnapshotWrite(text);
 		}
 
 		public void WriteUserType(string text)
 		{
-			Console.Write(text, UserType);
+			AppendText(text, UserType);
 			SnapshotWrite(text);
 		}
 
 		public void WriteString(string text)
 		{
-			Console.Write(text, String);
+			AppendText(text, String);
 			SnapshotWrite(text);
 		}
 
 		public void WriteComment(string text)
 		{
-			Console.Write(text, Comment);
+			AppendText(text, Comment);
 			SnapshotWrite(text);
 		}
 
 		public void WriteError(string text)
 		{
-			Console.Write(text, Error);
+			AppendText(text, Error);
 			SnapshotWrite(text);
 		}
 
 		public void WriteLine()
 		{
-			Console.WriteLine();
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine();
 		}
 
 		public void WriteLine(string text)
 		{
-			Console.WriteLine(text, Text);
+			AppendText(text, Text);
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine(text);
 		}
 
 		public void WriteLineKeyword(string text)
 		{
-			Console.WriteLine(text, Keyword);
+			AppendText(text, Keyword);
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine(text);
 		}
 
 		public void WriteLineUserType(string text)
 		{
-			Console.WriteLine(text, UserType);
+			AppendText(text, UserType);
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine(text);
 		}
 
 		public void WriteLineString(string text)
 		{
-			Console.WriteLine(text, String);
+			AppendText(text, String);
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine(text);
 		}
 
 		public void WriteLineComment(string text)
 		{
-			Console.WriteLine(text, Comment);
+			AppendText(text, Comment);
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine(text);
 		}
 
 		public void WriteLineError(string text)
 		{
-			Console.WriteLine(text, Error);
+			AppendText(text, Error);
+			_richTextBox.AppendText(Environment.NewLine);
 			SnapshotWriteLine(text);
 		}
 	}

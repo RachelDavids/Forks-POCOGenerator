@@ -1,66 +1,34 @@
-﻿using System;
-using System.IO;
+using System;
 using POCOGenerator;
-using POCOGenerator.Objects;
+using Samples.Support;
 
 namespace SkipAndStopDemo
 {
-    class Program
-    {
-        static void Main()
-        {
-            IGenerator generator = GeneratorFactory.GetConsoleGenerator();
-            try { generator.Settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt"); } catch { }
-            if (string.IsNullOrEmpty(generator.Settings.Connection.ConnectionString))
-                generator.Settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
+	internal static class Program
+	{
+		private static void Main()
+		{
+			POCORunner runner = new(() => GeneratorFactory.GetGenerator(Console.Out), "AdventureWorks");
+			IGenerator generator = runner.Initialize(ApplySettings);
+			runner.Run();
+			// skip any table that is not under Sales schema
+			generator.TableGenerating += (_, e) => e.Skip = e.Table.Schema != "Sales";
 
-            generator.Settings.ClassName.IncludeSchema = true;
-            generator.Settings.ClassName.SchemaSeparator = "_";
+			// stop the generator
+			// views, procedures, functions and TVPs will not be generated
+			generator.TablesGenerated += (_, e) => e.Stop = true;
 
-            // select everything
-            generator.Settings.DatabaseObjects.IncludeAll = true;
+			runner.Run();
+		}
 
-            generator.TableGenerating += (object sender, TableGeneratingEventArgs e) =>
-            {
-                Table table = e.Table;
+		private static void ApplySettings(ISettings settings)
+		{
+			IClassName className = settings.ClassName;
+			className.IncludeSchema = true;
+			className.SchemaSeparator = "_";
 
-                // skip any table that is not under Sales schema
-                if (table.Schema != "Sales")
-                    e.Skip = true;
-            };
-
-            generator.TablesGenerated += (object sender, TablesGeneratedEventArgs e) =>
-            {
-                // stop the generator
-                // views, procedures, functions and TVPs will not be generated
-                e.Stop = true;
-            };
-
-            GeneratorResults results = generator.Generate();
-
-            PrintError(results, generator.Error);
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue . . .");
-            Console.ReadKey(true);
-        }
-
-        private static void PrintError(GeneratorResults results, Exception Error)
-        {
-            bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
-
-            if (isError)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Error Result: {0}", results);
-            }
-
-            if (Error != null)
-            {
-                Console.WriteLine("Error: {0}", Error.Message);
-                Console.WriteLine("Error Stack Trace:");
-                Console.WriteLine(Error.StackTrace);
-            }
-        }
-    }
+			// select everything
+			settings.DatabaseObjects.IncludeAll = true;
+		}
+	}
 }

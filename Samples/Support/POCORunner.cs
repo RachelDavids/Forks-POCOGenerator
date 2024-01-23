@@ -10,6 +10,8 @@ namespace Samples.Support
 	{
 		private readonly Func<IGenerator> _generatorFactory;
 		private readonly string _targetDbName;
+		public IGenerator Generator { get; private set; }
+		public ISettings GeneratorSettings => Generator.Settings;
 
 		public POCORunner(Func<IGenerator> factory, string targetDbName)
 		{
@@ -17,23 +19,31 @@ namespace Samples.Support
 			_targetDbName = targetDbName;
 		}
 
-		public IGenerator Initialize(Action<ISettings> settingsUpdate = null)
+		public IGenerator Initialize() => Initialize(ApplyDefaults);
+		public IGenerator Initialize(Action<ISettings> settingsUpdate)
 		{
+			ArgumentNullException.ThrowIfNull(settingsUpdate);
 			IGenerator generator = _generatorFactory();
 			ISettings settings = generator.Settings;
 			IConnection connection = settings.Connection;
 			connection.ConnectionString = FindLocalDb(_targetDbName);
+			settingsUpdate.Invoke(settings);
+			Generator = generator;
+			return generator;
+		}
+
+		public static void ApplyDefaults(ISettings settings)
+		{
+			ArgumentNullException.ThrowIfNull(settings);
 			settings.DatabaseObjects.Tables.IncludeAll = true;
 			settings.POCO.CommentsWithoutNull = true;
 			IClassName className = settings.ClassName;
 			className.IncludeSchema = true;
 			className.SchemaSeparator = "_";
 			className.IgnoreDboSchema = true;
-			settingsUpdate?.Invoke(settings);
-			return generator;
 		}
 
-		private static void PrintError(GeneratorResults results, Exception error)
+		public static void PrintError(GeneratorResults results, Exception error)
 		{
 			bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
 			bool isWarning = (results & GeneratorResults.Warning) == GeneratorResults.Warning;
@@ -57,7 +67,7 @@ namespace Samples.Support
 				Console.WriteLine(error.StackTrace);
 			}
 		}
-		private static string FindLocalDb(string name)
+		public static string FindLocalDb(string name)
 		{
 			StringBuilder sb = new();
 			List<string> srv = InstanceLocator.GetLocalServerQualifiedInstanceNames();
@@ -70,10 +80,22 @@ namespace Samples.Support
 			return sb.ToString();
 		}
 
-		public void Run(IGenerator generator)
+		/// <summary>Connects to the RDBMS server and generates POCO classes from
+		/// selected database objects.</summary>
+		public void Run()
 		{
-			GeneratorResults results = generator.Generate();
-			PrintError(results, generator.Error);
+			GeneratorResults results = Generator.Generate();
+			PrintError(results, Generator.Error);
+		}
+
+		/// <summary>Generates POCO classes from previously built class objects
+		/// without connecting to the RDBMS server again.
+		/// <para>Falls back to <see cref="IGenerator.Generate"/> if no class
+		/// objects were built previously.</para></summary>
+		public void RunPOCOs()
+		{
+			GeneratorResults results = Generator.GeneratePOCOs();
+			PrintError(results, Generator.Error);
 		}
 	}
 }

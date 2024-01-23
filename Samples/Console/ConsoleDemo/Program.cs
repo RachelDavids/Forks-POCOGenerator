@@ -8,8 +8,8 @@ namespace ConsoleDemo
 		private static void Main()
 		{
 			POCORunner runner = new(GeneratorFactory.GetConsoleGenerator, "AdventureWorks");
-			IGenerator generator = runner.Initialize();
-			runner.Run(generator);
+			runner.Initialize();
+			runner.Run();
 			// don't need to prompt since VS does it automatically
 			// and causes issues if you wish to redirect
 		}

@@ -4,16 +4,17 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-  <PropertyGroup>
-  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="ConnectionString.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\POCOGenerator.Forms\POCOGenerator.Forms.csproj" />
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
     <ProjectReference Include="..\..\Support\Samples.Support.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ConnectionString.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="PavelTorgashov.Forms.FastColoredTextBox" Version="23.10.23" />
   </ItemGroup>
 </Project>

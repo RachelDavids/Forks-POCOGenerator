@@ -3,6 +3,7 @@ using System.Text;
 namespace POCOGenerator.POCOWriters
 {
 	public abstract class POCOWriter
+		: ISnapshot
 	{
 		private StringBuilder snapshot;
 

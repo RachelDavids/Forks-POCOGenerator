@@ -1,4 +1,6 @@
-namespace RichTextBoxDemo
+using PavelTorgashov.Forms;
+
+namespace FastColoredTextBoxDemo
 {
 	sealed partial class DemoForm
     {
@@ -28,7 +30,7 @@ namespace RichTextBoxDemo
 		/// </summary>
 		private void InitializeComponent()
 		{
-			txtPocoEditor = new System.Windows.Forms.RichTextBox();
+			txtPocoEditor = new PavelTorgashov.Forms.FastColoredTextBox();
 			btnGenerate = new System.Windows.Forms.Button();
 			btnClose = new System.Windows.Forms.Button();
 			btnClear = new System.Windows.Forms.Button();
@@ -45,7 +47,8 @@ namespace RichTextBoxDemo
 			txtPocoEditor.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			txtPocoEditor.BackColor = System.Drawing.Color.White;
 			txtPocoEditor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			txtPocoEditor.DetectUrls = false;
+			txtPocoEditor.Language = Language.CSharp;
+			//txtPocoEditor.DetectUrls = false;
 			txtPocoEditor.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
 			txtPocoEditor.Location = new System.Drawing.Point(0, 0);
 			txtPocoEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -176,7 +179,7 @@ namespace RichTextBoxDemo
 			Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			Name = "DemoForm";
 			StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			Text = "RichTextBox Demo";
+			Text = "FastColoredTextBox Demo";
 			flowLayoutPanel1.ResumeLayout(false);
 			flowLayoutPanel1.PerformLayout();
 			ResumeLayout(false);
@@ -185,7 +188,7 @@ namespace RichTextBoxDemo
 
 		#endregion
 
-		private System.Windows.Forms.RichTextBox txtPocoEditor;
+		private PavelTorgashov.Forms.FastColoredTextBox txtPocoEditor;
         private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnClear;

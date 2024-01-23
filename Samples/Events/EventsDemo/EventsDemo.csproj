@@ -5,7 +5,6 @@
     <AssemblyTitle>EventsDemo</AssemblyTitle>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EventsDemo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
