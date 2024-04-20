@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IDbHelper
+	public interface IDbHelper
     {
         IDbSupport Support { get; }
 

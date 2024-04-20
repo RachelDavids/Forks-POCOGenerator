@@ -5,15 +5,15 @@ namespace POCOGenerator.Objects
 	/// <summary>Represents a way to navigate a relationship, defined by a foreign key, between tables.</summary>
 	public sealed class NavigationProperty
 	{
-		private readonly POCOGenerator.DbObjects.INavigationProperty navigationProperty;
+		private readonly DbObjects.INavigationProperty navigationProperty;
 
-		internal NavigationProperty(POCOGenerator.DbObjects.INavigationProperty navigationProperty, Table fromTable)
+		internal NavigationProperty(DbObjects.INavigationProperty navigationProperty, Table fromTable)
 		{
 			this.navigationProperty = navigationProperty;
 			FromTable = fromTable;
 		}
 
-		internal bool InternalEquals(POCOGenerator.DbObjects.INavigationProperty navigationProperty) => this.navigationProperty == navigationProperty;
+		internal bool InternalEquals(DbObjects.INavigationProperty navigationProperty) => this.navigationProperty == navigationProperty;
 
 		/// <summary>Gets the table that this navigation property is referencing from.</summary>
 		/// <value>The table that this navigation property is referencing from.</value>
@@ -56,7 +56,7 @@ namespace POCOGenerator.Objects
 			{
 				if (toTable == null)
 				{
-					POCOGenerator.DbObjects.ITable table =
+					DbObjects.ITable table =
 						navigationProperty.IsFromForeignToPrimary ?
 						navigationProperty.ForeignKey.PrimaryTable :
 						navigationProperty.ForeignKey.ForeignTable

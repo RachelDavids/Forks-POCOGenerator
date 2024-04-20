@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.DbObjects;
+﻿using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    internal sealed class PrimaryKeyColumn : IPrimaryKeyColumn
+	internal sealed class PrimaryKeyColumn : IPrimaryKeyColumn
     {
         public IPrimaryKey PrimaryKey { get; set; }
         public ITableColumn TableColumn { get; set; }

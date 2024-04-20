@@ -11,25 +11,14 @@ using POCOGenerator.Utils;
 
 namespace POCOGenerator.POCOIterators
 {
-	public abstract class DbIterator
+	public abstract class DbIterator(IWriter writer,
+									 IDbSupport support,
+									 IDbIteratorSettings settings)
 		: IDbIterator
 	{
-		#region Constructor
-
-		protected IWriter writer;
-		protected IDbSupport support;
-		protected IDbIteratorSettings settings;
-
-		public DbIterator(IWriter writer, IDbSupport support, IDbIteratorSettings settings)
-		{
-			this.writer = writer;
-			this.support = support;
-			this.settings = settings;
-		}
-
-		#endregion
-
-		#region Events
+		protected IWriter Writer { get; } = writer;
+		protected IDbSupport Support { get; } = support;
+		protected IDbIteratorSettings Settings { get; } = settings;
 
 		// in order of execution
 		public event EventHandler<ServerGeneratingAsyncEventArgs> ServerGeneratingAsync;
@@ -101,15 +90,11 @@ namespace POCOGenerator.POCOIterators
 		public event EventHandler<ServerGeneratedAsyncEventArgs> ServerGeneratedAsync;
 		public event EventHandler<ServerGeneratedEventArgs> ServerGenerated;
 
-		#endregion
-
-		#region Iterate
-
 		public void Iterate(IEnumerable<IDbObjectTraverse> dbObjects)
 		{
 			Clear();
 
-			if (dbObjects == null || dbObjects.Any() == false)
+			if (dbObjects == null || !dbObjects.Any())
 			{
 				return;
 			}
@@ -174,7 +159,7 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsDatabaseGenerating == null || argsDatabaseGenerating.Skip == false)
+				if (argsDatabaseGenerating == null || !argsDatabaseGenerating.Skip)
 				{
 					if (IterateTables(database, dbObjects, namespaceOffset, ref isFirstDbObject, isExistDbObject))
 					{
@@ -229,20 +214,20 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsTablesGenerating == null || argsTablesGenerating.Skip == false)
+				if (argsTablesGenerating == null || !argsTablesGenerating.Skip)
 				{
 					List<IComplexTypeTable> complexTypeTables = null;
 
 					foreach (IDbObjectTraverse table in tables)
 					{
 						// don't write join table
-						if (((ITable)table).IsJoinTable && settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable == false)
+						if (((ITable)table).IsJoinTable && !Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable)
 						{
 							continue;
 						}
 
 						// collect complex type tables
-						if (settings.POCOIteratorSettings.ComplexTypes && ((ITable)table).ComplexTypeTables.HasAny())
+						if (Settings.POCOIteratorSettings.ComplexTypes && ((ITable)table).ComplexTypeTables.HasAny())
 						{
 							if (complexTypeTables == null)
 							{
@@ -252,7 +237,7 @@ namespace POCOGenerator.POCOIterators
 							{
 								foreach (IComplexTypeTable ctt in ((ITable)table).ComplexTypeTables)
 								{
-									if (complexTypeTables.Contains(ctt) == false)
+									if (!complexTypeTables.Contains(ctt))
 									{
 										complexTypeTables.Add(ctt);
 									}
@@ -300,7 +285,7 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsComplexTypeTablesGenerating == null || argsComplexTypeTablesGenerating.Skip == false)
+				if (argsComplexTypeTablesGenerating == null || !argsComplexTypeTablesGenerating.Skip)
 				{
 					foreach (IComplexTypeTable complexTypeTable in complexTypeTables)
 					{
@@ -340,7 +325,7 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsViewsGenerating == null || argsViewsGenerating.Skip == false)
+				if (argsViewsGenerating == null || !argsViewsGenerating.Skip)
 				{
 					foreach (IDbObjectTraverse view in views)
 					{
@@ -380,7 +365,7 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsProceduresGenerating == null || argsProceduresGenerating.Skip == false)
+				if (argsProceduresGenerating == null || !argsProceduresGenerating.Skip)
 				{
 					foreach (IDbObjectTraverse procedure in procedures)
 					{
@@ -420,7 +405,7 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsFunctionsGenerating == null || argsFunctionsGenerating.Skip == false)
+				if (argsFunctionsGenerating == null || !argsFunctionsGenerating.Skip)
 				{
 					foreach (IDbObjectTraverse function in functions)
 					{
@@ -460,7 +445,7 @@ namespace POCOGenerator.POCOIterators
 					return true;
 				}
 
-				if (argsTVPsGenerating == null || argsTVPsGenerating.Skip == false)
+				if (argsTVPsGenerating == null || !argsTVPsGenerating.Skip)
 				{
 					foreach (IDbObjectTraverse tvp in tvps)
 					{
@@ -488,23 +473,23 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual string ItereatorStart(bool isExistDbObject, IEnumerable<IDbObjectTraverse> dbObjects)
 		{
-			string namespaceOffset = string.Empty;
+			string namespaceOffset = String.Empty;
 
 			if (isExistDbObject)
 			{
-				if (settings.POCOIteratorSettings.WrapAroundEachClass == false)
+				if (!Settings.POCOIteratorSettings.WrapAroundEachClass)
 				{
 					// Using
-					if (settings.POCOIteratorSettings.UsingInsideNamespace == false)
+					if (!Settings.POCOIteratorSettings.UsingInsideNamespace)
 					{
 						WriteUsing(dbObjects, namespaceOffset);
 					}
 
 					// Namespace Start
-					namespaceOffset = WriteNamespaceStart(settings.POCOIteratorSettings.Namespace);
+					namespaceOffset = WriteNamespaceStart(Settings.POCOIteratorSettings.Namespace);
 
 					// Using
-					if (settings.POCOIteratorSettings.UsingInsideNamespace)
+					if (Settings.POCOIteratorSettings.UsingInsideNamespace)
 					{
 						WriteUsing(dbObjects, namespaceOffset);
 					}
@@ -518,10 +503,10 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (isExistDbObject)
 			{
-				if (settings.POCOIteratorSettings.WrapAroundEachClass == false)
+				if (!Settings.POCOIteratorSettings.WrapAroundEachClass)
 				{
 					// Namespace End
-					WriteNamespaceEnd(settings.POCOIteratorSettings.Namespace);
+					WriteNamespaceEnd(Settings.POCOIteratorSettings.Namespace);
 				}
 			}
 		}
@@ -543,7 +528,7 @@ namespace POCOGenerator.POCOIterators
 			);
 			dbObject.ClassName = className;
 
-			string @namespace = settings.POCOIteratorSettings.Namespace;
+			string @namespace = Settings.POCOIteratorSettings.Namespace;
 			bool skip = false;
 			bool stop = RaiseGeneratingEvent(dbObject, ref @namespace, ref skip);
 			if (stop)
@@ -556,9 +541,9 @@ namespace POCOGenerator.POCOIterators
 				return false;
 			}
 
-			if (isFirstDbObject == false)
+			if (!isFirstDbObject)
 			{
-				writer.WriteLine();
+				Writer.WriteLine();
 			}
 
 			isFirstDbObject = false;
@@ -585,10 +570,10 @@ namespace POCOGenerator.POCOIterators
 			// Navigation Properties
 			List<INavigationProperty> navigationProperties = GetNavigationProperties(dbObject);
 
-			if (settings.POCOIteratorSettings.WrapAroundEachClass)
+			if (Settings.POCOIteratorSettings.WrapAroundEachClass)
 			{
 				// Using
-				if (settings.POCOIteratorSettings.UsingInsideNamespace == false)
+				if (!Settings.POCOIteratorSettings.UsingInsideNamespace)
 				{
 					WriteUsing(dbObject, namespaceOffset);
 				}
@@ -597,7 +582,7 @@ namespace POCOGenerator.POCOIterators
 				namespaceOffset = WriteNamespaceStart(@namespace);
 
 				// Using
-				if (settings.POCOIteratorSettings.UsingInsideNamespace)
+				if (Settings.POCOIteratorSettings.UsingInsideNamespace)
 				{
 					WriteUsing(dbObject, namespaceOffset);
 				}
@@ -617,7 +602,7 @@ namespace POCOGenerator.POCOIterators
 			{
 				IOrderedEnumerable<IColumn> columns = dbObject.Columns.OrderBy(c => c.ColumnOrdinal ?? 0);
 
-				if (settings.POCOIteratorSettings.ComplexTypes &&
+				if (Settings.POCOIteratorSettings.ComplexTypes &&
 					dbObject.DbObjectType == DbObjectType.Table &&
 					((ITable)dbObject).ComplexTypeTables.HasAny())
 				{
@@ -627,12 +612,11 @@ namespace POCOGenerator.POCOIterators
 					// print just the first one, from each group, and ignore the rest of them
 					IEnumerable<ITableColumn> toIgnore = table.TableColumns
 						.Where(c => c.ComplexTypeTableColumn != null)
-						.GroupBy(c => new
-						{
+						.GroupBy(c => (
 							c.ComplexTypeTableColumn.ComplexTypeTable,
-							PropertyName = c.ColumnName[..c.ColumnName.IndexOf('_')]
-						})
-						.SelectMany(g => g.Except(new ITableColumn[] { g.First() }));
+							PropertyName: c.ColumnName[..c.ColumnName.IndexOf('_')]
+						))
+						.SelectMany(g => g.Except([g.First()]));
 
 					ITableColumn[] tableColumns = table.TableColumns.Except(toIgnore).ToArray();
 
@@ -654,7 +638,7 @@ namespace POCOGenerator.POCOIterators
 			}
 
 			// Enums
-			if (settings.POCOIteratorSettings.EnumSQLTypeToString == false && (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
+			if (!Settings.POCOIteratorSettings.EnumSQLTypeToString && (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
 			{
 				if (enumColumns.HasAny())
 				{
@@ -672,7 +656,7 @@ namespace POCOGenerator.POCOIterators
 			// Class End
 			WriteClassEnd(dbObject, namespaceOffset);
 
-			if (settings.POCOIteratorSettings.WrapAroundEachClass)
+			if (Settings.POCOIteratorSettings.WrapAroundEachClass)
 			{
 				// Namespace End
 				WriteNamespaceEnd(@namespace);
@@ -707,7 +691,7 @@ namespace POCOGenerator.POCOIterators
 
 			if (TablePOCO != null || TablePOCOAsync != null)
 			{
-				writer.StartSnapshot();
+				Writer.StartSnapshot();
 			}
 
 			return false;
@@ -739,7 +723,7 @@ namespace POCOGenerator.POCOIterators
 
 			if (ComplexTypeTablePOCO != null || ComplexTypeTablePOCOAsync != null)
 			{
-				writer.StartSnapshot();
+				Writer.StartSnapshot();
 			}
 
 			return false;
@@ -771,7 +755,7 @@ namespace POCOGenerator.POCOIterators
 
 			if (ViewPOCO != null || ViewPOCOAsync != null)
 			{
-				writer.StartSnapshot();
+				Writer.StartSnapshot();
 			}
 
 			return false;
@@ -803,7 +787,7 @@ namespace POCOGenerator.POCOIterators
 
 			if (ProcedurePOCO != null || ProcedurePOCOAsync != null)
 			{
-				writer.StartSnapshot();
+				Writer.StartSnapshot();
 			}
 
 			return false;
@@ -835,7 +819,7 @@ namespace POCOGenerator.POCOIterators
 
 			if (FunctionPOCO != null || FunctionPOCOAsync != null)
 			{
-				writer.StartSnapshot();
+				Writer.StartSnapshot();
 			}
 
 			return false;
@@ -867,7 +851,7 @@ namespace POCOGenerator.POCOIterators
 
 			if (TVPPOCO != null || TVPPOCOAsync != null)
 			{
-				writer.StartSnapshot();
+				Writer.StartSnapshot();
 			}
 
 			return false;
@@ -879,7 +863,7 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (TablePOCO != null || TablePOCOAsync != null)
 			{
-				string poco = writer.EndSnapshot().ToString().Trim();
+				string poco = Writer.EndSnapshot().ToString().Trim();
 
 				TablePOCOAsync.RaiseAsync(this, () => new TablePOCOAsyncEventArgs((ITable)dbObject, poco));
 
@@ -900,7 +884,7 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (ComplexTypeTablePOCO != null || ComplexTypeTablePOCOAsync != null)
 			{
-				string poco = writer.EndSnapshot().ToString().Trim();
+				string poco = Writer.EndSnapshot().ToString().Trim();
 
 				ComplexTypeTablePOCOAsync.RaiseAsync(this, () => new ComplexTypeTablePOCOAsyncEventArgs((IComplexTypeTable)dbObject, poco));
 
@@ -921,7 +905,7 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (ViewPOCO != null || ViewPOCOAsync != null)
 			{
-				string poco = writer.EndSnapshot().ToString().Trim();
+				string poco = Writer.EndSnapshot().ToString().Trim();
 
 				ViewPOCOAsync.RaiseAsync(this, () => new ViewPOCOAsyncEventArgs((IView)dbObject, poco));
 
@@ -942,7 +926,7 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (ProcedurePOCO != null || ProcedurePOCOAsync != null)
 			{
-				string poco = writer.EndSnapshot().ToString().Trim();
+				string poco = Writer.EndSnapshot().ToString().Trim();
 
 				ProcedurePOCOAsync.RaiseAsync(this, () => new ProcedurePOCOAsyncEventArgs((IProcedure)dbObject, poco));
 
@@ -963,7 +947,7 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (FunctionPOCO != null || FunctionPOCOAsync != null)
 			{
-				string poco = writer.EndSnapshot().ToString().Trim();
+				string poco = Writer.EndSnapshot().ToString().Trim();
 
 				FunctionPOCOAsync.RaiseAsync(this, () => new FunctionPOCOAsyncEventArgs((IFunction)dbObject, poco));
 
@@ -984,7 +968,7 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (TVPPOCO != null || TVPPOCOAsync != null)
 			{
-				string poco = writer.EndSnapshot().ToString().Trim();
+				string poco = Writer.EndSnapshot().ToString().Trim();
 
 				TVPPOCOAsync.RaiseAsync(this, () => new TVPPOCOAsyncEventArgs((ITVP)dbObject, poco));
 
@@ -1001,45 +985,33 @@ namespace POCOGenerator.POCOIterators
 			return argsTVP != null && argsTVP.Stop;
 		}
 
-		#endregion
+		protected virtual void Clear() => Writer.Clear();
 
-		#region Clear
-
-		protected virtual void Clear() => writer.Clear();
-
-		#endregion
-
-		#region Schema
-
-		protected virtual string DefaultSchema => support.DefaultSchema;
-
-		#endregion
-
-		#region Using
+		protected virtual string DefaultSchema => Support.DefaultSchema;
 
 		protected virtual void WriteUsing(IDbObjectTraverse dbObject, string namespaceOffset) => WriteUsing(new IDbObjectTraverse[] { dbObject }, namespaceOffset);
 
 		protected virtual void WriteUsing(IEnumerable<IDbObjectTraverse> dbObjects, string namespaceOffset)
 		{
-			if (settings.POCOIteratorSettings.Using)
+			if (Settings.POCOIteratorSettings.Using)
 			{
 				WriteUsingClause(dbObjects, namespaceOffset);
 				WriteEFUsingClause(dbObjects, namespaceOffset);
-				writer.WriteLine();
+				Writer.WriteLine();
 			}
 		}
 
 		protected virtual void WriteUsingClause(IEnumerable<IDbObjectTraverse> dbObjects, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.WriteKeyword("using");
-			writer.WriteLine(" System;");
+			Writer.Write(namespaceOffset);
+			Writer.WriteKeyword("using");
+			Writer.WriteLine(" System;");
 
-			if (settings.NavigationPropertiesIteratorSettings.Enable)
+			if (Settings.NavigationPropertiesIteratorSettings.Enable)
 			{
-				writer.Write(namespaceOffset);
-				writer.WriteKeyword("using");
-				writer.WriteLine(" System.Collections.Generic;");
+				Writer.Write(namespaceOffset);
+				Writer.WriteKeyword("using");
+				Writer.WriteLine(" System.Collections.Generic;");
 			}
 
 			if (HasSpecialSQLTypes(dbObjects))
@@ -1058,7 +1030,7 @@ namespace POCOGenerator.POCOIterators
 					{
 						foreach (IColumn column in dbObject.Columns)
 						{
-							string dataTypeName = (column.DataTypeName ?? string.Empty).ToLower();
+							string dataTypeName = (column.DataTypeName ?? String.Empty).ToLower();
 							if (IsSQLTypeRDBMSSpecificType(dataTypeName))
 							{
 								return true;
@@ -1073,49 +1045,41 @@ namespace POCOGenerator.POCOIterators
 
 		protected abstract void WriteSpecialSQLTypesUsingClause(string namespaceOffset);
 
-		#region EF
-
 		protected virtual void WriteEFUsingClause(IEnumerable<IDbObjectTraverse> dbObjects, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Enable)
+			if (Settings.EFAnnotationsIteratorSettings.Enable)
 			{
 				if (dbObjects.HasAny())
 				{
 					if (dbObjects.Any(o => o.DbObjectType == DbObjectType.Table))
 					{
-						if (settings.EFAnnotationsIteratorSettings.Description)
+						if (Settings.EFAnnotationsIteratorSettings.Description)
 						{
-							writer.Write(namespaceOffset);
-							writer.WriteKeyword("using");
-							writer.WriteLine(" System.ComponentModel;");
+							Writer.Write(namespaceOffset);
+							Writer.WriteKeyword("using");
+							Writer.WriteLine(" System.ComponentModel;");
 						}
 
-						writer.Write(namespaceOffset);
-						writer.WriteKeyword("using");
-						writer.WriteLine(" System.ComponentModel.DataAnnotations;");
+						Writer.Write(namespaceOffset);
+						Writer.WriteKeyword("using");
+						Writer.WriteLine(" System.ComponentModel.DataAnnotations;");
 
-						writer.Write(namespaceOffset);
-						writer.WriteKeyword("using");
-						writer.WriteLine(" System.ComponentModel.DataAnnotations.Schema;");
+						Writer.Write(namespaceOffset);
+						Writer.WriteKeyword("using");
+						Writer.WriteLine(" System.ComponentModel.DataAnnotations.Schema;");
 					}
 				}
 			}
 		}
 
-		#endregion
-
-		#endregion
-
-		#region Namespace Start
-
 		protected virtual string WriteNamespaceStart(string @namespace)
 		{
-			string namespaceOffset = string.Empty;
+			string namespaceOffset = String.Empty;
 
-			if (string.IsNullOrEmpty(@namespace) == false)
+			if (!String.IsNullOrEmpty(@namespace))
 			{
 				WriteNamespaceStartClause(@namespace);
-				namespaceOffset = settings.POCOIteratorSettings.Tab;
+				namespaceOffset = Settings.POCOIteratorSettings.Tab;
 			}
 
 			return namespaceOffset;
@@ -1123,47 +1087,37 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteNamespaceStartClause(string @namespace)
 		{
-			writer.WriteKeyword("namespace");
-			writer.Write(" ");
-			writer.WriteLine(@namespace);
-			writer.WriteLine("{");
+			Writer.WriteKeyword("namespace");
+			Writer.Write(" ");
+			Writer.WriteLine(@namespace);
+			Writer.WriteLine("{");
 		}
-
-		#endregion
-
-		#region Error
 
 		protected virtual void WriteError(IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.WriteLineError("/*");
+			Writer.Write(namespaceOffset);
+			Writer.WriteLineError("/*");
 
-			writer.Write(namespaceOffset);
-			writer.WriteLineError(string.Format("{0}.{1}", dbObject.Database.ToString(), dbObject.ToString()));
+			Writer.Write(namespaceOffset);
+			Writer.WriteLineError(String.Format("{0}.{1}", dbObject.Database.ToString(), dbObject.ToString()));
 
 			Exception currentError = dbObject.Error;
 			while (currentError != null)
 			{
-				writer.Write(namespaceOffset);
-				writer.WriteLineError(currentError.Message);
+				Writer.Write(namespaceOffset);
+				Writer.WriteLineError(currentError.Message);
 				currentError = currentError.InnerException;
 			}
 
-			writer.Write(namespaceOffset);
-			writer.WriteLineError("*/");
+			Writer.Write(namespaceOffset);
+			Writer.WriteLineError("*/");
 		}
-
-		#endregion
-
-		#region Class Attributes
 
 		protected virtual void WriteClassAttributes(IDbObjectTraverse dbObject, string namespaceOffset) => WriteEFClassAttributes(dbObject, namespaceOffset);
 
-		#region EF
-
 		protected virtual void WriteEFClassAttributes(IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Enable)
+			if (Settings.EFAnnotationsIteratorSettings.Enable)
 			{
 				if (dbObject.DbObjectType == DbObjectType.Table)
 				{
@@ -1171,15 +1125,15 @@ namespace POCOGenerator.POCOIterators
 				}
 				else if (dbObject.DbObjectType == DbObjectType.ComplexTypeTable)
 				{
-					if (settings.EFAnnotationsIteratorSettings.ComplexType)
+					if (Settings.EFAnnotationsIteratorSettings.ComplexType)
 					{
 						WriteEFComplexType(dbObject, namespaceOffset);
 					}
 				}
 
-				if (settings.EFAnnotationsIteratorSettings.Description && dbObject is IDescription descObject)
+				if (Settings.EFAnnotationsIteratorSettings.Description && dbObject is IDescription descObject)
 				{
-					if (string.IsNullOrEmpty(descObject.Description) == false)
+					if (!String.IsNullOrEmpty(descObject.Description))
 					{
 						WriteEFDescription(descObject.Description, false, namespaceOffset);
 					}
@@ -1189,67 +1143,61 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFTable(IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write("[");
-			writer.WriteUserType("Table");
-			writer.Write("(");
-			writer.WriteString("\"");
+			Writer.Write(namespaceOffset);
+			Writer.Write("[");
+			Writer.WriteUserType("Table");
+			Writer.Write("(");
+			Writer.WriteString("\"");
 
 			if (dbObject is ISchema schema)
 			{
-				if (string.IsNullOrEmpty(schema.Schema) == false)
+				if (!String.IsNullOrEmpty(schema.Schema))
 				{
 					if (schema.Schema != DefaultSchema)
 					{
-						writer.WriteString(schema.Schema);
-						writer.WriteString(".");
+						Writer.WriteString(schema.Schema);
+						Writer.WriteString(".");
 					}
 				}
 			}
 
-			writer.WriteString(dbObject.Name);
-			writer.WriteString("\"");
-			writer.WriteLine(")]");
+			Writer.WriteString(dbObject.Name);
+			Writer.WriteString("\"");
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteEFComplexType(IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write("[");
-			writer.WriteUserType("ComplexType");
-			writer.WriteLine("]");
+			Writer.Write(namespaceOffset);
+			Writer.Write("[");
+			Writer.WriteUserType("ComplexType");
+			Writer.WriteLine("]");
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Class Name
 
 		protected virtual string GetClassName(string database, string schema, string name, DbObjectType dbObjectType)
 		{
 			string className = null;
 
 			// prefix
-			if (string.IsNullOrEmpty(settings.ClassNameIteratorSettings.Prefix) == false)
+			if (!String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.Prefix))
 			{
-				className += settings.ClassNameIteratorSettings.Prefix;
+				className += Settings.ClassNameIteratorSettings.Prefix;
 			}
 
-			if (string.IsNullOrEmpty(settings.ClassNameIteratorSettings.FixedClassName))
+			if (String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.FixedClassName))
 			{
-				if (settings.ClassNameIteratorSettings.IncludeDB)
+				if (Settings.ClassNameIteratorSettings.IncludeDB)
 				{
 					// database
-					if (settings.ClassNameIteratorSettings.CamelCase || string.IsNullOrEmpty(settings.ClassNameIteratorSettings.WordsSeparator) == false)
+					if (Settings.ClassNameIteratorSettings.CamelCase || !String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.WordsSeparator))
 					{
-						className += NameHelper.TransformName(database, settings.ClassNameIteratorSettings.WordsSeparator, settings.ClassNameIteratorSettings.CamelCase, settings.ClassNameIteratorSettings.UpperCase, settings.ClassNameIteratorSettings.LowerCase);
+						className += NameHelper.TransformName(database, Settings.ClassNameIteratorSettings.WordsSeparator, Settings.ClassNameIteratorSettings.CamelCase, Settings.ClassNameIteratorSettings.UpperCase, Settings.ClassNameIteratorSettings.LowerCase);
 					}
-					else if (settings.ClassNameIteratorSettings.UpperCase)
+					else if (Settings.ClassNameIteratorSettings.UpperCase)
 					{
 						className += database.ToUpper();
 					}
-					else if (settings.ClassNameIteratorSettings.LowerCase)
+					else if (Settings.ClassNameIteratorSettings.LowerCase)
 					{
 						className += database.ToLower();
 					}
@@ -1259,28 +1207,28 @@ namespace POCOGenerator.POCOIterators
 					}
 
 					// db separator
-					if (string.IsNullOrEmpty(settings.ClassNameIteratorSettings.DBSeparator) == false)
+					if (!String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.DBSeparator))
 					{
-						className += settings.ClassNameIteratorSettings.DBSeparator;
+						className += Settings.ClassNameIteratorSettings.DBSeparator;
 					}
 				}
 
-				if (settings.ClassNameIteratorSettings.IncludeSchema)
+				if (Settings.ClassNameIteratorSettings.IncludeSchema)
 				{
-					if (string.IsNullOrEmpty(schema) == false)
+					if (!String.IsNullOrEmpty(schema))
 					{
-						if (settings.ClassNameIteratorSettings.IgnoreDboSchema == false || schema != DefaultSchema)
+						if (!Settings.ClassNameIteratorSettings.IgnoreDboSchema || schema != DefaultSchema)
 						{
 							// schema
-							if (settings.ClassNameIteratorSettings.CamelCase || string.IsNullOrEmpty(settings.ClassNameIteratorSettings.WordsSeparator) == false)
+							if (Settings.ClassNameIteratorSettings.CamelCase || !String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.WordsSeparator))
 							{
-								className += NameHelper.TransformName(schema, settings.ClassNameIteratorSettings.WordsSeparator, settings.ClassNameIteratorSettings.CamelCase, settings.ClassNameIteratorSettings.UpperCase, settings.ClassNameIteratorSettings.LowerCase);
+								className += NameHelper.TransformName(schema, Settings.ClassNameIteratorSettings.WordsSeparator, Settings.ClassNameIteratorSettings.CamelCase, Settings.ClassNameIteratorSettings.UpperCase, Settings.ClassNameIteratorSettings.LowerCase);
 							}
-							else if (settings.ClassNameIteratorSettings.UpperCase)
+							else if (Settings.ClassNameIteratorSettings.UpperCase)
 							{
 								className += schema.ToUpper();
 							}
-							else if (settings.ClassNameIteratorSettings.LowerCase)
+							else if (Settings.ClassNameIteratorSettings.LowerCase)
 							{
 								className += schema.ToLower();
 							}
@@ -1290,16 +1238,16 @@ namespace POCOGenerator.POCOIterators
 							}
 
 							// schema separator
-							if (string.IsNullOrEmpty(settings.ClassNameIteratorSettings.SchemaSeparator) == false)
+							if (!String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.SchemaSeparator))
 							{
-								className += settings.ClassNameIteratorSettings.SchemaSeparator;
+								className += Settings.ClassNameIteratorSettings.SchemaSeparator;
 							}
 						}
 					}
 				}
 
 				// name
-				if (settings.ClassNameIteratorSettings.Singular)
+				if (Settings.ClassNameIteratorSettings.Singular)
 				{
 					if (dbObjectType is DbObjectType.Table or DbObjectType.View or DbObjectType.TVP)
 					{
@@ -1307,15 +1255,15 @@ namespace POCOGenerator.POCOIterators
 					}
 				}
 
-				if (settings.ClassNameIteratorSettings.CamelCase || string.IsNullOrEmpty(settings.ClassNameIteratorSettings.WordsSeparator) == false)
+				if (Settings.ClassNameIteratorSettings.CamelCase || !String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.WordsSeparator))
 				{
-					className += NameHelper.TransformName(name, settings.ClassNameIteratorSettings.WordsSeparator, settings.ClassNameIteratorSettings.CamelCase, settings.ClassNameIteratorSettings.UpperCase, settings.ClassNameIteratorSettings.LowerCase);
+					className += NameHelper.TransformName(name, Settings.ClassNameIteratorSettings.WordsSeparator, Settings.ClassNameIteratorSettings.CamelCase, Settings.ClassNameIteratorSettings.UpperCase, Settings.ClassNameIteratorSettings.LowerCase);
 				}
-				else if (settings.ClassNameIteratorSettings.UpperCase)
+				else if (Settings.ClassNameIteratorSettings.UpperCase)
 				{
 					className += name.ToUpper();
 				}
-				else if (settings.ClassNameIteratorSettings.LowerCase)
+				else if (Settings.ClassNameIteratorSettings.LowerCase)
 				{
 					className += name.ToLower();
 				}
@@ -1324,65 +1272,57 @@ namespace POCOGenerator.POCOIterators
 					className += name;
 				}
 
-				if (string.IsNullOrEmpty(settings.ClassNameIteratorSettings.Search) == false)
+				if (!String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.Search))
 				{
-					className = settings.ClassNameIteratorSettings.SearchIgnoreCase
-						? Regex.Replace(className, settings.ClassNameIteratorSettings.Search, settings.ClassNameIteratorSettings.Replace ?? string.Empty, RegexOptions.IgnoreCase)
-						: className.Replace(settings.ClassNameIteratorSettings.Search, settings.ClassNameIteratorSettings.Replace ?? string.Empty);
+					className = Settings.ClassNameIteratorSettings.SearchIgnoreCase
+						? Regex.Replace(className, Settings.ClassNameIteratorSettings.Search, Settings.ClassNameIteratorSettings.Replace ?? String.Empty, RegexOptions.IgnoreCase)
+						: className.Replace(Settings.ClassNameIteratorSettings.Search, Settings.ClassNameIteratorSettings.Replace ?? String.Empty);
 				}
 			}
 			else
 			{
 				// fixed name
-				className += settings.ClassNameIteratorSettings.FixedClassName;
+				className += Settings.ClassNameIteratorSettings.FixedClassName;
 			}
 
 			// suffix
-			if (string.IsNullOrEmpty(settings.ClassNameIteratorSettings.Suffix) == false)
+			if (!String.IsNullOrEmpty(Settings.ClassNameIteratorSettings.Suffix))
 			{
-				className += settings.ClassNameIteratorSettings.Suffix;
+				className += Settings.ClassNameIteratorSettings.Suffix;
 			}
 
 			return className;
 		}
 
-		#endregion
-
-		#region Class Start
-
 		protected virtual void WriteClassStart(string className, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.WriteKeyword("public");
-			writer.Write(" ");
-			if (settings.POCOIteratorSettings.PartialClass)
+			Writer.Write(namespaceOffset);
+			Writer.WriteKeyword("public");
+			Writer.Write(" ");
+			if (Settings.POCOIteratorSettings.PartialClass)
 			{
-				writer.WriteKeyword("partial");
-				writer.Write(" ");
+				Writer.WriteKeyword("partial");
+				Writer.Write(" ");
 			}
-			writer.WriteKeyword("class");
-			writer.Write(" ");
-			writer.WriteUserType(className);
-			if (string.IsNullOrEmpty(settings.POCOIteratorSettings.Inherit) == false)
+			Writer.WriteKeyword("class");
+			Writer.Write(" ");
+			Writer.WriteUserType(className);
+			if (!String.IsNullOrEmpty(Settings.POCOIteratorSettings.Inherit))
 			{
-				writer.Write(" : ");
-				string[] inherit = settings.POCOIteratorSettings.Inherit.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-				writer.WriteUserType(inherit[0]);
+				Writer.Write(" : ");
+				string[] inherit = Settings.POCOIteratorSettings.Inherit.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+				Writer.WriteUserType(inherit[0]);
 				for (int i = 1; i < inherit.Length; i++)
 				{
-					writer.Write(", ");
-					writer.WriteUserType(inherit[i]);
+					Writer.Write(", ");
+					Writer.WriteUserType(inherit[i]);
 				}
 			}
-			writer.WriteLine();
+			Writer.WriteLine();
 
-			writer.Write(namespaceOffset);
-			writer.WriteLine("{");
+			Writer.Write(namespaceOffset);
+			Writer.WriteLine("{");
 		}
-
-		#endregion
-
-		#region Class Constructor
 
 		protected virtual void WriteConstructor(string className, List<IEnumColumn> enumColumns, List<INavigationProperty> navigationProperties, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
@@ -1404,14 +1344,14 @@ namespace POCOGenerator.POCOIterators
 			{
 				WriteConstructorStart(className, dbObject, namespaceOffset);
 
-				if (isConstructorHasColumnDefaults && isConstructorHasEnumColumns == false)
+				if (isConstructorHasColumnDefaults && !isConstructorHasEnumColumns)
 				{
 					foreach (ITableColumn column in tableColumnsWithColumnDefault.OrderBy(c => c.ColumnOrdinal ?? 0))
 					{
 						WriteColumnDefaultConstructorInitialization(column, namespaceOffset);
 					}
 				}
-				else if (isConstructorHasEnumColumns && isConstructorHasColumnDefaults == false)
+				else if (isConstructorHasEnumColumns && !isConstructorHasColumnDefaults)
 				{
 					foreach (ITableColumn column in tableColumnsWithEnum.OrderBy(c => c.ColumnOrdinal ?? 0))
 					{
@@ -1420,24 +1360,24 @@ namespace POCOGenerator.POCOIterators
 				}
 				else if (isConstructorHasColumnDefaults && isConstructorHasEnumColumns)
 				{
-					var lst1 = tableColumnsWithColumnDefault.Select(column => new { column, IsColumnDefault = true });
-					var lst2 = tableColumnsWithEnum.Select(column => new { column, IsColumnDefault = false });
-					foreach (var item in lst1.Union(lst2).OrderBy(i => i.column.ColumnOrdinal ?? 0))
+					IEnumerable<(ITableColumn column, bool isColumnDefault)> lst1 = tableColumnsWithColumnDefault.Select(column => (column, IsColumnDefault: true));
+					IEnumerable<(ITableColumn column, bool isColumnDefault)> lst2 = tableColumnsWithEnum.Select(column => (column, IsColumnDefault: false));
+					foreach ((ITableColumn column, bool isColumnDefault) in lst1.Union(lst2).OrderBy(i => i.column.ColumnOrdinal ?? 0))
 					{
-						if (item.IsColumnDefault)
+						if (isColumnDefault)
 						{
-							WriteColumnDefaultConstructorInitialization(item.column, namespaceOffset);
+							WriteColumnDefaultConstructorInitialization(column, namespaceOffset);
 						}
 						else
 						{
-							WriteEnumConstructorInitialization(item.column, namespaceOffset);
+							WriteEnumConstructorInitialization(column, namespaceOffset);
 						}
 					}
 				}
 
 				if ((isConstructorHasColumnDefaults || isConstructorHasEnumColumns) && isConstructorHasNavigationProperties)
 				{
-					writer.WriteLine();
+					Writer.WriteLine();
 				}
 
 				if (isConstructorHasNavigationProperties)
@@ -1449,38 +1389,36 @@ namespace POCOGenerator.POCOIterators
 				}
 
 				WriteConstructorEnd(dbObject, namespaceOffset);
-				writer.WriteLine();
+				Writer.WriteLine();
 			}
 		}
 
 		protected virtual void WriteConstructorStart(string className, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteKeyword("public");
-			writer.Write(" ");
-			writer.Write(className);
-			writer.WriteLine("()");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteKeyword("public");
+			Writer.Write(" ");
+			Writer.Write(className);
+			Writer.WriteLine("()");
 
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteLine("{");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteLine("{");
 		}
 
 		protected virtual void WriteConstructorEnd(IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteLine("}");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteLine("}");
 		}
-
-		#region Class Constructor - Column Defaults
 
 		protected virtual List<ITableColumn> GetTableColumnsWithColumnDefaultConstructor(IDbObjectTraverse dbObject) => GetColumnDefaults_NotNull(dbObject);
 
 		protected virtual List<ITableColumn> GetColumnDefaults_NotNull(IDbObjectTraverse dbObject)
 		{
-			if (settings.POCOIteratorSettings.ColumnDefaults && dbObject.DbObjectType == DbObjectType.Table)
+			if (Settings.POCOIteratorSettings.ColumnDefaults && dbObject.DbObjectType == DbObjectType.Table)
 			{
 				ITable table = (ITable)dbObject;
 				if (table.TableColumns.HasAny())
@@ -1494,12 +1432,12 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual List<ITableColumn> GetColumnDefaults_NotNullOrEmpty(IDbObjectTraverse dbObject)
 		{
-			if (settings.POCOIteratorSettings.ColumnDefaults && dbObject.DbObjectType == DbObjectType.Table)
+			if (Settings.POCOIteratorSettings.ColumnDefaults && dbObject.DbObjectType == DbObjectType.Table)
 			{
 				ITable table = (ITable)dbObject;
 				if (table.TableColumns.HasAny())
 				{
-					return table.TableColumns.Where(c => string.IsNullOrEmpty(c.ColumnDefault) == false).ToList();
+					return table.TableColumns.Where(c => !String.IsNullOrEmpty(c.ColumnDefault)).ToList();
 				}
 			}
 
@@ -1508,7 +1446,7 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteColumnDefaultConstructorInitialization(ITableColumn column, string namespaceOffset)
 		{
-			string dataTypeName = (column.DataTypeName ?? string.Empty).ToLower();
+			string dataTypeName = (column.DataTypeName ?? String.Empty).ToLower();
 			string cleanColumnDefault = CleanColumnDefault(column.ColumnDefault);
 
 			if (IsSQLTypeMappedToBool(dataTypeName, column.IsUnsigned, column.NumericPrecision))
@@ -1709,21 +1647,21 @@ namespace POCOGenerator.POCOIterators
 		protected virtual void WriteColumnDefaultConstructorInitializationStart(ITableColumn column, string namespaceOffset, bool isComment = false)
 		{
 			string cleanColumnName = NameHelper.CleanName(column.ColumnName);
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(settings.POCOIteratorSettings.Tab);
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
 			if (isComment)
 			{
-				writer.WriteComment("/* this.");
-				writer.WriteComment(cleanColumnName);
-				writer.WriteComment(" = ");
+				Writer.WriteComment("/* this.");
+				Writer.WriteComment(cleanColumnName);
+				Writer.WriteComment(" = ");
 			}
 			else
 			{
-				writer.WriteKeyword("this");
-				writer.Write(".");
-				writer.Write(cleanColumnName);
-				writer.Write(" = ");
+				Writer.WriteKeyword("this");
+				Writer.Write(".");
+				Writer.Write(cleanColumnName);
+				Writer.Write(" = ");
 			}
 		}
 
@@ -1731,18 +1669,18 @@ namespace POCOGenerator.POCOIterators
 		{
 			if (isComment)
 			{
-				writer.WriteLineComment("; */");
+				Writer.WriteLineComment("; */");
 			}
 			else
 			{
-				writer.WriteLine(";");
+				Writer.WriteLine(";");
 			}
 		}
 
 		protected virtual void WriteColumnDefaultConstructorInitializationBool(bool value, ITableColumn column, string namespaceOffset)
 		{
 			WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
-			writer.WriteKeyword(value.ToString().ToLower());
+			Writer.WriteKeyword(value.ToString().ToLower());
 			WriteColumnDefaultConstructorInitializationEnd();
 		}
 
@@ -1772,16 +1710,16 @@ namespace POCOGenerator.POCOIterators
 		{
 			columnDefault = CleanNumberDefault(columnDefault);
 			WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
-			writer.Write(columnDefault);
-			if (string.IsNullOrEmpty(suffix) == false)
+			Writer.Write(columnDefault);
+			if (!String.IsNullOrEmpty(suffix))
 			{
-				writer.Write(suffix);
+				Writer.Write(suffix);
 			}
 
 			WriteColumnDefaultConstructorInitializationEnd();
 		}
 
-		protected virtual string CleanNumberDefault(string columnDefault) => columnDefault.Replace("(", string.Empty).Replace(")", string.Empty);
+		protected virtual string CleanNumberDefault(string columnDefault) => columnDefault.Replace("(", String.Empty).Replace(")", String.Empty);
 
 		protected virtual void WriteColumnDefaultConstructorInitializationDateTime_Now(ITableColumn column, string namespaceOffset)
 		{
@@ -1860,13 +1798,13 @@ namespace POCOGenerator.POCOIterators
 			Match match = regexTimeSpan.Match(cleanColumnDefault);
 			if (match.Success)
 			{
-				int hours = int.Parse(match.Groups["hh"].Value);
-				int minutes = int.Parse(match.Groups["mm"].Value);
-				int seconds = int.Parse(match.Groups["ss"].Value);
+				int hours = Int32.Parse(match.Groups["hh"].Value);
+				int minutes = Int32.Parse(match.Groups["mm"].Value);
+				int seconds = Int32.Parse(match.Groups["ss"].Value);
 				int milliseconds = 0;
 				if (match.Groups["ms"].Success)
 				{
-					milliseconds = int.Parse(match.Groups["ms"].Value);
+					milliseconds = Int32.Parse(match.Groups["ms"].Value);
 				}
 
 				WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
@@ -1941,92 +1879,92 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteDateTime_Now()
 		{
-			writer.WriteUserType("DateTime");
-			writer.Write(".Now");
+			Writer.WriteUserType("DateTime");
+			Writer.Write(".Now");
 		}
 
 		protected virtual void WriteDateTime_UtcNow()
 		{
-			writer.WriteUserType("DateTime");
-			writer.Write(".UtcNow");
+			Writer.WriteUserType("DateTime");
+			Writer.Write(".UtcNow");
 		}
 
 		protected virtual void WriteDateTime_OffsetNow()
 		{
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write(".Now.DateTime");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write(".Now.DateTime");
 		}
 
 		protected virtual void WriteDateTime_OffsetUtcNow()
 		{
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write(".UtcNow.UtcDateTime");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write(".UtcNow.UtcDateTime");
 		}
 
 		protected virtual void WriteDateTime(DateTime dateTime)
 		{
-			writer.WriteKeyword("new ");
-			writer.WriteUserType("DateTime");
-			writer.Write("(");
-			writer.Write(dateTime.Year.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTime.Month.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTime.Day.ToString(CultureInfo.InvariantCulture));
+			Writer.WriteKeyword("new ");
+			Writer.WriteUserType("DateTime");
+			Writer.Write("(");
+			Writer.Write(dateTime.Year.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTime.Month.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTime.Day.ToString(CultureInfo.InvariantCulture));
 			if (dateTime.Hour != 0 || dateTime.Minute != 0 || dateTime.Second != 0 || dateTime.Millisecond != 0)
 			{
-				writer.Write(", ");
-				writer.Write(dateTime.Hour.ToString(CultureInfo.InvariantCulture));
-				writer.Write(", ");
-				writer.Write(dateTime.Minute.ToString(CultureInfo.InvariantCulture));
-				writer.Write(", ");
-				writer.Write(dateTime.Second.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(", ");
+				Writer.Write(dateTime.Hour.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(", ");
+				Writer.Write(dateTime.Minute.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(", ");
+				Writer.Write(dateTime.Second.ToString(CultureInfo.InvariantCulture));
 				if (dateTime.Millisecond != 0)
 				{
-					writer.Write(", ");
-					writer.Write(dateTime.Millisecond.ToString(CultureInfo.InvariantCulture));
+					Writer.Write(", ");
+					Writer.Write(dateTime.Millisecond.ToString(CultureInfo.InvariantCulture));
 				}
 			}
-			writer.Write(")");
+			Writer.Write(")");
 		}
 
 		protected virtual void WriteTimeSpan_Now()
 		{
-			writer.WriteUserType("DateTime");
-			writer.Write(".Now.TimeOfDay");
+			Writer.WriteUserType("DateTime");
+			Writer.Write(".Now.TimeOfDay");
 		}
 
 		protected virtual void WriteTimeSpan_UtcNow()
 		{
-			writer.WriteUserType("DateTime");
-			writer.Write(".UtcNow.TimeOfDay");
+			Writer.WriteUserType("DateTime");
+			Writer.Write(".UtcNow.TimeOfDay");
 		}
 
 		protected virtual void WriteTimeSpan_OffsetNow()
 		{
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write(".Now.DateTime.TimeOfDay");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write(".Now.DateTime.TimeOfDay");
 		}
 
 		protected virtual void WriteTimeSpan_OffsetUtcNow()
 		{
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write(".UtcNow.UtcDateTime.TimeOfDay");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write(".UtcNow.UtcDateTime.TimeOfDay");
 		}
 
 		protected virtual void WriteTimeSpan(TimeSpan timeSpan) => WriteTimeSpan(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
 
 		protected virtual void WriteTimeSpan(int hours, int minutes, int seconds)
 		{
-			writer.WriteKeyword("new ");
-			writer.WriteUserType("TimeSpan");
-			writer.Write("(");
-			writer.Write(hours.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(minutes.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(seconds.ToString(CultureInfo.InvariantCulture));
-			writer.Write(")");
+			Writer.WriteKeyword("new ");
+			Writer.WriteUserType("TimeSpan");
+			Writer.Write("(");
+			Writer.Write(hours.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(minutes.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(seconds.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(")");
 		}
 
 		protected virtual void WriteTimeSpan(int hours, int minutes, int seconds, int milliseconds)
@@ -2037,95 +1975,95 @@ namespace POCOGenerator.POCOIterators
 			}
 			else
 			{
-				writer.WriteKeyword("new ");
-				writer.WriteUserType("TimeSpan");
-				writer.Write("(0, ");
-				writer.Write(hours.ToString(CultureInfo.InvariantCulture));
-				writer.Write(", ");
-				writer.Write(minutes.ToString(CultureInfo.InvariantCulture));
-				writer.Write(", ");
-				writer.Write(seconds.ToString(CultureInfo.InvariantCulture));
-				writer.Write(", ");
-				writer.Write(milliseconds.ToString(CultureInfo.InvariantCulture));
-				writer.Write(")");
+				Writer.WriteKeyword("new ");
+				Writer.WriteUserType("TimeSpan");
+				Writer.Write("(0, ");
+				Writer.Write(hours.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(", ");
+				Writer.Write(minutes.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(", ");
+				Writer.Write(seconds.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(", ");
+				Writer.Write(milliseconds.ToString(CultureInfo.InvariantCulture));
+				Writer.Write(")");
 			}
 		}
 
 		protected virtual void WriteTimeSpan(DateTime dateTime)
 		{
 			WriteDateTime(dateTime);
-			writer.Write(".TimeOfDay");
+			Writer.Write(".TimeOfDay");
 		}
 
 		protected virtual void WriteDateTimeOffset_Now()
 		{
-			writer.WriteKeyword("new ");
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write("(");
-			writer.WriteUserType("DateTime");
-			writer.Write(".Now)");
+			Writer.WriteKeyword("new ");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write("(");
+			Writer.WriteUserType("DateTime");
+			Writer.Write(".Now)");
 		}
 
 		protected virtual void WriteDateTimeOffset_UtcNow()
 		{
-			writer.WriteKeyword("new ");
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write("(");
-			writer.WriteUserType("DateTime");
-			writer.Write(".UtcNow)");
+			Writer.WriteKeyword("new ");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write("(");
+			Writer.WriteUserType("DateTime");
+			Writer.Write(".UtcNow)");
 		}
 
 		protected virtual void WriteDateTimeOffset_OffsetNow()
 		{
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write(".Now");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write(".Now");
 		}
 
 		protected virtual void WriteDateTimeOffset_OffsetUtcNow()
 		{
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write(".UtcNow");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write(".UtcNow");
 		}
 
 		protected virtual void WriteDateTimeOffset(DateTimeOffset dateTimeOffset)
 		{
-			writer.WriteKeyword("new ");
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write("(");
-			writer.Write(dateTimeOffset.Year.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTimeOffset.Month.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTimeOffset.Day.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTimeOffset.Hour.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTimeOffset.Minute.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTimeOffset.Second.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
-			writer.Write(dateTimeOffset.Millisecond.ToString(CultureInfo.InvariantCulture));
-			writer.Write(", ");
+			Writer.WriteKeyword("new ");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write("(");
+			Writer.Write(dateTimeOffset.Year.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTimeOffset.Month.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTimeOffset.Day.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTimeOffset.Hour.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTimeOffset.Minute.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTimeOffset.Second.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
+			Writer.Write(dateTimeOffset.Millisecond.ToString(CultureInfo.InvariantCulture));
+			Writer.Write(", ");
 			WriteTimeSpan(dateTimeOffset.Offset);
-			writer.Write(")");
+			Writer.Write(")");
 		}
 
 		protected virtual void WriteDateTimeOffset(DateTime dateTime)
 		{
-			writer.WriteKeyword("new ");
-			writer.WriteUserType("DateTimeOffset");
-			writer.Write("(");
+			Writer.WriteKeyword("new ");
+			Writer.WriteUserType("DateTimeOffset");
+			Writer.Write("(");
 			WriteDateTime(dateTime);
-			writer.Write(")");
+			Writer.Write(")");
 		}
 
 		protected virtual void WriteColumnDefaultConstructorInitializationString(string columnDefault, ITableColumn column, string namespaceOffset)
 		{
 			columnDefault = CleanStringDefault(columnDefault);
 			WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
-			writer.WriteString("\"");
-			writer.WriteString(columnDefault);
-			writer.WriteString("\"");
+			Writer.WriteString("\"");
+			Writer.WriteString(columnDefault);
+			Writer.WriteString("\"");
 			WriteColumnDefaultConstructorInitializationEnd();
 		}
 
@@ -2137,51 +2075,51 @@ namespace POCOGenerator.POCOIterators
 		{
 			columnDefault = CleanBinaryDefault(columnDefault);
 			WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
-			writer.WriteUserType("BitConverter");
-			writer.Write(".GetBytes(");
-			writer.WriteUserType("Convert");
-			writer.Write(".ToInt64(");
-			writer.WriteString("\"");
-			if (columnDefault.StartsWith("0x") == false)
+			Writer.WriteUserType("BitConverter");
+			Writer.Write(".GetBytes(");
+			Writer.WriteUserType("Convert");
+			Writer.Write(".ToInt64(");
+			Writer.WriteString("\"");
+			if (!columnDefault.StartsWith("0x"))
 			{
-				writer.WriteString("0x");
+				Writer.WriteString("0x");
 			}
 
-			writer.WriteString(columnDefault);
-			writer.WriteString("\"");
-			writer.Write(", 16)");
-			writer.Write(")");
+			Writer.WriteString(columnDefault);
+			Writer.WriteString("\"");
+			Writer.Write(", 16)");
+			Writer.Write(")");
 			WriteColumnDefaultConstructorInitializationEnd();
 
 			string cleanColumnName = NameHelper.CleanName(column.ColumnName);
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteKeyword("if");
-			writer.Write(" (");
-			writer.WriteUserType("BitConverter");
-			writer.WriteLine(".IsLittleEndian)");
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteUserType("Array");
-			writer.Write(".Reverse(");
-			writer.WriteKeyword("this");
-			writer.Write(".");
-			writer.Write(cleanColumnName);
-			writer.WriteLine(");");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteKeyword("if");
+			Writer.Write(" (");
+			Writer.WriteUserType("BitConverter");
+			Writer.WriteLine(".IsLittleEndian)");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteUserType("Array");
+			Writer.Write(".Reverse(");
+			Writer.WriteKeyword("this");
+			Writer.Write(".");
+			Writer.Write(cleanColumnName);
+			Writer.WriteLine(");");
 		}
 
-		protected virtual string CleanBinaryDefault(string columnDefault) => columnDefault.Replace("(", string.Empty).Replace(")", string.Empty);
+		protected virtual string CleanBinaryDefault(string columnDefault) => columnDefault.Replace("(", String.Empty).Replace(")", String.Empty);
 
-		protected virtual void WriteColumnDefaultConstructorInitializationByteArray_String(string columnDefault, ITableColumn column, string namespaceOffset) => WriteColumnDefaultConstructorInitializationByteArray_Hex("0x" + BitConverter.ToString(Encoding.UTF8.GetBytes(columnDefault)).Replace("-", string.Empty), column, namespaceOffset);
+		protected virtual void WriteColumnDefaultConstructorInitializationByteArray_String(string columnDefault, ITableColumn column, string namespaceOffset) => WriteColumnDefaultConstructorInitializationByteArray_Hex("0x" + BitConverter.ToString(Encoding.UTF8.GetBytes(columnDefault)).Replace("-", String.Empty), column, namespaceOffset);
 
 		protected virtual void WriteColumnDefaultConstructorInitializationNewGuid(ITableColumn column, string namespaceOffset)
 		{
 			WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
-			writer.WriteUserType("Guid");
-			writer.Write(".NewGuid()");
+			Writer.WriteUserType("Guid");
+			Writer.Write(".NewGuid()");
 			WriteColumnDefaultConstructorInitializationEnd();
 		}
 
@@ -2192,19 +2130,15 @@ namespace POCOGenerator.POCOIterators
 		protected virtual void WriteColumnDefaultConstructorInitializationComment(string columnDefault, ITableColumn column, string namespaceOffset)
 		{
 			WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset, true);
-			writer.WriteComment(columnDefault);
+			Writer.WriteComment(columnDefault);
 			WriteColumnDefaultConstructorInitializationEnd(true);
 		}
-
-		#endregion
-
-		#region Class Constructor - Enum Columns
 
 		protected virtual List<ITableColumn> GetTableColumnsWithEnumConstructor(IDbObjectTraverse dbObject, List<IEnumColumn> enumColumns) => null;
 
 		protected virtual void WriteEnumConstructorInitialization(ITableColumn column, string namespaceOffset)
 		{
-			if ((column is IEnumColumn enumColumn) == false)
+			if (column is not IEnumColumn enumColumn)
 			{
 				return;
 			}
@@ -2225,14 +2159,14 @@ namespace POCOGenerator.POCOIterators
 		{
 			string literal = GetEnumDataTypeLiteralConstructorInitialization(enumColumn);
 
-			if (string.IsNullOrEmpty(literal) == false)
+			if (!String.IsNullOrEmpty(literal))
 			{
 				string cleanLiteral = NameHelper.CleanEnumLiteral(literal);
 
 				WriteColumnDefaultConstructorInitializationStart(column, namespaceOffset);
 				WriteEnumName(cleanColumnName);
-				writer.Write(".");
-				writer.Write(cleanLiteral);
+				Writer.Write(".");
+				Writer.Write(cleanLiteral);
 				WriteColumnDefaultConstructorInitializationEnd();
 			}
 		}
@@ -2251,12 +2185,12 @@ namespace POCOGenerator.POCOIterators
 
 					if (i > 0)
 					{
-						writer.Write(" | ");
+						Writer.Write(" | ");
 					}
 
 					WriteEnumName(cleanColumnName);
-					writer.Write(".");
-					writer.Write(cleanLiteral);
+					Writer.Write(".");
+					Writer.Write(cleanLiteral);
 				}
 				WriteColumnDefaultConstructorInitializationEnd();
 			}
@@ -2265,10 +2199,6 @@ namespace POCOGenerator.POCOIterators
 		protected virtual string GetEnumDataTypeLiteralConstructorInitialization(IEnumColumn enumColumn) => null;
 
 		protected virtual List<string> GetSetDataTypeLiteralsConstructorInitialization(IEnumColumn enumColumn) => null;
-
-		#endregion
-
-		#region Class Constructor - Navigation Properties
 
 		protected virtual bool IsConstructorHasNavigationProperties(IDbObjectTraverse dbObject, List<INavigationProperty> navigationProperties)
 		{
@@ -2279,34 +2209,26 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteNavigationPropertyConstructorInitialization(INavigationProperty navigationProperty, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteKeyword("this");
-			writer.Write(".");
-			writer.Write(navigationProperty.ToString());
-			writer.Write(" = ");
-			writer.WriteKeyword("new");
-			writer.Write(" ");
-			writer.WriteUserType(settings.NavigationPropertiesIteratorSettings.ICollectionNavigationProperties ? "HashSet" : "List");
-			writer.Write("<");
-			writer.WriteUserType(navigationProperty.ClassName);
-			writer.WriteLine(">();");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteKeyword("this");
+			Writer.Write(".");
+			Writer.Write(navigationProperty.ToString());
+			Writer.Write(" = ");
+			Writer.WriteKeyword("new");
+			Writer.Write(" ");
+			Writer.WriteUserType(Settings.NavigationPropertiesIteratorSettings.ICollectionNavigationProperties ? "HashSet" : "List");
+			Writer.Write("<");
+			Writer.WriteUserType(navigationProperty.ClassName);
+			Writer.WriteLine(">();");
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Column Attributes
 
 		protected virtual void WriteColumnAttributes(IColumn column, string cleanColumnName, IDbObjectTraverse dbObject, string namespaceOffset) => WriteEFColumnAttributes(column, cleanColumnName, dbObject, namespaceOffset);
 
-		#region EF
-
 		protected virtual void WriteEFColumnAttributes(IColumn column, string cleanColumnName, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Enable)
+			if (Settings.EFAnnotationsIteratorSettings.Enable)
 			{
 				if (dbObject.DbObjectType == DbObjectType.Table)
 				{
@@ -2407,7 +2329,7 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFIndexAttribute(ITableColumn tableColumn, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Index && tableColumn.IndexColumns.HasAny())
+			if (Settings.EFAnnotationsIteratorSettings.Index && tableColumn.IndexColumns.HasAny())
 			{
 				foreach (IIndexColumn indexColumn in tableColumn.IndexColumns.OrderBy(ic => ic.Index.Name))
 				{
@@ -2429,7 +2351,7 @@ namespace POCOGenerator.POCOIterators
 			bool isPrimaryKey = tableColumn.PrimaryKeyColumn != null;
 			bool isCompositePrimaryKey = IsCompositePrimaryKey(dbObject);
 
-			if ((settings.EFAnnotationsIteratorSettings.Column && (isPrimaryKey == false || isCompositePrimaryKey == false)) ||
+			if ((Settings.EFAnnotationsIteratorSettings.Column && (!isPrimaryKey || !isCompositePrimaryKey)) ||
 				(tableColumn.ColumnName != cleanColumnName))
 			{
 				WriteEFColumn(tableColumn.ColumnName, tableColumn.DataTypeName, namespaceOffset);
@@ -2446,7 +2368,7 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFStringLengthAttribute(IColumn tableColumn, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.StringLength)
+			if (Settings.EFAnnotationsIteratorSettings.StringLength)
 			{
 				if (IsEFAttributeStringLength(tableColumn.DataTypeName))
 				{
@@ -2468,7 +2390,7 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFConcurrencyCheckAttribute(IColumn tableColumn, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.ConcurrencyCheck)
+			if (Settings.EFAnnotationsIteratorSettings.ConcurrencyCheck)
 			{
 				if (IsEFAttributeConcurrencyCheck(tableColumn.DataTypeName))
 				{
@@ -2495,12 +2417,12 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFRequiredAttribute(IColumn tableColumn, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Required || settings.EFAnnotationsIteratorSettings.RequiredWithErrorMessage)
+			if (Settings.EFAnnotationsIteratorSettings.Required || Settings.EFAnnotationsIteratorSettings.RequiredWithErrorMessage)
 			{
-				if (tableColumn.IsNullable == false)
+				if (!tableColumn.IsNullable)
 				{
 					string display = null;
-					if (settings.EFAnnotationsIteratorSettings.RequiredWithErrorMessage)
+					if (Settings.EFAnnotationsIteratorSettings.RequiredWithErrorMessage)
 					{
 						display = GetEFDisplay(tableColumn.ColumnName);
 					}
@@ -2512,7 +2434,7 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFDisplayAttribute(IColumn tableColumn, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Display)
+			if (Settings.EFAnnotationsIteratorSettings.Display)
 			{
 				string display = GetEFDisplay(tableColumn.ColumnName);
 				WriteEFDisplay(display, namespaceOffset);
@@ -2521,9 +2443,9 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFDescriptionAttribute(IColumn column, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Description && column is IDescription descObject)
+			if (Settings.EFAnnotationsIteratorSettings.Description && column is IDescription descObject)
 			{
-				if (string.IsNullOrEmpty(descObject.Description) == false)
+				if (!String.IsNullOrEmpty(descObject.Description))
 				{
 					WriteEFDescription(descObject.Description, true, namespaceOffset);
 				}
@@ -2543,185 +2465,185 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFPrimaryKey(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Key");
-			writer.WriteLine("]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Key");
+			Writer.WriteLine("]");
 		}
 
 		protected virtual void WriteEFCompositePrimaryKey(string columnName, string dataTypeName, byte ordinal, string namespaceOffset)
 		{
 			WriteEFPrimaryKey(namespaceOffset);
 
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Column");
-			writer.Write("(");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Column");
+			Writer.Write("(");
 
-			if (settings.EFAnnotationsIteratorSettings.Column)
+			if (Settings.EFAnnotationsIteratorSettings.Column)
 			{
-				writer.Write("Name = ");
-				writer.WriteString("\"");
-				writer.WriteString(columnName);
-				writer.WriteString("\"");
-				writer.Write(", TypeName = ");
-				writer.WriteString("\"");
-				writer.WriteString(dataTypeName);
-				writer.WriteString("\"");
-				writer.Write(", ");
+				Writer.Write("Name = ");
+				Writer.WriteString("\"");
+				Writer.WriteString(columnName);
+				Writer.WriteString("\"");
+				Writer.Write(", TypeName = ");
+				Writer.WriteString("\"");
+				Writer.WriteString(dataTypeName);
+				Writer.WriteString("\"");
+				Writer.Write(", ");
 			}
 
-			writer.Write("Order = ");
-			writer.Write(ordinal.ToString());
-			writer.WriteLine(")]");
+			Writer.Write("Order = ");
+			Writer.Write(ordinal.ToString());
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteEFIndex(string indexName, bool isUnique, bool isClustered, bool isDescending, string namespaceOffset)
 		{
 			WriteEFIndexSortOrderError(indexName, isDescending, namespaceOffset);
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Index");
-			writer.Write("(");
-			writer.WriteString("\"");
-			writer.WriteString(indexName);
-			writer.WriteString("\"");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Index");
+			Writer.Write("(");
+			Writer.WriteString("\"");
+			Writer.WriteString(indexName);
+			Writer.WriteString("\"");
 			if (isUnique)
 			{
-				writer.Write(", IsUnique = ");
-				writer.WriteKeyword("true");
+				Writer.Write(", IsUnique = ");
+				Writer.WriteKeyword("true");
 			}
 			if (isClustered)
 			{
-				writer.Write(", IsClustered = ");
-				writer.WriteKeyword("true");
+				Writer.Write(", IsClustered = ");
+				Writer.WriteKeyword("true");
 			}
-			writer.WriteLine(")]");
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteEFCompositeIndex(string indexName, bool isUnique, bool isClustered, bool isDescending, byte ordinal, string namespaceOffset)
 		{
 			WriteEFIndexSortOrderError(indexName, isDescending, namespaceOffset);
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Index");
-			writer.Write("(");
-			writer.WriteString("\"");
-			writer.WriteString(indexName);
-			writer.WriteString("\"");
-			writer.Write(", ");
-			writer.Write(ordinal.ToString());
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Index");
+			Writer.Write("(");
+			Writer.WriteString("\"");
+			Writer.WriteString(indexName);
+			Writer.WriteString("\"");
+			Writer.Write(", ");
+			Writer.Write(ordinal.ToString());
 			if (isUnique)
 			{
-				writer.Write(", IsUnique = ");
-				writer.WriteKeyword("true");
+				Writer.Write(", IsUnique = ");
+				Writer.WriteKeyword("true");
 			}
 			if (isClustered)
 			{
-				writer.Write(", IsClustered = ");
-				writer.WriteKeyword("true");
+				Writer.Write(", IsClustered = ");
+				Writer.WriteKeyword("true");
 			}
-			writer.WriteLine(")]");
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteEFIndexSortOrderError(string indexName, bool isDescending, string namespaceOffset)
 		{
 			if (isDescending)
 			{
-				writer.Write(namespaceOffset);
-				writer.Write(settings.POCOIteratorSettings.Tab);
-				writer.WriteError("/* ");
-				writer.WriteError(indexName);
-				writer.WriteLineError(". Sort order is Descending. Index doesn't support sort order. */");
+				Writer.Write(namespaceOffset);
+				Writer.Write(Settings.POCOIteratorSettings.Tab);
+				Writer.WriteError("/* ");
+				Writer.WriteError(indexName);
+				Writer.WriteLineError(". Sort order is Descending. Index doesn't support sort order. */");
 			}
 		}
 
 		protected virtual void WriteEFColumn(string columnName, string dataTypeName, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Column");
-			writer.Write("(Name = ");
-			writer.WriteString("\"");
-			writer.WriteString(columnName);
-			writer.WriteString("\"");
-			writer.Write(", TypeName = ");
-			writer.WriteString("\"");
-			writer.WriteString(dataTypeName);
-			writer.WriteString("\"");
-			writer.WriteLine(")]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Column");
+			Writer.Write("(Name = ");
+			Writer.WriteString("\"");
+			Writer.WriteString(columnName);
+			Writer.WriteString("\"");
+			Writer.Write(", TypeName = ");
+			Writer.WriteString("\"");
+			Writer.WriteString(dataTypeName);
+			Writer.WriteString("\"");
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteEFMaxLength(int? stringPrecision, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("MaxLength");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("MaxLength");
 			if (stringPrecision >= 0)
 			{
-				writer.Write("(");
-				writer.Write(stringPrecision.ToString());
-				writer.Write(")");
+				Writer.Write("(");
+				Writer.Write(stringPrecision.ToString());
+				Writer.Write(")");
 			}
-			writer.WriteLine("]");
+			Writer.WriteLine("]");
 		}
 
 		protected virtual void WriteEFStringLength(int stringPrecision, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("StringLength");
-			writer.Write("(");
-			writer.Write(stringPrecision.ToString());
-			writer.Write(")");
-			writer.WriteLine("]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("StringLength");
+			Writer.Write("(");
+			Writer.Write(stringPrecision.ToString());
+			Writer.Write(")");
+			Writer.WriteLine("]");
 		}
 
 		protected virtual void WriteEFTimestamp(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Timestamp");
-			writer.WriteLine("]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Timestamp");
+			Writer.WriteLine("]");
 		}
 
 		protected virtual void WriteEFConcurrencyCheck(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("ConcurrencyCheck");
-			writer.WriteLine("]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("ConcurrencyCheck");
+			Writer.WriteLine("]");
 		}
 
 		protected virtual void WriteEFDatabaseGeneratedIdentity(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("DatabaseGenerated");
-			writer.Write("(");
-			writer.WriteUserType("DatabaseGeneratedOption");
-			writer.WriteLine(".Identity)]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("DatabaseGenerated");
+			Writer.Write("(");
+			Writer.WriteUserType("DatabaseGeneratedOption");
+			Writer.WriteLine(".Identity)]");
 		}
 
 		protected virtual void WriteEFDatabaseGeneratedComputed(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("DatabaseGenerated");
-			writer.Write("(");
-			writer.WriteUserType("DatabaseGeneratedOption");
-			writer.WriteLine(".Computed)]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("DatabaseGenerated");
+			Writer.Write("(");
+			Writer.WriteUserType("DatabaseGeneratedOption");
+			Writer.WriteLine(".Computed)]");
 		}
 
 		protected static readonly Regex regexDisplay1 = new("[^0-9a-zA-Z]", RegexOptions.Compiled);
@@ -2740,66 +2662,60 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFRequired(string display, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Required");
-			if (settings.EFAnnotationsIteratorSettings.RequiredWithErrorMessage)
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Required");
+			if (Settings.EFAnnotationsIteratorSettings.RequiredWithErrorMessage)
 			{
 				WriteEFRequiredErrorMessage(display);
 			}
 
-			writer.WriteLine("]");
+			Writer.WriteLine("]");
 		}
 
 		protected virtual void WriteEFRequiredErrorMessage(string display)
 		{
-			writer.Write("(ErrorMessage = ");
-			writer.WriteString("\"");
-			writer.WriteString(display);
-			writer.WriteString(" is required");
-			writer.WriteString("\"");
-			writer.Write(")");
+			Writer.Write("(ErrorMessage = ");
+			Writer.WriteString("\"");
+			Writer.WriteString(display);
+			Writer.WriteString(" is required");
+			Writer.WriteString("\"");
+			Writer.Write(")");
 		}
 
 		protected virtual void WriteEFDisplay(string display, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Display");
-			writer.Write("(Name = ");
-			writer.WriteString("\"");
-			writer.WriteString(display);
-			writer.WriteString("\"");
-			writer.WriteLine(")]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Display");
+			Writer.Write("(Name = ");
+			Writer.WriteString("\"");
+			Writer.WriteString(display);
+			Writer.WriteString("\"");
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteEFDescription(string description, bool writeTab, string namespaceOffset)
 		{
-			if (string.IsNullOrEmpty(description) == false)
+			if (!String.IsNullOrEmpty(description))
 			{
-				writer.Write(namespaceOffset);
+				Writer.Write(namespaceOffset);
 				if (writeTab)
 				{
-					writer.Write(settings.POCOIteratorSettings.Tab);
+					Writer.Write(Settings.POCOIteratorSettings.Tab);
 				}
 
-				writer.Write("[");
-				writer.WriteUserType("Description");
-				writer.Write("(");
-				writer.WriteString("\"");
-				writer.WriteString(NameHelper.Escape(description));
-				writer.WriteString("\"");
-				writer.WriteLine(")]");
+				Writer.Write("[");
+				Writer.WriteUserType("Description");
+				Writer.Write("(");
+				Writer.WriteString("\"");
+				Writer.WriteString(NameHelper.Escape(description));
+				Writer.WriteString("\"");
+				Writer.WriteLine(")]");
 			}
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Column
 
 		protected virtual void WriteColumn(IColumn column, bool isComplexTypeTableColumn, bool isLastColumn, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
@@ -2829,11 +2745,11 @@ namespace POCOGenerator.POCOIterators
 
 			WriteColumnComments(column);
 
-			writer.WriteLine();
+			Writer.WriteLine();
 
-			if (settings.POCOIteratorSettings.NewLineBetweenMembers && isLastColumn == false)
+			if (Settings.POCOIteratorSettings.NewLineBetweenMembers && !isLastColumn)
 			{
-				writer.WriteLine();
+				Writer.WriteLine();
 			}
 		}
 
@@ -2860,30 +2776,30 @@ namespace POCOGenerator.POCOIterators
 
 			WriteColumnEnd();
 
-			writer.WriteLine();
+			Writer.WriteLine();
 
-			if (settings.POCOIteratorSettings.NewLineBetweenMembers && isLastColumn == false)
+			if (Settings.POCOIteratorSettings.NewLineBetweenMembers && !isLastColumn)
 			{
-				writer.WriteLine();
+				Writer.WriteLine();
 			}
 		}
 
 		protected virtual void WriteColumnStart(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteKeyword("public");
-			writer.Write(" ");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteKeyword("public");
+			Writer.Write(" ");
 
-			if (settings.POCOIteratorSettings.Properties && settings.POCOIteratorSettings.VirtualProperties)
+			if (Settings.POCOIteratorSettings.Properties && Settings.POCOIteratorSettings.VirtualProperties)
 			{
-				writer.WriteKeyword("virtual");
-				writer.Write(" ");
+				Writer.WriteKeyword("virtual");
+				Writer.Write(" ");
 			}
-			else if (settings.POCOIteratorSettings.Properties && settings.POCOIteratorSettings.OverrideProperties)
+			else if (Settings.POCOIteratorSettings.Properties && Settings.POCOIteratorSettings.OverrideProperties)
 			{
-				writer.WriteKeyword("override");
-				writer.Write(" ");
+				Writer.WriteKeyword("override");
+				Writer.Write(" ");
 			}
 		}
 
@@ -2891,202 +2807,200 @@ namespace POCOGenerator.POCOIterators
 
 		protected abstract void WriteDbColumnDataType(IColumn column);
 
-		protected virtual void WriteComplexTypeName(string complexTypeName) => writer.WriteUserType(complexTypeName);
+		protected virtual void WriteComplexTypeName(string complexTypeName) => Writer.WriteUserType(complexTypeName);
 
 		protected virtual void WriteColumnName(string columnName)
 		{
-			writer.Write(" ");
-			writer.Write(columnName);
+			Writer.Write(" ");
+			Writer.Write(columnName);
 		}
 
 		protected virtual void WriteColumnEnd()
 		{
-			if (settings.POCOIteratorSettings.Properties)
+			if (Settings.POCOIteratorSettings.Properties)
 			{
-				writer.Write(" { ");
-				writer.WriteKeyword("get");
-				writer.Write("; ");
-				writer.WriteKeyword("set");
-				writer.Write("; }");
+				Writer.Write(" { ");
+				Writer.WriteKeyword("get");
+				Writer.Write("; ");
+				Writer.WriteKeyword("set");
+				Writer.Write("; }");
 			}
-			else if (settings.POCOIteratorSettings.Fields)
+			else if (Settings.POCOIteratorSettings.Fields)
 			{
-				writer.Write(";");
+				Writer.Write(";");
 			}
 		}
 
 		protected virtual void WriteColumnComments(IColumn column)
 		{
-			if (settings.POCOIteratorSettings.Comments || settings.POCOIteratorSettings.CommentsWithoutNull)
+			if (Settings.POCOIteratorSettings.Comments || Settings.POCOIteratorSettings.CommentsWithoutNull)
 			{
-				writer.Write(" ");
-				writer.WriteComment("//");
-				writer.WriteComment(" ");
-				writer.WriteComment(column.DataTypeDisplay);
-				writer.WriteComment(column.Precision ?? string.Empty);
+				Writer.Write(" ");
+				Writer.WriteComment("//");
+				Writer.WriteComment(" ");
+				Writer.WriteComment(column.DataTypeDisplay);
+				Writer.WriteComment(column.Precision ?? String.Empty);
 
-				if (settings.POCOIteratorSettings.CommentsWithoutNull == false)
+				if (!Settings.POCOIteratorSettings.CommentsWithoutNull)
 				{
-					writer.WriteComment(",");
-					writer.WriteComment(" ");
-					writer.WriteComment(column.IsNullable ? "null" : "not null");
+					Writer.WriteComment(",");
+					Writer.WriteComment(" ");
+					Writer.WriteComment(column.IsNullable ? "null" : "not null");
 				}
 			}
 		}
 
-		#region Column Data Types
-
 		protected virtual void WriteColumnBool(bool isNullable)
 		{
-			writer.WriteKeyword("bool");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("bool");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnByte(bool isNullable)
 		{
-			writer.WriteKeyword("byte");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("byte");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnByteArray()
 		{
-			writer.WriteKeyword("byte");
-			writer.Write("[]");
+			Writer.WriteKeyword("byte");
+			Writer.Write("[]");
 		}
 
 		protected virtual void WriteColumnDateTime(bool isNullable)
 		{
-			writer.WriteUserType("DateTime");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteUserType("DateTime");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnDateTimeOffset(bool isNullable)
 		{
-			writer.WriteUserType("DateTimeOffset");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteUserType("DateTimeOffset");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnDecimal(bool isNullable)
 		{
-			writer.WriteKeyword("decimal");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("decimal");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnDouble(bool isNullable)
 		{
-			writer.WriteKeyword("double");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("double");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnFloat(bool isNullable)
 		{
-			writer.WriteKeyword("float");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("float");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnGuid(bool isNullable)
 		{
-			writer.WriteUserType("Guid");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteUserType("Guid");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnInt(bool isNullable)
 		{
-			writer.WriteKeyword("int");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("int");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnLong(bool isNullable)
 		{
-			writer.WriteKeyword("long");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("long");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
-		protected virtual void WriteColumnObject() => writer.WriteKeyword("object");
+		protected virtual void WriteColumnObject() => Writer.WriteKeyword("object");
 
 		protected virtual void WriteColumnSByte(bool isNullable)
 		{
-			writer.WriteKeyword("sbyte");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("sbyte");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnShort(bool isNullable)
 		{
-			writer.WriteKeyword("short");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("short");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
-		protected virtual void WriteColumnString() => writer.WriteKeyword("string");
+		protected virtual void WriteColumnString() => Writer.WriteKeyword("string");
 
 		protected virtual void WriteColumnTimeSpan(bool isNullable)
 		{
-			writer.WriteUserType("TimeSpan");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteUserType("TimeSpan");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnUInt(bool isNullable)
 		{
-			writer.WriteKeyword("uint");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("uint");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnULong(bool isNullable)
 		{
-			writer.WriteKeyword("ulong");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("ulong");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
 		protected virtual void WriteColumnUShort(bool isNullable)
 		{
-			writer.WriteKeyword("ushort");
-			if (isNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			Writer.WriteKeyword("ushort");
+			if (isNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
@@ -3094,23 +3008,17 @@ namespace POCOGenerator.POCOIterators
 		{
 			string cleanColumnName = NameHelper.CleanName(enumColumn.Column.ColumnName);
 			WriteEnumName(cleanColumnName);
-			if (enumColumn.Column.IsNullable || settings.POCOIteratorSettings.StructTypesNullable)
+			if (enumColumn.Column.IsNullable || Settings.POCOIteratorSettings.StructTypesNullable)
 			{
-				writer.Write("?");
+				Writer.Write("?");
 			}
 		}
 
-		#endregion
-
-		#endregion
-
-		#region Enums
-
 		protected virtual List<IEnumColumn> GetEnumColumns(IDbObjectTraverse dbObject)
 		{
-			if (support.IsSupportEnumDataType)
+			if (Support.IsSupportEnumDataType)
 			{
-				if (settings.POCOIteratorSettings.EnumSQLTypeToString == false && (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
+				if (!Settings.POCOIteratorSettings.EnumSQLTypeToString && (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
 				{
 					if (dbObject.Columns != null && dbObject.Columns.Any(c => c is IEnumColumn))
 					{
@@ -3129,7 +3037,7 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEnum(IEnumColumn enumColumn, bool isLastColumn, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.WriteLine();
+			Writer.WriteLine();
 
 			string cleanColumnName = NameHelper.CleanName(enumColumn.Column.ColumnName);
 
@@ -3170,7 +3078,7 @@ namespace POCOGenerator.POCOIterators
 				string literal = literals[i];
 
 				string literalValue = "1";
-				if (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort)
+				if (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort)
 				{
 					literalValue += "ul";
 				}
@@ -3191,51 +3099,51 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEnumFlags(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("Flags");
-			writer.Write("]");
-			writer.WriteLine();
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("Flags");
+			Writer.Write("]");
+			Writer.WriteLine();
 		}
 
 		protected virtual void WriteEnumStart(string columnName, bool isSetDataType, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteKeyword("public");
-			writer.Write(" ");
-			writer.WriteKeyword("enum");
-			writer.Write(" ");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteKeyword("public");
+			Writer.Write(" ");
+			Writer.WriteKeyword("enum");
+			Writer.Write(" ");
 			WriteEnumName(columnName);
-			writer.Write(" : ");
-			if (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort)
+			Writer.Write(" : ");
+			if (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort)
 			{
 				if (isSetDataType)
 				{
-					writer.WriteKeyword("ulong");
+					Writer.WriteKeyword("ulong");
 				}
 				else
 				{
-					writer.WriteKeyword("ushort");
+					Writer.WriteKeyword("ushort");
 				}
 			}
-			else if (settings.POCOIteratorSettings.EnumSQLTypeToEnumInt)
+			else if (Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt)
 			{
-				writer.WriteKeyword("int");
+				Writer.WriteKeyword("int");
 			}
-			writer.WriteLine();
+			Writer.WriteLine();
 
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("{");
-			writer.WriteLine();
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("{");
+			Writer.WriteLine();
 		}
 
 		protected virtual void WriteEnumName(string columnName)
 		{
 			WriteEnumNamePrefix();
-			writer.WriteUserType(columnName);
+			Writer.WriteUserType(columnName);
 			WriteEnumNameSuffix();
 		}
 
@@ -3243,44 +3151,38 @@ namespace POCOGenerator.POCOIterators
 		{
 		}
 
-		protected virtual void WriteEnumNameSuffix() => writer.WriteUserType("_Values");
+		protected virtual void WriteEnumNameSuffix() => Writer.WriteUserType("_Values");
 
 		protected virtual void WriteEnumLiteral(string literal, string literalValue, bool isLastLiteral, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write(literal);
-			writer.Write(" = ");
-			writer.Write(literalValue);
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write(literal);
+			Writer.Write(" = ");
+			Writer.Write(literalValue);
 			if (isLastLiteral)
 			{
-				writer.Write(",");
+				Writer.Write(",");
 			}
 
-			writer.WriteLine();
+			Writer.WriteLine();
 		}
 
 		protected virtual void WriteEnumEnd(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("}");
-			writer.WriteLine();
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("}");
+			Writer.WriteLine();
 		}
-
-		#endregion
-
-		#region Navigation Properties
 
 		protected virtual bool IsNavigableObject(IDbObjectTraverse dbObject)
 		{
 			return
-				settings.NavigationPropertiesIteratorSettings.Enable &&
+				Settings.NavigationPropertiesIteratorSettings.Enable &&
 				dbObject.DbObjectType == DbObjectType.Table;
 		}
-
-		#region Get Navigation Properties
 
 		protected virtual List<INavigationProperty> GetNavigationProperties(IDbObjectTraverse dbObject)
 		{
@@ -3296,9 +3198,9 @@ namespace POCOGenerator.POCOIterators
 
 					foreach (IForeignKey fk in table.ForeignKeys)
 					{
-						if ((settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
+						if ((Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
 							fk.NavigationPropertyFromForeignToPrimary.IsVisibleWhenManyToManyJoinTableIsOn) ||
-							(settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable == false &&
+							(!Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
 							fk.NavigationPropertyFromForeignToPrimary.IsVisibleWhenManyToManyJoinTableIsOff))
 						{
 							string className = GetClassName(
@@ -3320,9 +3222,9 @@ namespace POCOGenerator.POCOIterators
 
 					foreach (IForeignKey fk in table.PrimaryForeignKeys)
 					{
-						if ((settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
+						if ((Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
 							fk.NavigationPropertyFromPrimaryToForeign.IsVisibleWhenManyToManyJoinTableIsOn) ||
-							(settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable == false &&
+							(!Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
 							fk.NavigationPropertyFromPrimaryToForeign.IsVisibleWhenManyToManyJoinTableIsOff))
 						{
 							string className = GetClassName(
@@ -3340,9 +3242,9 @@ namespace POCOGenerator.POCOIterators
 						{
 							foreach (INavigationProperty vnp in fk.VirtualNavigationProperties)
 							{
-								if ((settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
+								if ((Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
 									vnp.IsVisibleWhenManyToManyJoinTableIsOn) ||
-									(settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable == false &&
+									(!Settings.NavigationPropertiesIteratorSettings.ManyToManyJoinTable &&
 									vnp.IsVisibleWhenManyToManyJoinTableIsOff))
 								{
 									IForeignKey vfk = vnp.ForeignKey;
@@ -3412,19 +3314,15 @@ namespace POCOGenerator.POCOIterators
 			}
 		}
 
-		#endregion
-
-		#region Write Navigation Properties
-
 		protected virtual void WriteNavigationProperties(List<INavigationProperty> navigationProperties, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
 			if (IsNavigableObject(dbObject))
 			{
 				if (navigationProperties.HasAny())
 				{
-					if (settings.POCOIteratorSettings.NewLineBetweenMembers == false)
+					if (!Settings.POCOIteratorSettings.NewLineBetweenMembers)
 					{
-						writer.WriteLine();
+						Writer.WriteLine();
 					}
 
 					foreach (INavigationProperty np in navigationProperties)
@@ -3437,9 +3335,9 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteNavigationProperty(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			if (settings.POCOIteratorSettings.NewLineBetweenMembers)
+			if (Settings.POCOIteratorSettings.NewLineBetweenMembers)
 			{
-				writer.WriteLine();
+				Writer.WriteLine();
 			}
 
 			WriteNavigationPropertyComments(navigationProperty, dbObject, namespaceOffset);
@@ -3458,36 +3356,36 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteNavigationPropertyComments(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			if (settings.NavigationPropertiesIteratorSettings.Comments)
+			if (Settings.NavigationPropertiesIteratorSettings.Comments)
 			{
-				if (navigationProperty.IsVirtualNavigationProperty == false)
+				if (!navigationProperty.IsVirtualNavigationProperty)
 				{
 					foreach (IForeignKeyColumn fkc in navigationProperty.ForeignKey.ForeignKeyColumns)
 					{
-						writer.Write(namespaceOffset);
-						writer.Write(settings.POCOIteratorSettings.Tab);
-						writer.WriteComment("// ");
+						Writer.Write(namespaceOffset);
+						Writer.Write(Settings.POCOIteratorSettings.Tab);
+						Writer.WriteComment("// ");
 						if (navigationProperty.ForeignKey.ForeignTable is ISchema schemaFT)
 						{
-							writer.WriteComment(schemaFT.Schema);
-							writer.WriteComment(".");
+							Writer.WriteComment(schemaFT.Schema);
+							Writer.WriteComment(".");
 						}
-						writer.WriteComment(navigationProperty.ForeignKey.ForeignTable.Name);
-						writer.WriteComment(".");
-						writer.WriteComment(fkc.ForeignTableColumn.ColumnName);
-						writer.WriteComment(" -> ");
+						Writer.WriteComment(navigationProperty.ForeignKey.ForeignTable.Name);
+						Writer.WriteComment(".");
+						Writer.WriteComment(fkc.ForeignTableColumn.ColumnName);
+						Writer.WriteComment(" -> ");
 						if (navigationProperty.ForeignKey.PrimaryTable is ISchema schemaPT)
 						{
-							writer.WriteComment(schemaPT.Schema);
-							writer.WriteComment(".");
+							Writer.WriteComment(schemaPT.Schema);
+							Writer.WriteComment(".");
 						}
-						writer.WriteComment(navigationProperty.ForeignKey.PrimaryTable.Name);
-						writer.WriteComment(".");
-						writer.WriteComment(fkc.PrimaryTableColumn.ColumnName);
-						writer.WriteComment(" (");
-						writer.WriteComment(navigationProperty.ForeignKey.Name);
-						writer.WriteComment(")");
-						writer.WriteLine();
+						Writer.WriteComment(navigationProperty.ForeignKey.PrimaryTable.Name);
+						Writer.WriteComment(".");
+						Writer.WriteComment(fkc.PrimaryTableColumn.ColumnName);
+						Writer.WriteComment(" (");
+						Writer.WriteComment(navigationProperty.ForeignKey.Name);
+						Writer.WriteComment(")");
+						Writer.WriteLine();
 					}
 				}
 			}
@@ -3498,88 +3396,84 @@ namespace POCOGenerator.POCOIterators
 		protected virtual void WriteNavigationPropertySingular(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
 			WriteNavigationPropertyStart(namespaceOffset);
-			writer.WriteUserType(navigationProperty.ClassName);
-			writer.Write(" ");
-			writer.Write(navigationProperty.ToString());
+			Writer.WriteUserType(navigationProperty.ClassName);
+			Writer.Write(" ");
+			Writer.Write(navigationProperty.ToString());
 			WriteNavigationPropertyEnd();
-			writer.WriteLine();
+			Writer.WriteLine();
 		}
 
 		protected virtual void WriteNavigationPropertyCollection(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
 			WriteNavigationPropertyStart(namespaceOffset);
-			if (settings.NavigationPropertiesIteratorSettings.ListNavigationProperties)
+			if (Settings.NavigationPropertiesIteratorSettings.ListNavigationProperties)
 			{
-				writer.WriteUserType("List");
+				Writer.WriteUserType("List");
 			}
-			else if (settings.NavigationPropertiesIteratorSettings.IListNavigationProperties)
+			else if (Settings.NavigationPropertiesIteratorSettings.IListNavigationProperties)
 			{
-				writer.WriteUserType("IList");
+				Writer.WriteUserType("IList");
 			}
-			else if (settings.NavigationPropertiesIteratorSettings.ICollectionNavigationProperties)
+			else if (Settings.NavigationPropertiesIteratorSettings.ICollectionNavigationProperties)
 			{
-				writer.WriteUserType("ICollection");
+				Writer.WriteUserType("ICollection");
 			}
-			else if (settings.NavigationPropertiesIteratorSettings.IEnumerableNavigationProperties)
+			else if (Settings.NavigationPropertiesIteratorSettings.IEnumerableNavigationProperties)
 			{
-				writer.WriteUserType("IEnumerable");
+				Writer.WriteUserType("IEnumerable");
 			}
 
-			writer.Write("<");
-			writer.WriteUserType(navigationProperty.ClassName);
-			writer.Write("> ");
-			writer.Write(navigationProperty.ToString());
+			Writer.Write("<");
+			Writer.WriteUserType(navigationProperty.ClassName);
+			Writer.Write("> ");
+			Writer.Write(navigationProperty.ToString());
 			WriteNavigationPropertyEnd();
-			writer.WriteLine();
+			Writer.WriteLine();
 		}
 
 		protected virtual void WriteNavigationPropertyStart(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.WriteKeyword("public");
-			writer.Write(" ");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.WriteKeyword("public");
+			Writer.Write(" ");
 
-			if (settings.POCOIteratorSettings.Properties && settings.NavigationPropertiesIteratorSettings.VirtualNavigationProperties)
+			if (Settings.POCOIteratorSettings.Properties && Settings.NavigationPropertiesIteratorSettings.VirtualNavigationProperties)
 			{
-				writer.WriteKeyword("virtual");
-				writer.Write(" ");
+				Writer.WriteKeyword("virtual");
+				Writer.Write(" ");
 			}
-			else if (settings.POCOIteratorSettings.Properties && settings.NavigationPropertiesIteratorSettings.OverrideNavigationProperties)
+			else if (Settings.POCOIteratorSettings.Properties && Settings.NavigationPropertiesIteratorSettings.OverrideNavigationProperties)
 			{
-				writer.WriteKeyword("override");
-				writer.Write(" ");
+				Writer.WriteKeyword("override");
+				Writer.Write(" ");
 			}
 		}
 
 		protected virtual void WriteNavigationPropertyEnd()
 		{
-			if (settings.POCOIteratorSettings.Properties)
+			if (Settings.POCOIteratorSettings.Properties)
 			{
-				writer.Write(" { ");
-				writer.WriteKeyword("get");
-				writer.Write("; ");
-				writer.WriteKeyword("set");
-				writer.Write("; }");
+				Writer.Write(" { ");
+				Writer.WriteKeyword("get");
+				Writer.Write("; ");
+				Writer.WriteKeyword("set");
+				Writer.Write("; }");
 			}
-			else if (settings.POCOIteratorSettings.Fields)
+			else if (Settings.POCOIteratorSettings.Fields)
 			{
-				writer.Write(";");
+				Writer.Write(";");
 			}
 		}
 
-		#endregion
-
-		#region EF
-
 		protected virtual void SetNavigationPropertiesMultipleRelationships(List<INavigationProperty> navigationProperties)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Enable)
+			if (Settings.EFAnnotationsIteratorSettings.Enable)
 			{
 				if (navigationProperties.HasAny())
 				{
 					IEnumerable<INavigationProperty> multipleRels = navigationProperties
-						.GroupBy(np => new { np.ForeignKey.ForeignTable, np.ForeignKey.PrimaryTable })
+						.GroupBy(np => (np.ForeignKey.ForeignTable, np.ForeignKey.PrimaryTable))
 						.Where(g => g.Count() > 1)
 						.SelectMany(g => g);
 
@@ -3593,9 +3487,9 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteEFNavigationPropertyAttributes(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			if (settings.EFAnnotationsIteratorSettings.Enable)
+			if (Settings.EFAnnotationsIteratorSettings.Enable)
 			{
-				if (settings.EFAnnotationsIteratorSettings.ForeignKeyAndInverseProperty)
+				if (Settings.EFAnnotationsIteratorSettings.ForeignKeyAndInverseProperty)
 				{
 					if (IsNavigableObject(dbObject))
 					{
@@ -3604,7 +3498,7 @@ namespace POCOGenerator.POCOIterators
 							WriteNavigationPropertyForeignKeyAttribute(navigationProperty, dbObject, namespaceOffset);
 						}
 
-						if (navigationProperty.IsFromForeignToPrimary == false && navigationProperty.HasMultipleRelationships)
+						if (!navigationProperty.IsFromForeignToPrimary && navigationProperty.HasMultipleRelationships)
 						{
 							WriteNavigationPropertyInversePropertyAttribute(navigationProperty, dbObject, namespaceOffset);
 						}
@@ -3615,64 +3509,52 @@ namespace POCOGenerator.POCOIterators
 
 		protected virtual void WriteNavigationPropertyForeignKeyAttribute(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("ForeignKey");
-			writer.Write("(");
-			writer.WriteString("\"");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("ForeignKey");
+			Writer.Write("(");
+			Writer.WriteString("\"");
 			if (navigationProperty.HasMultipleRelationships)
 			{
-				writer.WriteString(string.Join(", ", navigationProperty.ForeignKey.ForeignKeyColumns.Select(c => c.ForeignTableColumn.ColumnName)));
+				Writer.WriteString(String.Join(", ", navigationProperty.ForeignKey.ForeignKeyColumns.Select(c => c.ForeignTableColumn.ColumnName)));
 			}
 			else
 			{
-				writer.WriteString(string.Join(", ", navigationProperty.ForeignKey.ForeignKeyColumns.Select(c => c.PrimaryTableColumn.ColumnName)));
+				Writer.WriteString(String.Join(", ", navigationProperty.ForeignKey.ForeignKeyColumns.Select(c => c.PrimaryTableColumn.ColumnName)));
 			}
 
-			writer.WriteString("\"");
-			writer.WriteLine(")]");
+			Writer.WriteString("\"");
+			Writer.WriteLine(")]");
 		}
 
 		protected virtual void WriteNavigationPropertyInversePropertyAttribute(INavigationProperty navigationProperty, IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.Write(settings.POCOIteratorSettings.Tab);
-			writer.Write("[");
-			writer.WriteUserType("InverseProperty");
-			writer.Write("(");
-			writer.WriteString("\"");
-			writer.WriteString(navigationProperty.InverseProperty.ToString());
-			writer.WriteString("\"");
-			writer.WriteLine(")]");
+			Writer.Write(namespaceOffset);
+			Writer.Write(Settings.POCOIteratorSettings.Tab);
+			Writer.Write("[");
+			Writer.WriteUserType("InverseProperty");
+			Writer.Write("(");
+			Writer.WriteString("\"");
+			Writer.WriteString(navigationProperty.InverseProperty.ToString());
+			Writer.WriteString("\"");
+			Writer.WriteLine(")]");
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Class End
 
 		protected virtual void WriteClassEnd(IDbObjectTraverse dbObject, string namespaceOffset) => WriteDbClassEnd(dbObject, namespaceOffset);
 
 		protected virtual void WriteDbClassEnd(IDbObjectTraverse dbObject, string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.WriteLine("}");
+			Writer.Write(namespaceOffset);
+			Writer.WriteLine("}");
 		}
-
-		#endregion
-
-		#region Namespace End
 
 		protected virtual void WriteNamespaceEnd(string @namespace)
 		{
-			if (string.IsNullOrEmpty(@namespace) == false)
+			if (!String.IsNullOrEmpty(@namespace))
 			{
-				writer.WriteLine("}");
+				Writer.WriteLine("}");
 			}
 		}
-
-		#endregion
 	}
 }

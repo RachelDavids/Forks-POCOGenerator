@@ -1,174 +1,193 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
+
 using POCOGenerator;
 using POCOGenerator.Objects;
 
 namespace ServerTreeDemo
 {
-    class Program
-    {
-        static void Main()
-        {
-            bool redirectToFile = true;
+	internal class Program
+	{
+		private static void Main()
+		{
+			bool redirectToFile = true;
 
-            if (redirectToFile)
-                ToFile();
-            else
-                ToConsole();
-        }
+			if (redirectToFile)
+			{
+				ToFile();
+			}
+			else
+			{
+				ToConsole();
+			}
+		}
 
-        private static void ToFile()
-        {
-            using (FileStream fs = File.Open(@"ServerTreeDemo.txt", FileMode.Create))
-            {
-                using (StreamWriter sw = new StreamWriter(fs))
-                {
-                    TextWriter writer = Console.Out;
-                    Console.SetOut(sw);
-                    ToConsole(true);
-                    Console.SetOut(writer);
-                }
-            }
-        }
+		private static void ToFile()
+		{
+			using (FileStream fs = File.Open(@"ServerTreeDemo.txt", FileMode.Create))
+			{
+				using (StreamWriter sw = new(fs))
+				{
+					TextWriter writer = Console.Out;
+					Console.SetOut(sw);
+					ToConsole(true);
+					Console.SetOut(writer);
+				}
+			}
+		}
 
-        private static void ToConsole(bool redirectToFile = false)
-        {
-            IGenerator generator = GeneratorFactory.GetGenerator();
-            try { generator.Settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt"); } catch { }
-            if (string.IsNullOrEmpty(generator.Settings.Connection.ConnectionString))
-                generator.Settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
-            generator.Settings.DatabaseObjects.IncludeAll = true;
+		private static void ToConsole(bool redirectToFile = false)
+		{
+			IGenerator generator = GeneratorFactory.GetGenerator();
+			try { generator.Settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt"); } catch { }
+			if (String.IsNullOrEmpty(generator.Settings.Connection.ConnectionString))
+			{
+				generator.Settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
+			}
 
-            generator.ServerBuilt += (object sender, ServerBuiltEventArgs e) =>
-            {
-                Server server = e.Server;
-                PrintServer(server);
+			generator.Settings.DatabaseObjects.IncludeAll = true;
 
-                // do not generate classes
-                e.Stop = true;
-            };
+			generator.ServerBuilt += (object sender, ServerBuiltEventArgs e) => {
+				Server server = e.Server;
+				PrintServer(server);
 
-            GeneratorResults results = generator.Generate();
+				// do not generate classes
+				e.Stop = true;
+			};
 
-            PrintError(results, generator.Error);
+			GeneratorResults results = generator.Generate();
 
-            if (redirectToFile == false)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Press any key to continue . . .");
-                Console.ReadKey(true);
-            }
-        }
+			PrintError(results, generator.Error);
 
-        private static void PrintError(GeneratorResults results, Exception Error)
-        {
-            bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
+			if (!redirectToFile)
+			{
+				Console.WriteLine();
+				Console.WriteLine("Press any key to continue . . .");
+				Console.ReadKey(true);
+			}
+		}
 
-            if (isError)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Error Result: {0}", results);
-            }
+		private static void PrintError(GeneratorResults results, Exception error)
+		{
+			bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
 
-            if (Error != null)
-            {
-                Console.WriteLine("Error: {0}", Error.Message);
-                Console.WriteLine("Error Stack Trace:");
-                Console.WriteLine(Error.StackTrace);
-            }
-        }
+			if (isError)
+			{
+				Console.WriteLine();
+				Console.WriteLine("Error Result: {0}", results);
+			}
 
-        private const int INDENT_SIZE = 4;
+			if (error != null)
+			{
+				Console.WriteLine("Error: {0}", error.Message);
+				Console.WriteLine("Error Stack Trace:");
+				Console.WriteLine(error.StackTrace);
+			}
+		}
 
-        private static void PrintServer(Server server)
-        {
-            Console.WriteLine(server);
-            PrintDatabases(server, INDENT_SIZE);
-        }
+		private const int INDENT_SIZE = 4;
 
-        private static void PrintDatabases(Server server, int indent)
-        {
-            if (server.Databases.Any())
-            {
-                Console.WriteLine("{0}{1}", new string(' ', indent), "Databases");
+		private static void PrintServer(Server server)
+		{
+			Console.WriteLine(server);
+			PrintDatabases(server, INDENT_SIZE);
+		}
 
-                indent += INDENT_SIZE;
-                foreach (Database database in server.Databases)
-                    PrintDatabase(database, indent);
-            }
-        }
+		private static void PrintDatabases(Server server, int indent)
+		{
+			if (server.Databases.Any())
+			{
+				Console.WriteLine("{0}{1}", new string(' ', indent), "Databases");
 
-        private static void PrintDatabase(Database database, int indent)
-        {
-            Console.WriteLine("{0}{1}", new string(' ', indent), database);
+				indent += INDENT_SIZE;
+				foreach (Database database in server.Databases)
+				{
+					PrintDatabase(database, indent);
+				}
+			}
+		}
 
-            indent += INDENT_SIZE;
-            PrintTables(database, indent);
-            PrintViews(database, indent);
-            PrintProcedures(database, indent);
-            PrintFunctions(database, indent);
-            PrintTVPs(database, indent);
-        }
+		private static void PrintDatabase(Database database, int indent)
+		{
+			Console.WriteLine("{0}{1}", new string(' ', indent), database);
 
-        private static void PrintTables(Database database, int indent)
-        {
-            if (database.Tables.Any())
-            {
-                Console.WriteLine("{0}{1}", new string(' ', indent), "Tables");
+			indent += INDENT_SIZE;
+			PrintTables(database, indent);
+			PrintViews(database, indent);
+			PrintProcedures(database, indent);
+			PrintFunctions(database, indent);
+			PrintTVPs(database, indent);
+		}
 
-                indent += INDENT_SIZE;
-                foreach (Table table in database.Tables)
-                    Console.WriteLine("{0}{1}", new string(' ', indent), table);
-            }
-        }
+		private static void PrintTables(Database database, int indent)
+		{
+			if (database.Tables.Any())
+			{
+				Console.WriteLine("{0}{1}", new string(' ', indent), "Tables");
 
-        private static void PrintViews(Database database, int indent)
-        {
-            if (database.Views.Any())
-            {
-                Console.WriteLine("{0}{1}", new string(' ', indent), "Views");
+				indent += INDENT_SIZE;
+				foreach (Table table in database.Tables)
+				{
+					Console.WriteLine("{0}{1}", new string(' ', indent), table);
+				}
+			}
+		}
 
-                indent += INDENT_SIZE;
-                foreach (View view in database.Views)
-                    Console.WriteLine("{0}{1}", new string(' ', indent), view);
-            }
-        }
+		private static void PrintViews(Database database, int indent)
+		{
+			if (database.Views.Any())
+			{
+				Console.WriteLine("{0}{1}", new string(' ', indent), "Views");
 
-        private static void PrintProcedures(Database database, int indent)
-        {
-            if (database.Procedures.Any())
-            {
-                Console.WriteLine("{0}{1}", new string(' ', indent), "Stored Procedures");
+				indent += INDENT_SIZE;
+				foreach (View view in database.Views)
+				{
+					Console.WriteLine("{0}{1}", new string(' ', indent), view);
+				}
+			}
+		}
 
-                indent += INDENT_SIZE;
-                foreach (Procedure procedure in database.Procedures)
-                    Console.WriteLine("{0}{1}", new string(' ', indent), procedure);
-            }
-        }
+		private static void PrintProcedures(Database database, int indent)
+		{
+			if (database.Procedures.Any())
+			{
+				Console.WriteLine("{0}{1}", new string(' ', indent), "Stored Procedures");
 
-        private static void PrintFunctions(Database database, int indent)
-        {
-            if (database.Functions.Any())
-            {
-                Console.WriteLine("{0}{1}", new string(' ', indent), "Table-valued Functions");
+				indent += INDENT_SIZE;
+				foreach (Procedure procedure in database.Procedures)
+				{
+					Console.WriteLine("{0}{1}", new string(' ', indent), procedure);
+				}
+			}
+		}
 
-                indent += INDENT_SIZE;
-                foreach (Function function in database.Functions)
-                    Console.WriteLine("{0}{1}", new string(' ', indent), function);
-            }
-        }
+		private static void PrintFunctions(Database database, int indent)
+		{
+			if (database.Functions.Any())
+			{
+				Console.WriteLine("{0}{1}", new string(' ', indent), "Table-valued Functions");
 
-        private static void PrintTVPs(Database database, int indent)
-        {
-            if (database.TVPs.Any())
-            {
-                Console.WriteLine("{0}{1}", new string(' ', indent), "User-Defined Table Types");
+				indent += INDENT_SIZE;
+				foreach (Function function in database.Functions)
+				{
+					Console.WriteLine("{0}{1}", new string(' ', indent), function);
+				}
+			}
+		}
 
-                indent += INDENT_SIZE;
-                foreach (TVP tvp in database.TVPs)
-                    Console.WriteLine("{0}{1}", new string(' ', indent), tvp);
-            }
-        }
-    }
+		private static void PrintTVPs(Database database, int indent)
+		{
+			if (database.TVPs.Any())
+			{
+				Console.WriteLine("{0}{1}", new string(' ', indent), "User-Defined Table Types");
+
+				indent += INDENT_SIZE;
+				foreach (TVP tvp in database.TVPs)
+				{
+					Console.WriteLine("{0}{1}", new string(' ', indent), tvp);
+				}
+			}
+		}
+	}
 }

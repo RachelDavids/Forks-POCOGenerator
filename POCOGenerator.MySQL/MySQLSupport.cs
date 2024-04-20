@@ -1,17 +1,16 @@
-﻿using System;
 using POCOGenerator.Db.DbObjects;
 
 namespace POCOGenerator.MySQL
 {
-    public class MySQLSupport : DbSupportBase
-    {
-        internal MySQLSupport()
-            : base()
-        {
-            IsSupportSchema = false;
-            IsSupportTableFunctions = false;
-            IsSupportTVPs = false;
-            IsSupportEnumDataType = true;
-        }
-    }
+	public sealed class MySQLSupport
+		: DbSupportBase
+	{
+		internal MySQLSupport()
+		{
+			IsSupportSchema = false;
+			IsSupportTableFunctions = false;
+			IsSupportTVPs = false;
+			IsSupportEnumDataType = true;
+		}
+	}
 }

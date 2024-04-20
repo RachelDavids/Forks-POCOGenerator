@@ -1,23 +1,22 @@
-﻿using System;
+using System;
+
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.SQLServer.DbObjects
 {
-    internal class ProcedureColumn : IProcedureColumn
-    {
-        #region Database Properties
+	internal class ProcedureColumn : IProcedureColumn
+	{
+		public string ColumnName { get; set; }
+		public int? ColumnOrdinal { get; set; }
+		public int? ColumnSize { get; set; }
+		public int? NumericPrecision { get; set; } // originally short?
+		public int? NumericScale { get; set; } // originally short?
+		public bool? AllowDBNull { get; set; }
+		public bool IsIdentity { get; set; } // originally bool?
+		public bool? IsLong { get; set; }
+		public string DataTypeName { get; set; }
 
-        public string ColumnName { get; set; }
-        public int? ColumnOrdinal { get; set; }
-        public int? ColumnSize { get; set; }
-        public int? NumericPrecision { get; set; } // originally short?
-        public int? NumericScale { get; set; } // originally short?
-        public bool? AllowDBNull { get; set; }
-        public bool IsIdentity { get; set; } // originally bool?
-        public bool? IsLong { get; set; }
-        public string DataTypeName { get; set; }
-
-        /* not in use. reduce memory.
+		/* not in use. reduce memory.
         public bool? IsUnique { get; set; }
         public bool? IsKey { get; set; }
         public string BaseServerName { get; set; }
@@ -42,76 +41,65 @@ namespace POCOGenerator.SQLServer.DbObjects
         public bool? IsColumnSet { get; set; }
         */
 
-        #endregion
+		public int? StringPrecision => IsLong == true ? -1 : ColumnSize;
+		public int? DateTimePrecision => NumericScale;
+		public bool IsUnsigned => false;
+		public bool IsNullable => AllowDBNull ?? false;
+		public bool IsComputed { get => false; set { } }
 
-        #region IColumn
+		public string DataTypeDisplay {
+			get {
+				if (DataTypeName == "xml")
+				{
+					return "XML";
+				}
+				// sys.geography, sys.geometry, sys.hierarchyid
+				int sys = DataTypeName.IndexOf("sys.", StringComparison.InvariantCulture);
+				return sys > -1
+						   ? DataTypeName[(sys + 4)..]
+						   : DataTypeName;
+			}
+		}
 
-        public int? StringPrecision { get { return (IsLong == true ? -1 : ColumnSize); } }
-        public int? DateTimePrecision { get { return NumericScale; } }
-        public bool IsUnsigned { get { return false; } }
-        public bool IsNullable { get { return (AllowDBNull ?? false); } }
-        public bool IsComputed { get { return false; } set { } }
+		public string Precision {
+			get {
+				string precision = null;
 
-        public string DataTypeDisplay
-        {
-            get
-            {
-                if (DataTypeName == "xml")
-                    return "XML";
-                // sys.geography, sys.geometry, sys.hierarchyid
-                if (DataTypeName.Contains("sys."))
-                    return DataTypeName.Substring(DataTypeName.IndexOf("sys.") + 4);
-                return DataTypeName;
-            }
-        }
+				string dataType = DataTypeName.ToLower();
 
-        public string Precision
-        {
-            get
-            {
-                string precision = null;
+				if (dataType is "binary" or "varbinary" or "char" or "nchar" or "nvarchar" or "varchar")
+				{
+					if (IsLong == true)
+					{
+						precision = "(max)";
+					}
+					else if (ColumnSize > 0)
+					{
+						precision = "(" + ColumnSize + ")";
+					}
+				}
+				else if (dataType is "decimal" or "numeric")
+				{
+					precision = "(" + NumericPrecision + "," + NumericScale + ")";
+				}
+				else if (dataType is "datetime2" or "datetimeoffset" or "time")
+				{
+					precision = "(" + DateTimePrecision + ")";
+				}
+				else if (dataType == "xml")
+				{
+					precision = "(.)";
+				}
 
-                string dataType = DataTypeName.ToLower();
+				return precision;
+			}
+		}
 
-                if (dataType == "binary" || dataType == "varbinary" || dataType == "char" || dataType == "nchar" || dataType == "nvarchar" || dataType == "varchar")
-                {
-                    if (IsLong == true)
-                        precision = "(max)";
-                    else if (ColumnSize > 0)
-                        precision = "(" + ColumnSize + ")";
-                }
-                else if (dataType == "decimal" || dataType == "numeric")
-                {
-                    precision = "(" + NumericPrecision + "," + NumericScale + ")";
-                }
-                else if (dataType == "datetime2" || dataType == "datetimeoffset" || dataType == "time")
-                {
-                    precision = "(" + DateTimePrecision + ")";
-                }
-                else if (dataType == "xml")
-                {
-                    precision = "(.)";
-                }
+		public IProcedure Procedure { get; set; }
 
-                return precision;
-            }
-        }
-
-        #endregion
-
-        #region IProcedureColumn
-
-        public IProcedure Procedure { get; set; }
-
-        #endregion
-
-        #region IDbObject
-
-        public override string ToString()
-        {
-            return ColumnName + " (" + DataTypeDisplay + Precision + ", " + (IsNullable ? "null" : "not null") + ")";
-        }
-
-        #endregion
-    }
+		public override string ToString()
+		{
+			return ColumnName + " (" + DataTypeDisplay + Precision + ", " + (IsNullable ? "null" : "not null") + ")";
+		}
+	}
 }

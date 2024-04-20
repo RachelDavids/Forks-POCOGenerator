@@ -97,7 +97,7 @@ namespace POCOGeneratorUI
 
 		private void chkUsing_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkUsing.Checked == false && chkUsingInsideNamespace.Checked)
+			if (!chkUsing.Checked && chkUsingInsideNamespace.Checked)
 			{
 				SetCheckBox(chkUsingInsideNamespace, chkUsingInsideNamespace_CheckedChanged, false);
 			}
@@ -106,7 +106,7 @@ namespace POCOGeneratorUI
 
 		private void chkUsingInsideNamespace_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkUsingInsideNamespace.Checked && chkUsing.Checked == false)
+			if (chkUsingInsideNamespace.Checked && !chkUsing.Checked)
 			{
 				SetCheckBox(chkUsing, chkUsing_CheckedChanged, true);
 			}
@@ -120,7 +120,7 @@ namespace POCOGeneratorUI
 
 		private void chkComplexTypes_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkComplexTypes.Checked == false)
+			if (!chkComplexTypes.Checked)
 			{
 				SetCheckBox(chkEFComplexType, chkEFComplexType_CheckedChanged, false);
 			}
@@ -206,7 +206,7 @@ namespace POCOGeneratorUI
 
 		private void chkNavigationProperties_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkNavigationProperties.Checked == false)
+			if (!chkNavigationProperties.Checked)
 			{
 				SetCheckBox(chkVirtualNavigationProperties, chkVirtualNavigationProperties_CheckedChanged, false);
 				SetCheckBox(chkOverrideNavigationProperties, chkOverrideNavigationProperties_CheckedChanged, false);
@@ -219,7 +219,7 @@ namespace POCOGeneratorUI
 
 		private void chkVirtualNavigationProperties_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkVirtualNavigationProperties.Checked && chkNavigationProperties.Checked == false)
+			if (chkVirtualNavigationProperties.Checked && !chkNavigationProperties.Checked)
 			{
 				SetCheckBox(chkNavigationProperties, chkNavigationProperties_CheckedChanged, true);
 			}
@@ -232,7 +232,7 @@ namespace POCOGeneratorUI
 
 		private void chkOverrideNavigationProperties_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkOverrideNavigationProperties.Checked && chkNavigationProperties.Checked == false)
+			if (chkOverrideNavigationProperties.Checked && !chkNavigationProperties.Checked)
 			{
 				SetCheckBox(chkNavigationProperties, chkNavigationProperties_CheckedChanged, true);
 			}
@@ -245,7 +245,7 @@ namespace POCOGeneratorUI
 
 		private void chkManyToManyJoinTable_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkManyToManyJoinTable.Checked && chkNavigationProperties.Checked == false)
+			if (chkManyToManyJoinTable.Checked && !chkNavigationProperties.Checked)
 			{
 				SetCheckBox(chkNavigationProperties, chkNavigationProperties_CheckedChanged, true);
 			}
@@ -254,7 +254,7 @@ namespace POCOGeneratorUI
 
 		private void chkNavigationPropertiesComments_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkNavigationPropertiesComments.Checked && chkNavigationProperties.Checked == false)
+			if (chkNavigationPropertiesComments.Checked && !chkNavigationProperties.Checked)
 			{
 				SetCheckBox(chkNavigationProperties, chkNavigationProperties_CheckedChanged, true);
 			}
@@ -299,7 +299,7 @@ namespace POCOGeneratorUI
 
 		private void chkEF_CheckedChanged(object sender, EventArgs e)
 		{
-			if (chkEF.Checked == false)
+			if (!chkEF.Checked)
 			{
 				SetCheckBox(chkEFColumn, chkEFColumn_CheckedChanged, false);
 				SetCheckBox(chkEFRequired, chkEFRequired_CheckedChanged, false);
@@ -317,7 +317,7 @@ namespace POCOGeneratorUI
 
 		private void CheckEFCheckBox(bool otherEF)
 		{
-			if (otherEF && chkEF.Checked == false)
+			if (otherEF && !chkEF.Checked)
 			{
 				SetCheckBox(chkEF, chkEF_CheckedChanged, true);
 			}
@@ -376,7 +376,7 @@ namespace POCOGeneratorUI
 		private void chkEFComplexType_CheckedChanged(object sender, EventArgs e)
 		{
 			CheckEFCheckBox(chkEFComplexType.Checked);
-			if (chkEFComplexType.Checked && chkComplexTypes.Checked == false)
+			if (chkEFComplexType.Checked && !chkComplexTypes.Checked)
 			{
 				SetCheckBox(chkComplexTypes, chkComplexTypes_CheckedChanged, true);
 			}
@@ -392,7 +392,7 @@ namespace POCOGeneratorUI
 		private void chkEFForeignKeyAndInverseProperty_CheckedChanged(object sender, EventArgs e)
 		{
 			CheckEFCheckBox(chkEFForeignKeyAndInverseProperty.Checked);
-			if (chkEFForeignKeyAndInverseProperty.Checked && chkNavigationProperties.Checked == false)
+			if (chkEFForeignKeyAndInverseProperty.Checked && !chkNavigationProperties.Checked)
 			{
 				SetCheckBox(chkNavigationProperties, chkNavigationProperties_CheckedChanged, true);
 			}

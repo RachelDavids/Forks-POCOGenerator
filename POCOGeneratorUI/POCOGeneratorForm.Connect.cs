@@ -21,7 +21,7 @@ namespace POCOGeneratorUI
 			bool succeeded = GetConnectionString(ref rdbms, ref connectionString, ref error);
 			if (succeeded)
 			{
-				if (rdbms != RDBMS.None && string.IsNullOrEmpty(connectionString) == false)
+				if (rdbms != RDBMS.None && !string.IsNullOrEmpty(connectionString))
 				{
 					IGenerator generator = GetGenerator(rdbms, connectionString);
 					if (generator != null)

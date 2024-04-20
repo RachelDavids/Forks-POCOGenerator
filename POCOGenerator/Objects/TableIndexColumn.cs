@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a column of a database table index.</summary>
-    public sealed class TableIndexColumn : IndexColumn
+	/// <summary>Represents a column of a database table index.</summary>
+	public sealed class TableIndexColumn : IndexColumn
     {
-        internal TableIndexColumn(POCOGenerator.DbObjects.IIndexColumn indexColumn, TableIndex index)
+        internal TableIndexColumn(DbObjects.IIndexColumn indexColumn, TableIndex index)
             : base(indexColumn)
         {
             this.Index = index;
@@ -24,9 +23,11 @@ namespace POCOGenerator.Objects
             get
             {
                 if (this.tableColumn == null)
-                    this.tableColumn = this.Index.Table.TableColumns.First(c => c.InternalEquals(this.indexColumn.TableColumn));
+				{
+					this.tableColumn = this.Index.Table.TableColumns.First(c => c.InternalEquals(this.indexColumn.TableColumn));
+				}
 
-                return this.tableColumn;
+				return this.tableColumn;
             }
         }
     }

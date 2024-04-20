@@ -26,11 +26,11 @@
     <ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="MySql.Data" Version="*" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="*" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="*" />
-    <PackageReference Include="System.Management" Version="8.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Management" Version="*" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="*" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Writers\" />

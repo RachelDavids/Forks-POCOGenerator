@@ -10,35 +10,21 @@ using POCOGenerator.Utils;
 
 namespace POCOGenerator.MySQL
 {
-	internal class MySQLIterator : DbIterator
+	internal class MySQLIterator(IWriter writer, IDbSupport support, IDbIteratorSettings settings)
+		: DbIterator(writer, support, settings)
 	{
-		#region Constructor
-
-		public MySQLIterator(IWriter writer, IDbSupport support, IDbIteratorSettings settings)
-			: base(writer, support, settings)
-		{
-		}
-
-		#endregion
-
-		#region Using
-
 		protected override void WriteSpecialSQLTypesUsingClause(string namespaceOffset)
 		{
-			writer.Write(namespaceOffset);
-			writer.WriteKeyword("using");
-			writer.WriteLine(" System.Data.Spatial;");
+			Writer.Write(namespaceOffset);
+			Writer.WriteKeyword("using");
+			Writer.WriteLine(" System.Data.Spatial;");
 		}
-
-		#endregion
-
-		#region Class Constructor - Column Defaults
 
 		protected override bool IsSQLTypeMappedToBool(string dataTypeName, bool isUnsigned, int? numericPrecision)
 		{
 			return
 				dataTypeName == "bit" ||
-				(dataTypeName == "tinyint" && isUnsigned == false && numericPrecision == 1) ||
+				(dataTypeName == "tinyint" && !isUnsigned && numericPrecision == 1) ||
 				dataTypeName == "bool" ||
 				dataTypeName == "boolean"
 			;
@@ -65,21 +51,21 @@ namespace POCOGenerator.MySQL
 
 		protected override bool IsSQLTypeMappedToSByte(string dataTypeName, bool isUnsigned, int? numericPrecision)
 		{
-			return dataTypeName == "tinyint" && isUnsigned == false && numericPrecision != 1;
+			return dataTypeName == "tinyint" && !isUnsigned && numericPrecision != 1;
 		}
 
 		protected override bool IsSQLTypeMappedToShort(string dataTypeName, bool isUnsigned, int? numericPrecision)
 		{
 			return
-				(dataTypeName == "smallint" && isUnsigned == false) ||
+				(dataTypeName == "smallint" && !isUnsigned) ||
 				dataTypeName == "year";
 		}
 
 		protected override bool IsSQLTypeMappedToInt(string dataTypeName, bool isUnsigned, int? numericPrecision)
 		{
 			return
-				(dataTypeName == "int" && isUnsigned == false) ||
-				(dataTypeName == "integer" && isUnsigned == false) ||
+				(dataTypeName == "int" && !isUnsigned) ||
+				(dataTypeName == "integer" && !isUnsigned) ||
 				dataTypeName == "mediumint" || // same for unsigned
 				(dataTypeName == "smallint" && isUnsigned)
 			;
@@ -88,7 +74,7 @@ namespace POCOGenerator.MySQL
 		protected override bool IsSQLTypeMappedToLong(string dataTypeName, bool isUnsigned, int? numericPrecision)
 		{
 			return
-				(dataTypeName == "bigint" && isUnsigned == false) ||
+				(dataTypeName == "bigint" && !isUnsigned) ||
 				(dataTypeName == "int" && isUnsigned) ||
 				(dataTypeName == "integer" && isUnsigned)
 			;
@@ -97,16 +83,16 @@ namespace POCOGenerator.MySQL
 		protected override bool IsSQLTypeMappedToFloat(string dataTypeName, bool isUnsigned, int? numericPrecision, int? numericScale)
 		{
 			return
-				(dataTypeName == "float" && isUnsigned == false) ||
-				(dataTypeName == "real" && support["REAL_AS_FLOAT"] && isUnsigned == false)
+				(dataTypeName == "float" && !isUnsigned) ||
+				(dataTypeName == "real" && Support["REAL_AS_FLOAT"] && !isUnsigned)
 			;
 		}
 
 		protected override bool IsSQLTypeMappedToDouble(string dataTypeName, bool isUnsigned, int? numericPrecision, int? numericScale)
 		{
 			return
-				(dataTypeName == "double" && isUnsigned == false) ||
-				(dataTypeName == "real" && support["REAL_AS_FLOAT"] == false && isUnsigned == false)
+				(dataTypeName == "double" && !isUnsigned) ||
+				(dataTypeName == "real" && !Support["REAL_AS_FLOAT"] && !isUnsigned)
 			;
 		}
 
@@ -214,7 +200,7 @@ namespace POCOGenerator.MySQL
 		{
 			// MySQL doesn't differentiate between NULL and ""
 			// it returns "" for NULL
-			if (String.IsNullOrEmpty(columnDefault) == false)
+			if (!String.IsNullOrEmpty(columnDefault))
 			{
 				base.WriteColumnDefaultConstructorInitializationString(columnDefault, column, namespaceOffset);
 			}
@@ -334,125 +320,121 @@ namespace POCOGenerator.MySQL
 
 			if (isComment)
 			{
-				if (settings.POCOIteratorSettings.Using == false)
+				if (!Settings.POCOIteratorSettings.Using)
 				{
-					writer.WriteComment("System.Data.Spatial.");
+					Writer.WriteComment("System.Data.Spatial.");
 				}
 
-				writer.WriteComment("DbGeometry");
-				writer.WriteComment(".");
+				Writer.WriteComment("DbGeometry");
+				Writer.WriteComment(".");
 
 				if (dataTypeName == "geometry")
 				{
-					writer.WriteComment("FromText");
+					Writer.WriteComment("FromText");
 				}
 				else if (dataTypeName is "geometrycollection" or "geomcollection")
 				{
-					writer.WriteComment("GeometryCollectionFromText");
+					Writer.WriteComment("GeometryCollectionFromText");
 				}
 				else if (dataTypeName == "linestring")
 				{
-					writer.WriteComment("LineFromText");
+					Writer.WriteComment("LineFromText");
 				}
 				else if (dataTypeName == "multilinestring")
 				{
-					writer.WriteComment("MultiLineFromText");
+					Writer.WriteComment("MultiLineFromText");
 				}
 				else if (dataTypeName == "point")
 				{
-					writer.WriteComment("PointFromText");
+					Writer.WriteComment("PointFromText");
 				}
 				else if (dataTypeName == "multipoint")
 				{
-					writer.WriteComment("MultiPointFromText");
+					Writer.WriteComment("MultiPointFromText");
 				}
 				else if (dataTypeName == "polygon")
 				{
-					writer.WriteComment("PolygonFromText");
+					Writer.WriteComment("PolygonFromText");
 				}
 				else if (dataTypeName == "multipolygon")
 				{
-					writer.WriteComment("MultiPolygonFromText");
+					Writer.WriteComment("MultiPolygonFromText");
 				}
 
-				writer.WriteComment("(");
-				writer.WriteComment("\"");
-				writer.WriteComment(columnDefault.Replace("\\", "\\\\").Replace("\"", "\\\""));
-				writer.WriteComment("\"");
-				writer.WriteComment(", 0)");
+				Writer.WriteComment("(");
+				Writer.WriteComment("\"");
+				Writer.WriteComment(columnDefault.Replace("\\", "\\\\").Replace("\"", "\\\""));
+				Writer.WriteComment("\"");
+				Writer.WriteComment(", 0)");
 			}
 			else
 			{
-				if (settings.POCOIteratorSettings.Using == false)
+				if (!Settings.POCOIteratorSettings.Using)
 				{
-					writer.Write("System.Data.Spatial.");
+					Writer.Write("System.Data.Spatial.");
 				}
 
-				writer.WriteUserType("DbGeometry");
-				writer.Write(".");
+				Writer.WriteUserType("DbGeometry");
+				Writer.Write(".");
 
 				if (dataTypeName == "geometry")
 				{
-					writer.Write("FromText");
+					Writer.Write("FromText");
 				}
 				else if (dataTypeName is "geometrycollection" or "geomcollection")
 				{
-					writer.Write("GeometryCollectionFromText");
+					Writer.Write("GeometryCollectionFromText");
 				}
 				else if (dataTypeName == "linestring")
 				{
-					writer.Write("LineFromText");
+					Writer.Write("LineFromText");
 				}
 				else if (dataTypeName == "multilinestring")
 				{
-					writer.Write("MultiLineFromText");
+					Writer.Write("MultiLineFromText");
 				}
 				else if (dataTypeName == "point")
 				{
-					writer.Write("PointFromText");
+					Writer.Write("PointFromText");
 				}
 				else if (dataTypeName == "multipoint")
 				{
-					writer.Write("MultiPointFromText");
+					Writer.Write("MultiPointFromText");
 				}
 				else if (dataTypeName == "polygon")
 				{
-					writer.Write("PolygonFromText");
+					Writer.Write("PolygonFromText");
 				}
 				else if (dataTypeName == "multipolygon")
 				{
-					writer.Write("MultiPolygonFromText");
+					Writer.Write("MultiPolygonFromText");
 				}
 
-				writer.Write("(");
-				writer.WriteString("\"");
-				writer.WriteString(columnDefault.Replace("\\", "\\\\").Replace("\"", "\\\""));
-				writer.WriteString("\"");
-				writer.Write(", 0)");
+				Writer.Write("(");
+				Writer.WriteString("\"");
+				Writer.WriteString(columnDefault.Replace("\\", "\\\\").Replace("\"", "\\\""));
+				Writer.WriteString("\"");
+				Writer.Write(", 0)");
 			}
 
 			WriteColumnDefaultConstructorInitializationEnd(isComment);
 		}
-
-		#endregion
-
-		#region Class Constructor - Enum Columns
 
 		// https://dev.mysql.com/doc/refman/8.0/en/enum.html
 		// https://www.careerride.com/question-20-MySQL
 
 		protected override List<ITableColumn> GetTableColumnsWithEnumConstructor(IDbObjectTraverse dbObject, List<IEnumColumn> enumColumns)
 		{
-			if (settings.POCOIteratorSettings.ColumnDefaults && dbObject.DbObjectType == DbObjectType.Table)
+			if (Settings.POCOIteratorSettings.ColumnDefaults && dbObject.DbObjectType == DbObjectType.Table)
 			{
 				if (enumColumns.HasAny())
 				{
 					// has column default
-					IEnumerable<ITableColumn> lst1 = enumColumns.Where(c => c.IsEnumDataType || c.IsSetDataType).Cast<ITableColumn>().Where(c => String.IsNullOrEmpty(c.ColumnDefault) == false);
+					IEnumerable<ITableColumn> lst1 = enumColumns.Where(c => c.IsEnumDataType || c.IsSetDataType).Cast<ITableColumn>().Where(c => !String.IsNullOrEmpty(c.ColumnDefault));
 
 					// If an ENUM column is declared NOT NULL, its default value is the first element of the list of permitted values.
 					// For string types other than ENUM, the default value is the empty string. For ENUM, the default is the first enumeration value
-					IEnumerable<ITableColumn> lst2 = enumColumns.Where(c => c.IsEnumDataType).Cast<ITableColumn>().Where(c => c.IsNullable == false && String.IsNullOrEmpty(c.ColumnDefault));
+					IEnumerable<ITableColumn> lst2 = enumColumns.Where(c => c.IsEnumDataType).Cast<ITableColumn>().Where(c => !c.IsNullable && String.IsNullOrEmpty(c.ColumnDefault));
 
 					return lst1.Union(lst2).ToList();
 				}
@@ -463,12 +445,12 @@ namespace POCOGenerator.MySQL
 
 		protected override void WriteEnumConstructorInitialization(ITableColumn column, string namespaceOffset)
 		{
-			if ((column is IEnumColumn enumColumn) == false)
+			if (column is not IEnumColumn enumColumn)
 			{
 				return;
 			}
 
-			if (settings.POCOIteratorSettings.EnumSQLTypeToString == false && (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
+			if (!Settings.POCOIteratorSettings.EnumSQLTypeToString && (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
 			{
 				string cleanColumnName = NameHelper.CleanName(enumColumn.Column.ColumnName);
 
@@ -481,12 +463,12 @@ namespace POCOGenerator.MySQL
 					WriteSetDataTypeConstructorInitialization(column, namespaceOffset, enumColumn, cleanColumnName);
 				}
 			}
-			else if (settings.POCOIteratorSettings.EnumSQLTypeToString && settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort == false && settings.POCOIteratorSettings.EnumSQLTypeToEnumInt == false)
+			else if (Settings.POCOIteratorSettings.EnumSQLTypeToString && !Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort && !Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt)
 			{
 				// If an ENUM column is declared NOT NULL, its default value is the first element of the list of permitted values.
 				// For string types other than ENUM, the default value is the empty string. For ENUM, the default is the first enumeration value
 				string literal = GetEnumDataTypeLiteralConstructorInitialization(enumColumn);
-				if (String.IsNullOrEmpty(literal) == false)
+				if (!String.IsNullOrEmpty(literal))
 				{
 					string cleanLiteral = NameHelper.CleanEnumLiteral(literal);
 					base.WriteColumnDefaultConstructorInitializationString(cleanLiteral, column, namespaceOffset);
@@ -496,18 +478,18 @@ namespace POCOGenerator.MySQL
 
 		protected override string GetEnumDataTypeLiteralConstructorInitialization(IEnumColumn enumColumn)
 		{
-			if (enumColumn.IsEnumDataType == false)
+			if (!enumColumn.IsEnumDataType)
 			{
 				return null;
 			}
 
-			if ((enumColumn is ITableColumn tableColumn) == false)
+			if (enumColumn is not ITableColumn tableColumn)
 			{
 				return null;
 			}
 
 			// has column default
-			if (String.IsNullOrEmpty(tableColumn.ColumnDefault) == false)
+			if (!String.IsNullOrEmpty(tableColumn.ColumnDefault))
 			{
 				if (enumColumn.EnumLiterals.Contains(tableColumn.ColumnDefault, StringComparer.Ordinal))
 				{
@@ -516,7 +498,7 @@ namespace POCOGenerator.MySQL
 			}
 			// If an ENUM column is declared NOT NULL, its default value is the first element of the list of permitted values.
 			// For string types other than ENUM, the default value is the empty string. For ENUM, the default is the first enumeration value
-			else if (tableColumn.IsNullable == false && String.IsNullOrEmpty(tableColumn.ColumnDefault))
+			else if (!tableColumn.IsNullable && String.IsNullOrEmpty(tableColumn.ColumnDefault))
 			{
 				return enumColumn.EnumLiterals.FirstOrDefault();
 			}
@@ -526,26 +508,13 @@ namespace POCOGenerator.MySQL
 
 		protected override List<string> GetSetDataTypeLiteralsConstructorInitialization(IEnumColumn enumColumn)
 		{
-			if (enumColumn.IsSetDataType == false)
-			{
-				return null;
-			}
-
-			if ((enumColumn is ITableColumn tableColumn) == false)
-			{
-				return null;
-			}
-
-			return String.IsNullOrEmpty(tableColumn.ColumnDefault) == false
-				? tableColumn.ColumnDefault.Split(',').Where(literal => enumColumn.EnumLiterals.Contains(literal, StringComparer.Ordinal)).ToList()
+			return !enumColumn.IsSetDataType
+				? null
+				: enumColumn is not ITableColumn tableColumn
+				? null
+				: !String.IsNullOrEmpty(tableColumn.ColumnDefault) ? tableColumn.ColumnDefault.Split(',').Where(literal => enumColumn.EnumLiterals.Contains(literal, StringComparer.Ordinal)).ToList()
 				: null;
 		}
-
-		#endregion
-
-		#region Column Attributes
-
-		#region EF
 
 		protected override bool IsEFAttributeMaxLength(string dataTypeName)
 		{
@@ -591,17 +560,11 @@ namespace POCOGenerator.MySQL
 			return dataTypeName == "timestamp";
 		}
 
-		#endregion
-
-		#endregion
-
-		#region Column
-
 		protected override void WriteDbColumnDataType(IColumn column)
 		{
-			if (support.IsSupportEnumDataType)
+			if (Support.IsSupportEnumDataType)
 			{
-				if (settings.POCOIteratorSettings.EnumSQLTypeToString == false && (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
+				if (!Settings.POCOIteratorSettings.EnumSQLTypeToString && (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
 				{
 					if (column is IEnumColumn enumColumn)
 					{
@@ -662,7 +625,7 @@ namespace POCOGenerator.MySQL
 					break;
 
 				case "real":
-					if (support["REAL_AS_FLOAT"])
+					if (Support["REAL_AS_FLOAT"])
 					{
 						if (column.IsUnsigned)
 						{
@@ -781,23 +744,19 @@ namespace POCOGenerator.MySQL
 
 		protected virtual void WriteColumnDbGeometry()
 		{
-			if (settings.POCOIteratorSettings.Using == false)
+			if (!Settings.POCOIteratorSettings.Using)
 			{
-				writer.Write("System.Data.Spatial.");
+				Writer.Write("System.Data.Spatial.");
 			}
 
-			writer.WriteUserType("DbGeometry");
+			Writer.WriteUserType("DbGeometry");
 		}
-
-		#endregion
-
-		#region Enums
 
 		protected override List<IEnumColumn> GetEnumColumns(IDbObjectTraverse dbObject)
 		{
-			if (support.IsSupportEnumDataType)
+			if (Support.IsSupportEnumDataType)
 			{
-				if (settings.POCOIteratorSettings.EnumSQLTypeToString == false && (settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
+				if (!Settings.POCOIteratorSettings.EnumSQLTypeToString && (Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort || Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt))
 				{
 					if (dbObject.Columns != null && dbObject.Columns.Any(c => c is IEnumColumn))
 					{
@@ -809,7 +768,7 @@ namespace POCOGenerator.MySQL
 							.ToList();
 					}
 				}
-				else if (settings.POCOIteratorSettings.EnumSQLTypeToString && settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort == false && settings.POCOIteratorSettings.EnumSQLTypeToEnumInt == false)
+				else if (Settings.POCOIteratorSettings.EnumSQLTypeToString && !Settings.POCOIteratorSettings.EnumSQLTypeToEnumUShort && !Settings.POCOIteratorSettings.EnumSQLTypeToEnumInt)
 				{
 					if (dbObject.Columns != null && dbObject.Columns.Any(c => c is IEnumColumn))
 					{
@@ -818,7 +777,7 @@ namespace POCOGenerator.MySQL
 							.Cast<IEnumColumn>()
 							// If an ENUM column is declared NOT NULL, its default value is the first element of the list of permitted values.
 							// For string types other than ENUM, the default value is the empty string. For ENUM, the default is the first enumeration value
-							.Where(c => c.IsEnumDataType).Cast<ITableColumn>().Where(c => c.IsNullable == false && String.IsNullOrEmpty(c.ColumnDefault))
+							.Where(c => c.IsEnumDataType).Cast<ITableColumn>().Where(c => !c.IsNullable && String.IsNullOrEmpty(c.ColumnDefault))
 							.Cast<IEnumColumn>()
 							.OrderBy(c => c.Column.ColumnOrdinal ?? 0)
 							.ToList();
@@ -828,7 +787,5 @@ namespace POCOGenerator.MySQL
 
 			return null;
 		}
-
-		#endregion
 	}
 }

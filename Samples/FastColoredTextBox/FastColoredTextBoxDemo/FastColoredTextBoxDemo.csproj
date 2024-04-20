@@ -1,20 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0-windows</TargetFrameworks>
-    <OutputType>WinExe</OutputType>
-    <UseWindowsForms>true</UseWindowsForms>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="ConnectionString.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\POCOGenerator.Forms\POCOGenerator.Forms.csproj" />
-    <ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
-    <ProjectReference Include="..\..\Support\Samples.Support.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="PavelTorgashov.Forms.FastColoredTextBox" Version="23.10.23" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-windows</TargetFrameworks>
+		<OutputType>WinExe</OutputType>
+		<UseWindowsForms>true</UseWindowsForms>
+		<EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="ConnectionString.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\POCOGenerator.Forms\POCOGenerator.Forms.csproj" />
+		<ProjectReference Include="..\..\..\POCOGenerator\POCOGenerator.csproj" />
+		<ProjectReference Include="..\..\Support\Samples.Support.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="PavelTorgashov.Forms.FastColoredTextBox" Version="*" />
+	</ItemGroup>
 </Project>

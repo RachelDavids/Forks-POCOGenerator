@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
+
+using Microsoft.Data.SqlClient;
 
 using POCOGenerator.Db;
 using POCOGenerator.Db.DbObjects;
@@ -13,28 +14,12 @@ using POCOGenerator.Utils;
 
 namespace POCOGenerator.SQLServer
 {
-	internal class SQLServerHelper : DbHelper
+	internal class SQLServerHelper(string connectionString)
+		: DbHelper(connectionString, new SQLServerSupport())
 	{
-		#region Constructor
+		protected override DbConnection GetConnection(string connectionString) => new SqlConnection(connectionString);
 
-		public SQLServerHelper(string connectionString)
-			: base(connectionString, new SQLServerSupport())
-		{
-		}
-
-		#endregion
-
-		#region Connection, Command & Parameter
-
-		protected override DbConnection GetConnection(string connectionString)
-		{
-			return new SqlConnection(connectionString);
-		}
-
-		protected override IDbCommand GetCommand()
-		{
-			return new SqlCommand();
-		}
+		protected override IDbCommand GetCommand() => new SqlCommand();
 
 		protected override IDataParameter GetParameter(IProcedureParameter parameter, IDatabase database)
 		{
@@ -98,7 +83,7 @@ namespace POCOGenerator.SQLServer
 						// could be more than one tvp with the same name but with different schema
 						// there's no way to differentiate between them
 						// beacuse the data type from the procedure parameter doesn't come with the schema name
-						ITVP tvp = database.TVPs.Where(t => String.Compare(t.Name, parameter.ParameterDataType, true) == 0).FirstOrDefault();
+						ITVP tvp = database.TVPs.FirstOrDefault(t => String.Compare(t.Name, parameter.ParameterDataType, true) == 0);
 						if (tvp != null)
 						{
 							sqlParameter.TypeName = parameter.ParameterDataType;
@@ -121,10 +106,6 @@ namespace POCOGenerator.SQLServer
 
 			return sqlParameter;
 		}
-
-		#endregion
-
-		#region Server
 
 		protected override string GetServerVersion()
 		{
@@ -151,26 +132,15 @@ namespace POCOGenerator.SQLServer
 			}
 		}
 
-		#endregion
-
-		#region Databases
-
-		protected override IEnumerable<IDatabase> GetSchemaDatabases(DbConnection connection)
-		{
-			return connection.GetSchema("Databases").Cast<Database>();
-		}
+		protected override IEnumerable<IDatabase> GetSchemaDatabases(DbConnection connection) => connection.GetSchema("Databases").Cast<Database>();
 
 		protected override void RemoveSystemDatabases(IServer server)
 		{
 			if (server.Databases.HasAny())
 			{
-				server.Databases = server.Databases.Where(t => t.ToString() != "master" && t.ToString() != "model" && t.ToString() != "msdb" && t.ToString() != "tempdb").ToList();
+				server.Databases = server.Databases.Where(t => t.ToString() is not "master" and not "model" and not "msdb" and not "tempdb").ToList();
 			}
 		}
-
-		#endregion
-
-		#region System Objects
 
 		protected override List<ISystemObject> GetSystemObjects(IDatabase database)
 		{
@@ -194,7 +164,7 @@ namespace POCOGenerator.SQLServer
 
 						foreach (SystemObject systemObject in systemObjects)
 						{
-							if (String.IsNullOrEmpty(systemObject.Type) == false)
+							if (!String.IsNullOrEmpty(systemObject.Type))
 							{
 								systemObject.Type = systemObject.Type.Trim();
 							}
@@ -205,10 +175,6 @@ namespace POCOGenerator.SQLServer
 				}
 			}
 		}
-
-		#endregion
-
-		#region Descriptions
 
 		protected override List<IDbObjectDescription> GetDbObjectDescriptions(IDatabase database)
 		{
@@ -232,10 +198,6 @@ namespace POCOGenerator.SQLServer
 				}
 			}
 		}
-
-		#endregion
-
-		#region Primary, Unique & Foreign Keys
 
 		protected override Tuple<List<IInternalKey>, List<IInternalKey>, List<IInternalForeignKey>> GetKeys(IDatabase database)
 		{
@@ -267,10 +229,6 @@ namespace POCOGenerator.SQLServer
 			}
 		}
 
-		#endregion
-
-		#region Indexes
-
 		protected override List<IInternalIndex> GetIndexes(IDatabase database)
 		{
 			string connectionString = database.GetDatabaseConnectionString(ConnectionString);
@@ -293,10 +251,6 @@ namespace POCOGenerator.SQLServer
 				}
 			}
 		}
-
-		#endregion
-
-		#region Identity Columns
 
 		protected override List<IIdentityColumn> GetIdentityColumns(IDatabase database)
 		{
@@ -321,10 +275,6 @@ namespace POCOGenerator.SQLServer
 			}
 		}
 
-		#endregion
-
-		#region Computed Columns
-
 		protected override List<IComputedColumn> GetComputedColumns(IDatabase database)
 		{
 			string connectionString = database.GetDatabaseConnectionString(ConnectionString);
@@ -347,10 +297,6 @@ namespace POCOGenerator.SQLServer
 				}
 			}
 		}
-
-		#endregion
-
-		#region TVPs
 
 		protected override List<ITVP> GetTVPs(IDatabase database)
 		{
@@ -379,7 +325,7 @@ namespace POCOGenerator.SQLServer
 		{
 			if (database.TVPs.HasAny() && systemObjects.HasAny())
 			{
-				database.TVPs = database.TVPs.Where(tvp => systemObjects.Any(so => (so is ISchema schema1 == false || tvp is ISchema schema2 == false || schema1.Schema == schema2.Schema) && so.Name == tvp.Name && so.Type == "TT") == false).ToList();
+				database.TVPs = database.TVPs.Where(tvp => !systemObjects.Any(so => (so is not ISchema schema1 || tvp is not ISchema schema2 || schema1.Schema == schema2.Schema) && so.Name == tvp.Name && so.Type == "TT")).ToList();
 			}
 		}
 
@@ -471,76 +417,43 @@ namespace POCOGenerator.SQLServer
 			return tvpDataTable;
 		}
 
-		#endregion
-
-		#region Tables
-
-		protected override IEnumerable<ITable> GetSchemaTables(DbConnection connection, string database)
-		{
-			return connection.GetSchema("Tables", new string[] { database, null, null, "BASE TABLE" }).Cast<Table>();
-		}
+		protected override IEnumerable<ITable> GetSchemaTables(DbConnection connection, string database) => connection.GetSchema("Tables", new string[] { database, null, null, "BASE TABLE" }).Cast<Table>();
 
 		protected override void RemoveSystemObjectsFromTables(IDatabase database, List<ISystemObject> systemObjects)
 		{
 			if (database.Tables.HasAny() && systemObjects.HasAny())
 			{
-				database.Tables = database.Tables.Where(t => systemObjects.Any(so => (so is ISchema schema1 == false || t is ISchema schema2 == false || schema1.Schema == schema2.Schema) && so.Name == t.Name && (so.Type == "IT" || so.Type == "S" || so.Type == "U")) == false).ToList();
+				database.Tables = database.Tables.Where(t => !systemObjects.Any(so => (so is not ISchema schema1 || t is not ISchema schema2 || schema1.Schema == schema2.Schema) && so.Name == t.Name && (so.Type == "IT" || so.Type == "S" || so.Type == "U"))).ToList();
 			}
 		}
 
-		protected override IEnumerable<ITableColumn> GetSchemaTableColumns(DbConnection connection, ITable table)
-		{
-			return connection.GetSchema("Columns", new string[] { table.Database.ToString(), ((ISchema)table).Schema, table.Name, null }).Cast<TableColumn>();
-		}
+		protected override IEnumerable<ITableColumn> GetSchemaTableColumns(DbConnection connection, ITable table) => connection.GetSchema("Columns", new string[] { table.Database.ToString(), ((ISchema)table).Schema, table.Name, null }).Cast<TableColumn>();
 
-		#endregion
-
-		#region Views
-
-		protected override IEnumerable<IView> GetSchemaViews(DbConnection connection, string database)
-		{
-			return connection.GetSchema("Tables", new string[] { database, null, null, "VIEW" }).Cast<View>();
-		}
+		protected override IEnumerable<IView> GetSchemaViews(DbConnection connection, string database) => connection.GetSchema("Tables", new string[] { database, null, null, "VIEW" }).Cast<View>();
 
 		protected override void RemoveSystemObjectsFromViews(IDatabase database, List<ISystemObject> systemObjects)
 		{
 			if (database.Views.HasAny() && systemObjects.HasAny())
 			{
-				database.Views = database.Views.Where(v => systemObjects.Any(so => (so is ISchema schema1 == false || v is ISchema schema2 == false || schema1.Schema == schema2.Schema) && so.Name == v.Name && so.Type == "V") == false).ToList();
+				database.Views = database.Views.Where(v => !systemObjects.Any(so => (so is not ISchema schema1 || v is not ISchema schema2 || schema1.Schema == schema2.Schema) && so.Name == v.Name && so.Type == "V")).ToList();
 			}
 		}
 
-		protected override IEnumerable<ITableColumn> GetSchemaViewColumns(DbConnection connection, IView view)
-		{
-			return connection.GetSchema("Columns", new string[] { view.Database.ToString(), ((ISchema)view).Schema, view.Name, null }).Cast<ViewColumn>();
-		}
+		protected override IEnumerable<ITableColumn> GetSchemaViewColumns(DbConnection connection, IView view) => connection.GetSchema("Columns", new string[] { view.Database.ToString(), ((ISchema)view).Schema, view.Name, null }).Cast<ViewColumn>();
 
-		#endregion
-
-		#region Procedures
-
-		protected override IEnumerable<IProcedure> GetSchemaProcedures(DbConnection connection, string database)
-		{
-			return connection.GetSchema("Procedures", new string[] { database, null, null, "PROCEDURE" }).Cast<Procedure>();
-		}
+		protected override IEnumerable<IProcedure> GetSchemaProcedures(DbConnection connection, string database) => connection.GetSchema("Procedures", new string[] { database, null, null, "PROCEDURE" }).Cast<Procedure>();
 
 		protected override void RemoveSystemObjectsFromProcedures(IDatabase database, List<ISystemObject> systemObjects)
 		{
 			if (database.Procedures.HasAny() && systemObjects.HasAny())
 			{
-				database.Procedures = database.Procedures.Where(p => systemObjects.Any(so => (so is ISchema schema1 == false || p is ISchema schema2 == false || schema1.Schema == schema2.Schema) && so.Name == p.Name && (so.Type == "P" || so.Type == "PC" || so.Type == "RF" || so.Type == "X")) == false).ToList();
+				database.Procedures = database.Procedures.Where(p => !systemObjects.Any(so => (so is not ISchema schema1 || p is not ISchema schema2 || schema1.Schema == schema2.Schema) && so.Name == p.Name && (so.Type == "P" || so.Type == "PC" || so.Type == "RF" || so.Type == "X"))).ToList();
 			}
 		}
 
-		protected override IEnumerable<IProcedureParameter> GetSchemaProcedureParameters(DbConnection connection, IProcedure procedure)
-		{
-			return connection.GetSchema("ProcedureParameters", new string[] { procedure.Database.ToString(), ((ISchema)procedure).Schema, procedure.Name, null }).Cast<ProcedureParameter>();
-		}
+		protected override IEnumerable<IProcedureParameter> GetSchemaProcedureParameters(DbConnection connection, IProcedure procedure) => connection.GetSchema("ProcedureParameters", new string[] { procedure.Database.ToString(), ((ISchema)procedure).Schema, procedure.Name, null }).Cast<ProcedureParameter>();
 
-		protected override string GetProcedureCommandText(IProcedure procedure)
-		{
-			return String.Format("[{0}].[{1}]", ((ISchema)procedure).Schema, procedure.Name);
-		}
+		protected override string GetProcedureCommandText(IProcedure procedure) => String.Format("[{0}].[{1}]", ((ISchema)procedure).Schema, procedure.Name);
 
 		protected override IEnumerable<IProcedureColumn> GetSchemaProcedureColumns(DataTable schemaTable)
 		{
@@ -555,7 +468,7 @@ namespace POCOGenerator.SQLServer
 				}
 
 				return value;
-			}).Where(c => String.IsNullOrEmpty(c.ColumnName) == false);
+			}).Where(c => !String.IsNullOrEmpty(c.ColumnName));
 		}
 
 		protected override void GetProcedureSchemaSecondTry(IProcedure procedure, DbConnection connection, Exception ex)
@@ -594,7 +507,7 @@ namespace POCOGenerator.SQLServer
 				commandText = String.Format(commandText, ((ISchema)procedure).Schema, procedure.Name);
 				foreach (IProcedureParameter parameter in procedure.ProcedureParameters.OrderBy(c => c.ParameterOrdinal ?? 0))
 				{
-					if (parameter.IsResult == false)
+					if (!parameter.IsResult)
 					{
 						commandText += parameter.ParameterName + ",";
 						command.Parameters.Add(GetParameter(parameter, procedure.Database));
@@ -607,34 +520,24 @@ namespace POCOGenerator.SQLServer
 			}
 		}
 
-		#endregion
-
-		#region Functions
-
-		protected override IEnumerable<IFunction> GetSchemaFunctions(DbConnection connection, string database)
-		{
-			return connection.GetSchema("Procedures", new string[] { database, null, null, "FUNCTION" }).Cast<Function>();
-		}
+		protected override IEnumerable<IFunction> GetSchemaFunctions(DbConnection connection, string database) => connection.GetSchema("Procedures", new string[] { database, null, null, "FUNCTION" }).Cast<Function>();
 
 		protected override void RemoveSystemObjectsFromFunctions(IDatabase database, List<ISystemObject> systemObjects)
 		{
 			if (database.Functions.HasAny() && systemObjects.HasAny())
 			{
-				database.Functions = database.Functions.Where(f => systemObjects.Any(so => (so is ISchema schema1 == false || f is ISchema schema2 == false || schema1.Schema == schema2.Schema) && so.Name == f.Name && (so.Type == "AF" || so.Type == "FN" || so.Type == "FS" || so.Type == "FT" || so.Type == "IF" || so.Type == "TF")) == false).ToList();
+				database.Functions = database.Functions.Where(f => !systemObjects.Any(so => (so is not ISchema schema1 || f is not ISchema schema2 || schema1.Schema == schema2.Schema) && so.Name == f.Name && (so.Type == "AF" || so.Type == "FN" || so.Type == "FS" || so.Type == "FT" || so.Type == "IF" || so.Type == "TF"))).ToList();
 			}
 		}
 
-		protected override IEnumerable<IProcedureParameter> GetSchemaFunctionParameters(DbConnection connection, IFunction function)
-		{
-			return connection.GetSchema("ProcedureParameters", new string[] { function.Database.ToString(), ((ISchema)function).Schema, function.Name, null }).Cast<ProcedureParameter>();
-		}
+		protected override IEnumerable<IProcedureParameter> GetSchemaFunctionParameters(DbConnection connection, IFunction function) => connection.GetSchema("ProcedureParameters", new string[] { function.Database.ToString(), ((ISchema)function).Schema, function.Name, null }).Cast<ProcedureParameter>();
 
 		protected override string GetFunctionCommandText(IFunction function)
 		{
 			string commandText = String.Format("select * from [{0}].[{1}](", ((ISchema)function).Schema, function.Name);
 			foreach (IProcedureParameter parameter in function.ProcedureParameters.OrderBy(c => c.ParameterOrdinal ?? 0))
 			{
-				if (parameter.IsResult == false)
+				if (!parameter.IsResult)
 				{
 					commandText += parameter.ParameterName + ",";
 				}
@@ -657,9 +560,7 @@ namespace POCOGenerator.SQLServer
 				}
 
 				return value;
-			}).Where(c => String.IsNullOrEmpty(c.ColumnName) == false);
+			}).Where(c => !String.IsNullOrEmpty(c.ColumnName));
 		}
-
-		#endregion
 	}
 }

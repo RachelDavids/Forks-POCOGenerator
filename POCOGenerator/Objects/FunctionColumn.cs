@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace POCOGenerator.Objects
+﻿namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database table-valued function column.</summary>
-    public sealed class FunctionColumn : IDbColumn
+	/// <summary>Represents a database table-valued function column.</summary>
+	public sealed class FunctionColumn : IDbColumn
     {
-        private readonly POCOGenerator.DbObjects.IProcedureColumn procedureColumn;
+        private readonly DbObjects.IProcedureColumn procedureColumn;
 
-        internal FunctionColumn(POCOGenerator.DbObjects.IProcedureColumn procedureColumn, Function function)
+        internal FunctionColumn(DbObjects.IProcedureColumn procedureColumn, Function function)
         {
             this.procedureColumn = procedureColumn;
             this.Function = function;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IProcedureColumn procedureColumn)
+        internal bool InternalEquals(DbObjects.IProcedureColumn procedureColumn)
         {
             return this.procedureColumn == procedureColumn;
         }

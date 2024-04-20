@@ -1,0 +1,33 @@
+# Top level entry required to mark this as a global AnalyzerConfig file
+is_global = true
+
+global_level = 500
+
+# Restrict the analyzed API surface for certain analyzers to 'public' (public APIs only).
+# CA1010: Generic interface should also be implemented
+dotnet_code_quality.CA1010.api_surface = public
+# CA1036: Override methods on comparable types
+dotnet_code_quality.CA1036.api_surface = public
+# CA1043: Use integral or string argument for indexers
+dotnet_code_quality.CA1043.api_surface = public
+# CA1707: Identifiers should not contain underscores
+dotnet_code_quality.CA1707.api_surface = public
+# CA1720: Identifiers should not contain type names
+dotnet_code_quality.CA1720.api_surface = public
+# CA1716: Identifiers should not match keywords
+dotnet_code_quality.CA1716.api_surface = public
+
+# Exclude single letter type parameter names
+# CA1715: Identifiers should have correct prefix
+dotnet_code_quality.CA1715.exclude_single_letter_type_parameters = true
+
+# (Naming) CA1710: Identifiers should have correct suffix
+# doesn't seem to work properly for TextList/ComboSelection
+dotnet_code_quality.CA1711.allowed_suffixes = Stack|Queue|TextList|Selection
+
+# (Naming) CA1716: Identifiers should not match keywords
+# Include the following list during analysis
+# Exclude Parameter
+dotnet_code_quality.CA1716.analyzed_symbol_kinds = Namespace,NamedType,Method,Property,Event
+
+############################################################################################

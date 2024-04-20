@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace POCOGenerator.DbObjects
 {
-    public interface IComplexTypeTable : IDbObjectTraverse
+	public interface IComplexTypeTable : IDbObjectTraverse
     {
         List<IComplexTypeTableColumn> ComplexTypeTableColumns { get; set; }
 

@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace POCOGenerator.Objects
+﻿namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database column.</summary>
-    public interface IDbColumn
+	/// <summary>Represents a database column.</summary>
+	public interface IDbColumn
     {
         /// <summary>Gets the name of the column.</summary>
         /// <value>The name of the column.</value>

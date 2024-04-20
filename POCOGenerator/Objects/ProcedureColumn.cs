@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace POCOGenerator.Objects
+﻿namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database stored procedure column.</summary>
-    public sealed class ProcedureColumn : IDbColumn
+	/// <summary>Represents a database stored procedure column.</summary>
+	public sealed class ProcedureColumn : IDbColumn
     {
-        private readonly POCOGenerator.DbObjects.IProcedureColumn procedureColumn;
+        private readonly DbObjects.IProcedureColumn procedureColumn;
 
-        internal ProcedureColumn(POCOGenerator.DbObjects.IProcedureColumn procedureColumn, Procedure procedure)
+        internal ProcedureColumn(DbObjects.IProcedureColumn procedureColumn, Procedure procedure)
         {
             this.procedureColumn = procedureColumn;
             this.Procedure = procedure;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IProcedureColumn procedureColumn)
+        internal bool InternalEquals(DbObjects.IProcedureColumn procedureColumn)
         {
             return this.procedureColumn == procedureColumn;
         }

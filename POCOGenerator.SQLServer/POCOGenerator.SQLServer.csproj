@@ -1,32 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0-windows</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <AssemblyTitle>POCOGenerator.SQLServer</AssemblyTitle>
-  </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Scripts\SQLServer_ComputedColumns.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_Descriptions.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_IdentityColumns.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_Indexes.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_Keys.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_SystemObjects.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_TVPColumns.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_TVPs.sql" />
-    <EmbeddedResource Include="Scripts\SQLServer_Version.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj" />
-    <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
-    <ProjectReference Include="..\POCOGenerator.Db\POCOGenerator.Db.csproj" />
-    <ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj" />
-    <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
-    <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SqlServer.Types">
-      <Version>160.1000.6</Version>
-    </PackageReference>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-windows</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<AssemblyTitle>POCOGenerator.SQLServer</AssemblyTitle>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Scripts\SQLServer_ComputedColumns.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_Descriptions.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_IdentityColumns.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_Indexes.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_Keys.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_SystemObjects.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_TVPColumns.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_TVPs.sql" />
+		<EmbeddedResource Include="Scripts\SQLServer_Version.sql" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\POCOGenerator.DbHandlers\POCOGenerator.DbHandlers.csproj" />
+		<ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
+		<ProjectReference Include="..\POCOGenerator.Db\POCOGenerator.Db.csproj" />
+		<ProjectReference Include="..\POCOGenerator.POCOIterators\POCOGenerator.POCOIterators.csproj" />
+		<ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
+		<ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SqlServer.Types" Version="*" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="*" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

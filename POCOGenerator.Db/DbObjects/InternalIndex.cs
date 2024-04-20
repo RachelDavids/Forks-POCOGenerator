@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.DbObjects;
+﻿using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    public interface IInternalIndex
+	public interface IInternalIndex
     {
         bool Is_Table_Index { get; }
         bool Is_View_Index { get; }

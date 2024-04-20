@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.DbObjects;
+﻿using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    internal sealed class IndexColumn : IIndexColumn
+	internal sealed class IndexColumn : IIndexColumn
     {
         public IIndex Index { get; set; }
         public ITableColumn TableColumn { get; set; }

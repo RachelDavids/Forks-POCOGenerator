@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IDbObjectDescription
+	public interface IDbObjectDescription
     {
         string Name { get; }
         string Minor_Name { get; }

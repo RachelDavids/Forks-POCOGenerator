@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IIndexColumn : IDbObject
+	public interface IIndexColumn : IDbObject
     {
         IIndex Index { get; }
         ITableColumn TableColumn { get; }

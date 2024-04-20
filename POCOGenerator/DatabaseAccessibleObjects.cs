@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator
 {
-    internal class DatabaseAccessibleObjects
+	internal class DatabaseAccessibleObjects
     {
         public IDatabase Database { get; set; }
         public List<ITable> Tables { get; set; }

@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace POCOGenerator.Objects
+﻿namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a semantic versioning four-part numbers.</summary>
-    public sealed class Version
+	/// <summary>Represents a semantic versioning four-part numbers.</summary>
+	public sealed class Version
     {
-        private readonly POCOGenerator.DbObjects.Version version;
+        private readonly DbObjects.Version version;
 
-        internal Version(POCOGenerator.DbObjects.Version version)
+        internal Version(DbObjects.Version version)
         {
             this.version = version;
         }

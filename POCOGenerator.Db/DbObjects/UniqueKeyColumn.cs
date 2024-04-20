@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.DbObjects;
+﻿using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    internal sealed class UniqueKeyColumn : IUniqueKeyColumn
+	internal sealed class UniqueKeyColumn : IUniqueKeyColumn
     {
         public IUniqueKey UniqueKey { get; set; }
         public ITableColumn TableColumn { get; set; }

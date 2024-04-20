@@ -1,0 +1,1168 @@
+{
+  "version": 1,
+  "parameters": "--vulnerable --include-transitive",
+  "sources": [
+    "https://api.nuget.org/v3/index.json"
+  ],
+  "projects": [
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator/POCOGenerator.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Console/ConsoleColorDarkThemeDemo/ConsoleColorDarkThemeDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Console/ConsoleColorDemo/ConsoleColorDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Console/ConsoleDemo/ConsoleDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Events/EventsDemo/EventsDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Events/MultipleFilesDemo/MultipleFilesDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/GeneratePOCOs/GeneratePOCOsDemo/GeneratePOCOsDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/SelectingObjects/SelectingObjectsDemo/SelectingObjectsDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/SelectingObjects/SkipAndStopDemo/SkipAndStopDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/SelectingObjects/WildcardsDemo/WildcardsDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/ServerTree/DetailedServerTreeDemo/DetailedServerTreeDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/ServerTree/ServerTreeDemo/ServerTreeDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Stream/FileStreamDemo/FileStreamDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Stream/MemoryStreamDemo/MemoryStreamDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Text/StringBuilderDemo/StringBuilderDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Text/TextWriterDemo/TextWriterDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/RichTextBox/RichTextBoxDemo/RichTextBoxDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGeneratorUI/POCOGeneratorUI.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.DbObjects/POCOGenerator.DbObjects.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.Db/POCOGenerator.Db.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.DbFactories/POCOGenerator.DbFactories.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.DbHandlers/POCOGenerator.DbHandlers.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.MySQL/POCOGenerator.MySQL.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0",
+          "transitivePackages": [
+            {
+              "id": "System.Data.SqlClient",
+              "resolvedVersion": "4.8.1",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-8g2p-5pqh-5jmc"
+                },
+                {
+                  "severity": "High",
+                  "advisoryurl": "https://github.com/advisories/GHSA-98g6-xh36-x2p7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0",
+          "transitivePackages": [
+            {
+              "id": "System.Data.SqlClient",
+              "resolvedVersion": "4.8.1",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-8g2p-5pqh-5jmc"
+                },
+                {
+                  "severity": "High",
+                  "advisoryurl": "https://github.com/advisories/GHSA-98g6-xh36-x2p7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0",
+          "transitivePackages": [
+            {
+              "id": "System.Data.SqlClient",
+              "resolvedVersion": "4.8.1",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-8g2p-5pqh-5jmc"
+                },
+                {
+                  "severity": "High",
+                  "advisoryurl": "https://github.com/advisories/GHSA-98g6-xh36-x2p7"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.POCOIterators/POCOGenerator.POCOIterators.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.POCOWriters/POCOGenerator.POCOWriters.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.SQLServer/POCOGenerator.SQLServer.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.Utils/POCOGenerator.Utils.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/ServerTree/NavigationPropertiesDemo/NavigationPropertiesDemo.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/GeneratePOCOs/ComplexTypesDemo/ComplexTypesDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/POCOGenerator.Forms/POCOGenerator.Forms.csproj"
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Data/Sql/Data.Sql.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/Support/Samples.Support.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "S:/Projects/Rachel/Forks/POCOGenerator/Samples/FastColoredTextBox/FastColoredTextBoxDemo/FastColoredTextBoxDemo.csproj",
+      "frameworks": [
+        {
+          "framework": "net7.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net8.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "framework": "net9.0-windows7.0",
+          "transitivePackages": [
+            {
+              "id": "Azure.Identity",
+              "resolvedVersion": "1.10.3",
+              "vulnerabilities": [
+                {
+                  "severity": "Moderate",
+                  "advisoryurl": "https://github.com/advisories/GHSA-wvxc-855f-jvrv"
+                }
+              ]
+            },
+            {
+              "id": "Microsoft.Identity.Client",
+              "resolvedVersion": "4.56.0",
+              "vulnerabilities": [
+                {
+                  "severity": "Low",
+                  "advisoryurl": "https://github.com/advisories/GHSA-x674-v45j-fwxw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

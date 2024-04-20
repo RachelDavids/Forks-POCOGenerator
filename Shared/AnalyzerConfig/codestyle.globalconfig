@@ -1,0 +1,69 @@
+# Top level entry required to mark this as a global AnalyzerConfig file
+is_global = true
+
+global_level = 500
+
+# CA1801 depreceated in favour of I DE0060 Remove unused parameter
+# set scope
+dotnet_code_quality_unused_parameters	= all
+
+############################################################################################
+csharp_style_prefer_top_level_statements	= false:error
+csharp_style_var_for_built_in_types                                          = false : suggestion
+csharp_style_var_when_type_is_apparent                                       = false : suggestion
+csharp_style_var_elsewhere                                                   = false : suggestion
+
+dotnet_style_null_propagation = true:suggestion
+
+# (Style) IDE0004: Remove Unnecessary Cast
+dotnet_diagnostic.IDE0004.severity = error
+# (Style) IDE0005: Imports statement is unnecessary.
+dotnet_diagnostic.IDE0005.severity = error
+# (Style) IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = error
+# (Style) IDE0007: Use explicit type
+dotnet_diagnostic.IDE0007.severity = suggestion
+# (Style) IDE0008: Use explicit type
+dotnet_diagnostic.IDE0008.severity = suggestion
+# (Style) IDE0010: Add missing cases
+dotnet_diagnostic.IDE0010.severity = error
+# (Style) IDE0011: Add braces
+dotnet_diagnostic.IDE0011.severity = error
+# (Style) IDE0028: Simplify collection initialization
+dotnet_diagnostic.IDE0028.severity = suggestion
+# (Style) IDE0031: Use null propagation
+dotnet_diagnostic.IDE0031.severity = suggestion
+# (Style) IDE0040: Add accessibility modifiers
+dotnet_diagnostic.IDE0040.severity = error
+# (Style) IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = error
+# (Style) IDE0045: Convert to conditional expression
+dotnet_diagnostic.IDE0045.severity = suggestion
+# (Style) IDE0046: Convert to conditional expression
+dotnet_diagnostic.IDE0046.severity = suggestion
+# (Style) IDE0047: Remove unnecessary parentheses
+dotnet_diagnostic.IDE0047.severity = error
+# (Style) IDE0057: Use range operator
+dotnet_diagnostic.IDE0057.severity = error
+# (Style) IDE0061: Use expression body for local function
+dotnet_diagnostic.IDE0061.severity = error
+# (Style) IDE0066: Convert switch statement to expression
+dotnet_diagnostic.IDE0066.severity = error
+# (Style) IDE0074: Use compound assignment
+dotnet_diagnostic.IDE0074.severity = suggestion
+# (Style) IDE0078: Use pattern matching
+dotnet_diagnostic.IDE0078.severity = error
+# (Style) IDE0090: Use 'new(...)'
+dotnet_diagnostic.IDE0090.severity = error
+# (Style) IDE0100: Remove redundant equality
+dotnet_diagnostic.IDE0100.severity = error
+# (Style) IDE0210: Convert to top-level statements
+dotnet_diagnostic.IDE0210.severity = error
+# (Style) IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = error
+# (Style) IDE0300: Simplify collection initialization
+dotnet_diagnostic.IDE0300.severity = suggestion
+# (Style) IDE0301: Simplify collection initialization
+dotnet_diagnostic.IDE0301.severity = suggestion
+# (Style) IDE0305: Simplify collection initialization
+dotnet_diagnostic.IDE0305.severity = suggestion

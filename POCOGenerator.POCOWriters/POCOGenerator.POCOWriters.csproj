@@ -5,6 +5,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="System.Drawing.Common" Version="*" />
-		<PackageReference Include="TrueColorConsole" Version="1.0.2" />
+		<PackageReference Include="TrueColorConsole" Version="*" />
 	</ItemGroup>
 </Project>

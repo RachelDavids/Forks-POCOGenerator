@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
 using POCOGenerator.Objects;
+
 using POCOGeneratorUI.Filtering;
 
 namespace POCOGeneratorUI
@@ -92,7 +94,7 @@ namespace POCOGeneratorUI
 			{
 				return;
 			}
-			if (filters.ContainsKey(parent) == false)
+			if (!filters.ContainsKey(parent))
 			{
 				return;
 			}
@@ -101,7 +103,7 @@ namespace POCOGeneratorUI
 			{
 				filters.Remove(parent);
 				parent.ShowAll();
-				parent.Text = parent.Text.Replace(" (filtered)", string.Empty);
+				parent.Text = parent.Text.Replace(" (filtered)", String.Empty);
 				CheckDbObjectsNodeAfterFilter(parent);
 			}
 		}
@@ -123,7 +125,7 @@ namespace POCOGeneratorUI
 				filterSettings.FilterSchema.Filter = filterSettingsForm.FilterSchema;
 				if (filterSettings.IsEnabled)
 				{
-					if (filters.ContainsKey(parent) == false)
+					if (!filters.ContainsKey(parent))
 					{
 						filters.Add(parent, filterSettings);
 					}
@@ -136,7 +138,7 @@ namespace POCOGeneratorUI
 						filters.Remove(parent);
 					}
 					parent.ShowAll();
-					parent.Text = parent.Text.Replace(" (filtered)", string.Empty);
+					parent.Text = parent.Text.Replace(" (filtered)", String.Empty);
 					CheckDbObjectsNodeAfterFilter(parent);
 				}
 			}
@@ -169,7 +171,7 @@ namespace POCOGeneratorUI
 					node.Show();
 				}
 			}
-			if (parent.Text.Contains(" (filtered)") == false)
+			if (!parent.Text.Contains(" (filtered)"))
 			{
 				parent.Text += " (filtered)";
 			}
@@ -186,21 +188,21 @@ namespace POCOGeneratorUI
 			{
 				if (filterSettings.FilterName.FilterType == FilterType.Equals)
 				{
-					if (string.Compare(dbObject.Name, filterSettings.FilterName.Filter, true) == 0 == false)
+					if (String.Compare(dbObject.Name, filterSettings.FilterName.Filter, true) != 0)
 					{
 						return false;
 					}
 				}
 				else if (filterSettings.FilterName.FilterType == FilterType.Contains)
 				{
-					if (dbObject.Name.IndexOf(filterSettings.FilterName.Filter, StringComparison.OrdinalIgnoreCase) != -1 == false)
+					if (dbObject.Name.IndexOf(filterSettings.FilterName.Filter, StringComparison.OrdinalIgnoreCase) == -1)
 					{
 						return false;
 					}
 				}
-				else if (filterSettings.FilterName.FilterType == FilterType.Does_Not_Contain)
+				else if (filterSettings.FilterName.FilterType == FilterType.DoesNotContain)
 				{
-					if (dbObject.Name.IndexOf(filterSettings.FilterName.Filter, StringComparison.OrdinalIgnoreCase) == -1 == false)
+					if (dbObject.Name.IndexOf(filterSettings.FilterName.Filter, StringComparison.OrdinalIgnoreCase) != -1)
 					{
 						return false;
 					}
@@ -212,23 +214,21 @@ namespace POCOGeneratorUI
 				{
 					if (filterSettings.FilterSchema.FilterType == FilterType.Equals)
 					{
-						if (string.Compare(dbObject.Schema, filterSettings.FilterSchema.Filter, true) == 0 == false)
+						if (String.Compare(dbObject.Schema, filterSettings.FilterSchema.Filter, true) != 0)
 						{
 							return false;
 						}
 					}
 					else if (filterSettings.FilterSchema.FilterType == FilterType.Contains)
 					{
-						if (dbObject.Schema.IndexOf(filterSettings.FilterSchema.Filter, StringComparison.OrdinalIgnoreCase) != -1 ==
-							false)
+						if (dbObject.Schema.IndexOf(filterSettings.FilterSchema.Filter, StringComparison.OrdinalIgnoreCase) == -1)
 						{
 							return false;
 						}
 					}
-					else if (filterSettings.FilterSchema.FilterType == FilterType.Does_Not_Contain)
+					else if (filterSettings.FilterSchema.FilterType == FilterType.DoesNotContain)
 					{
-						if (dbObject.Schema.IndexOf(filterSettings.FilterSchema.Filter, StringComparison.OrdinalIgnoreCase) == -1 ==
-							false)
+						if (dbObject.Schema.IndexOf(filterSettings.FilterSchema.Filter, StringComparison.OrdinalIgnoreCase) != -1)
 						{
 							return false;
 						}
@@ -240,15 +240,14 @@ namespace POCOGeneratorUI
 
 		private void CheckDbObjectsNodeAfterFilter(TreeNode parent)
 		{
-			bool toCheckParent =
-					parent.Checked == false &&
+			bool toCheckParent = !parent.Checked &&
 					parent.Nodes.Count > 0 &&
 					parent.Nodes.Cast<TreeNode>().All(n => n.Checked)
 				;
 			bool toUncheckParent =
 				parent.Checked && (
 									  parent.Nodes.Count == 0 ||
-									  parent.Nodes.Cast<TreeNode>().Any(n => n.Checked == false)
+									  parent.Nodes.Cast<TreeNode>().Any(n => !n.Checked)
 								  );
 			if (toCheckParent || toUncheckParent)
 			{
@@ -351,7 +350,7 @@ namespace POCOGeneratorUI
 			{
 				return;
 			}
-			if ((node.Tag is Table table) == false)
+			if (node.Tag is not Table table)
 			{
 				return;
 			}
@@ -362,7 +361,7 @@ namespace POCOGeneratorUI
 			{
 				if (primaryTables.Remove((Table)n.Tag))
 				{
-					if (n.Checked == false)
+					if (!n.Checked)
 					{
 						toCheck.Add(n);
 					}
@@ -390,7 +389,7 @@ namespace POCOGeneratorUI
 			{
 				return;
 			}
-			if ((node.Tag is Table table) == false)
+			if (node.Tag is not Table table)
 			{
 				return;
 			}
@@ -400,7 +399,7 @@ namespace POCOGeneratorUI
 			{
 				if (((Table)n.Tag).ForeignKeys.Any(fk => fk.PrimaryTable == table))
 				{
-					if (n.Checked == false)
+					if (!n.Checked)
 					{
 						toCheck.Add(n);
 					}
@@ -424,7 +423,7 @@ namespace POCOGeneratorUI
 			{
 				return;
 			}
-			if ((node.Tag is Table table) == false)
+			if (node.Tag is not Table table)
 			{
 				return;
 			}
@@ -440,7 +439,7 @@ namespace POCOGeneratorUI
 					{
 						foreach (ForeignKey fk in accessibleTables[i].ForeignKeys)
 						{
-							if (accessibleTables.Contains(fk.PrimaryTable) == false)
+							if (!accessibleTables.Contains(fk.PrimaryTable))
 							{
 								accessibleTables.Add(fk.PrimaryTable);
 							}
@@ -452,7 +451,7 @@ namespace POCOGeneratorUI
 				foreach (TreeNode n in node.Parent.Nodes)
 				{
 					Table t = (Table)n.Tag;
-					if (accessibleTables.Contains(t) == false)
+					if (!accessibleTables.Contains(t))
 					{
 						if (t.ForeignKeys.Any(fk => accessibleTables.Contains(fk.PrimaryTable)))
 						{
@@ -468,7 +467,7 @@ namespace POCOGeneratorUI
 				Table t = (Table)n.Tag;
 				if (accessibleTables.Remove(t))
 				{
-					if (n.Checked == false)
+					if (!n.Checked)
 					{
 						toCheck.Add(n);
 					}

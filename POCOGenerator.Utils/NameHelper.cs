@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+
 using Pluralize.NET;
 
 namespace POCOGenerator.Utils
 {
 	public static class NameHelper
 	{
-		#region Singular & Plural
-
 		private static readonly Regex regexCamelCase = new("(?<word>[A-Z]{2,}|[A-Z][^A-Z]*?|^[^A-Z]*?)(?=[A-Z]|$)", RegexOptions.Compiled);
 		private static readonly Regex regexDigits = new("\\d+", RegexOptions.Compiled);
 
@@ -19,7 +18,7 @@ namespace POCOGenerator.Utils
 
 		private static string WordQuantifier(string name, Func<string, string> quantifier)
 		{
-			if (string.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 			{
 				return name;
 			}
@@ -51,18 +50,13 @@ namespace POCOGenerator.Utils
 
 			string quantifiedWord = quantifier(word);
 
-			if (quantifiedWord == word)
-			{
-				return name;
-			}
-
-			return name.Length == word.Length ? quantifiedWord : name[..index] + quantifiedWord;
+			return quantifiedWord == word ? name : name.Length == word.Length ? quantifiedWord : name[..index] + quantifiedWord;
 		}
 
 		private static string ToSingular(string word)
 		{
 			return
-				(string.Compare(word, word.ToUpper(), false) == 0) ?
+				(String.CompareOrdinal(word, word.ToUpper()) == 0) ?
 				new Pluralizer().Singularize(word.ToLower()).ToUpper() :
 				new Pluralizer().Singularize(word)
 			;
@@ -71,15 +65,11 @@ namespace POCOGenerator.Utils
 		private static string ToPlural(string word)
 		{
 			return
-				(string.Compare(word, word.ToUpper(), false) == 0) ?
+				(String.CompareOrdinal(word, word.ToUpper()) == 0) ?
 				new Pluralizer().Pluralize(word.ToLower()).ToUpper() :
 				new Pluralizer().Pluralize(word)
 			;
 		}
-
-		#endregion
-
-		#region Transform Name
 
 		public static string TransformName(string name,
 										   string wordsSeparator = null,
@@ -111,7 +101,7 @@ namespace POCOGenerator.Utils
 				}
 
 				index++;
-				if (index < words.Count && string.IsNullOrEmpty(wordsSeparator) == false)
+				if (index < words.Count && !String.IsNullOrEmpty(wordsSeparator))
 				{
 					name += wordsSeparator;
 				}
@@ -136,10 +126,6 @@ namespace POCOGenerator.Utils
 			return camelCaseWords;
 		}
 
-		#endregion
-
-		#region Clean Name
-
 		public static string CleanName(string name)
 		{
 			name = name.Replace(" ", "_").Replace('-', '_').Trim();
@@ -150,10 +136,6 @@ namespace POCOGenerator.Utils
 
 			return name;
 		}
-
-		#endregion
-
-		#region Clean Enum Literal
 
 		public static string CleanEnumLiteral(string name)
 		{
@@ -166,11 +148,7 @@ namespace POCOGenerator.Utils
 			return name;
 		}
 
-		#endregion
-
-		#region Name Prefix
-
-		private static readonly List<string> NamePrefixes = [
+		private static readonly List<string> s_namePrefixes = [
 			"first",
 			"second",
 			"third",
@@ -206,8 +184,8 @@ namespace POCOGenerator.Utils
 		public static string AddNamePrefix(string name, string columnName)
 		{
 			string columnNameLower = columnName.ToLower();
-			string prefix = NamePrefixes.OrderByDescending(p => p.Length).FirstOrDefault(columnNameLower.StartsWith);
-			if (string.IsNullOrEmpty(prefix) == false)
+			string prefix = s_namePrefixes.OrderByDescending(p => p.Length).FirstOrDefault(columnNameLower.StartsWith);
+			if (!String.IsNullOrEmpty(prefix))
 			{
 				name = columnName[..prefix.Length] + name;
 			}
@@ -215,36 +193,25 @@ namespace POCOGenerator.Utils
 			return name;
 		}
 
-		#endregion
-
-		#region Name Verbs
-
-		private class ConjugatedVerb
+		private class ConjugatedVerb(string verb, string pastParticipleVerb)
 		{
-			public string Verb { get; set; }
-			public string PastParticipleVerb { get; set; }
-			public List<string> VerbVariations { get; set; }
-
-			public ConjugatedVerb(string verb, string pastParticipleVerb)
-			{
-				Verb = verb;
-				PastParticipleVerb = pastParticipleVerb;
-				VerbVariations = [];
-			}
+			public string Verb { get; set; } = verb;
+			public string PastParticipleVerb { get; set; } = pastParticipleVerb;
+			public List<string> VerbVariations { get; set; } = [];
 		}
 
-		private static readonly List<ConjugatedVerb> ConjugatedVerbs =
+		private static readonly List<ConjugatedVerb> s_conjugatedVerbs =
 		[
-			new ConjugatedVerb("insert", "inserted"),
-			new ConjugatedVerb("update", "updated"),
-			new ConjugatedVerb("delete", "deleted"),
-			new ConjugatedVerb("create", "created"),
-			new ConjugatedVerb("write", "written"),
-			new ConjugatedVerb("ship", "shipped"),
-			new ConjugatedVerb("send", "sent"),
+			new("insert", "inserted"),
+			new("update", "updated"),
+			new("delete", "deleted"),
+			new("create", "created"),
+			new("write", "written"),
+			new("ship", "shipped"),
+			new("send", "sent"),
 		];
 
-		private static readonly List<string> VerbVariations =
+		private static readonly List<string> s_verbVariations =
 		[
 			"{0}",
 			"{0}by",
@@ -261,7 +228,7 @@ namespace POCOGenerator.Utils
 			"{0}_person"
 		];
 
-		private static List<string> Variations;
+		private static List<string> s_variations;
 
 		static NameHelper()
 		{
@@ -270,22 +237,22 @@ namespace POCOGenerator.Utils
 
 		private static void BuildNameVerbsAndVariations()
 		{
-			foreach (ConjugatedVerb conjugations in ConjugatedVerbs)
+			foreach (ConjugatedVerb conjugations in s_conjugatedVerbs)
 			{
-				foreach (string variation in VerbVariations)
+				foreach (string variation in s_verbVariations)
 				{
-					conjugations.VerbVariations.Add(string.Format(variation, conjugations.Verb));
-					conjugations.VerbVariations.Add(string.Format(variation, conjugations.PastParticipleVerb));
+					conjugations.VerbVariations.Add(String.Format(variation, conjugations.Verb));
+					conjugations.VerbVariations.Add(String.Format(variation, conjugations.PastParticipleVerb));
 				}
 
 				// order length descending
 				conjugations.VerbVariations.Sort((x, y) => x.Length == y.Length ? 0 : (x.Length < y.Length ? 1 : -1));
 			}
 
-			Variations = ConjugatedVerbs.SelectMany(p => p.VerbVariations).ToList();
+			s_variations = s_conjugatedVerbs.SelectMany(p => p.VerbVariations).ToList();
 
 			// order length descending
-			Variations.Sort((x, y) => x.Length == y.Length ? 0 : (x.Length < y.Length ? 1 : -1));
+			s_variations.Sort((x, y) => x.Length == y.Length ? 0 : (x.Length < y.Length ? 1 : -1));
 		}
 
 		public static bool IsNameVerb(string name)
@@ -298,15 +265,15 @@ namespace POCOGenerator.Utils
 
 			bool hasDate = name.IndexOf("date", StringComparison.OrdinalIgnoreCase) != -1;
 			bool hasShip = name.IndexOf("ship", StringComparison.OrdinalIgnoreCase) != -1;
-			if (hasDate == false && hasShip == false)
+			if (!hasDate && !hasShip)
 			{
-				return Variations.Any(variation => name.IndexOf(variation, StringComparison.OrdinalIgnoreCase) != -1);
+				return s_variations.Any(variation => name.IndexOf(variation, StringComparison.OrdinalIgnoreCase) != -1);
 			}
 
 			if (hasDate)
 			{
 				bool hasUpdate = name.IndexOf("update", StringComparison.OrdinalIgnoreCase) != -1;
-				if (hasUpdate == false)
+				if (!hasUpdate)
 				{
 					return false;
 				}
@@ -318,7 +285,7 @@ namespace POCOGenerator.Utils
 						(index - 2) >= 0 &&
 						name.IndexOf("update", index - 2, StringComparison.OrdinalIgnoreCase) == (index - 2);
 
-					if (hasUpdate == false)
+					if (!hasUpdate)
 					{
 						return false;
 					}
@@ -342,7 +309,7 @@ namespace POCOGenerator.Utils
 
 		public static string ConjugateNameVerbToPastParticiple(string name)
 		{
-			ConjugatedVerb conjugations = ConjugatedVerbs.FirstOrDefault(cv => cv.VerbVariations.Any(variation => name.IndexOf(variation, StringComparison.OrdinalIgnoreCase) != -1));
+			ConjugatedVerb conjugations = s_conjugatedVerbs.FirstOrDefault(cv => cv.VerbVariations.Any(variation => name.IndexOf(variation, StringComparison.OrdinalIgnoreCase) != -1));
 
 			if (conjugations == null)
 			{
@@ -362,12 +329,6 @@ namespace POCOGenerator.Utils
 				: name;
 		}
 
-		#endregion
-
-		#region Escape
-
 		public static string Escape(string text) => text.Replace("\\", "\\\\").Replace("\"", "\\\"");
-
-		#endregion
 	}
 }

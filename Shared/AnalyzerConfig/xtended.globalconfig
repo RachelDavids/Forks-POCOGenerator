@@ -1,0 +1,9 @@
+# Top level entry required to mark this as a global AnalyzerConfig file
+is_global = true
+
+global_level = 500
+
+############################################################################################
+
+# (eXtended) XAP007: Prefer ValueTuple
+dotnet_diagnostic.XAP007.severity = error

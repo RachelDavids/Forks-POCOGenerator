@@ -1,37 +1,20 @@
-﻿using System;
 using POCOGenerator.DbHandlers;
 
 namespace POCOGenerator.DbFactories
 {
-    public sealed class DbFactory
-    {
-        private DbFactory() { }
+	public sealed class DbFactory
+	{
+		private DbFactory() { }
 
-        public static DbFactory Instance
-        {
-            get { return SingletonCreator.instance; }
-        }
+		public static DbFactory Instance => SingletonCreator.s_instance;
 
-        private class SingletonCreator
-        {
-            static SingletonCreator() { }
-            internal static readonly DbFactory instance = new DbFactory();
-        }
+		private class SingletonCreator
+		{
+			internal static readonly DbFactory s_instance = new();
+		}
 
-        public IDbHandler SQLServerHandler
-        {
-            get
-            {
-                return SQLServer.SQLServerHandler.Instance;
-            }
-        }
+		public IDbHandler SQLServerHandler => SQLServer.SQLServerHandler.Instance;
 
-        public IDbHandler MySQLHandler
-        {
-            get
-            {
-                return MySQL.MySQLHandler.Instance;
-            }
-        }
-    }
+		public IDbHandler MySQLHandler => MySQL.MySQLHandler.Instance;
+	}
 }

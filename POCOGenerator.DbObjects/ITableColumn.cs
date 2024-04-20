@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace POCOGenerator.DbObjects
 {
-    public interface ITableColumn : IColumn, IDescription
+	public interface ITableColumn : IColumn, IDescription
     {
         ITable Table { get; set; }
         IPrimaryKeyColumn PrimaryKeyColumn { get; set; }

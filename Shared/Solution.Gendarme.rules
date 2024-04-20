@@ -15,8 +15,8 @@
 	<rules include="*" from="Gendarme.Rules.BadPractice.dll"/>
 	<rules include="*" from="Gendarme.Rules.Concurrency.dll" />
 	<rules include="*"
-	       exclude="NullDerefRule"
-	       from="Gendarme.Rules.Correctness.dll"/>
+		   exclude="NullDerefRule"
+		   from="Gendarme.Rules.Correctness.dll"/>
 	<rules include="*"
 		   exclude="ConsiderUsingNamedTypesRule"
 		   from="Gendarme.Rules.Design.dll">
@@ -60,7 +60,6 @@
 	<!--<rules include="*" from="Gendarme.Rules.MSTest.dll"/>-->
 	<rules include="*" from="Gendarme.Rules.Smells.dll">
 	  <parameter rule="AvoidLongMethodsRule" property="MaxSourceLinesOfCode" value="35" />
-	  <parameter rule="AvoidLongParameterListsRule" property="ExposedMethodsOnly" value="true" />
 	  <parameter rule="AvoidLargeClassesRule" property="MaxDuplicatePrefixes" value="3" />
 	</rules>
   </ruleset>

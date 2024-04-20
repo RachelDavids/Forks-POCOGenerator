@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a column of a database view index.</summary>
-    public sealed class ViewIndexColumn : IndexColumn
+	/// <summary>Represents a column of a database view index.</summary>
+	public sealed class ViewIndexColumn : IndexColumn
     {
-        internal ViewIndexColumn(POCOGenerator.DbObjects.IIndexColumn indexColumn, ViewIndex index)
+        internal ViewIndexColumn(DbObjects.IIndexColumn indexColumn, ViewIndex index)
             : base(indexColumn)
         {
             this.Index = index;
@@ -24,9 +23,11 @@ namespace POCOGenerator.Objects
             get
             {
                 if (this.viewColumn == null)
-                    this.viewColumn = this.Index.View.ViewColumns.First(c => c.InternalEquals(this.indexColumn.TableColumn));
+				{
+					this.viewColumn = this.Index.View.ViewColumns.First(c => c.InternalEquals(this.indexColumn.TableColumn));
+				}
 
-                return this.viewColumn;
+				return this.viewColumn;
             }
         }
     }

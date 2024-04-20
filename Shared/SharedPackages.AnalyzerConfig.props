@@ -1,0 +1,24 @@
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ConfigProvider Condition=" '$(ConfigProvider)' == '' ">$(CompanyIdentifier)</ConfigProvider>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="$(ConfigProvider).AnalyzerConfig.DotNetStyle"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  GeneratePathProperty="true"
+				  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="$(ConfigProvider).AnalyzerConfig.CodeAnalysis"
+		                  Version="$(LatestStablePackageRequiredVersion)"
+		                  GeneratePathProperty="true"
+				  developmentDependency="true">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>

@@ -31,7 +31,7 @@ namespace POCOGenerator.POCOWriters.Writers
 
 		private void AppendText(string text, Color color)
 		{
-			if (string.IsNullOrEmpty(text) == false)
+			if (!System.String.IsNullOrEmpty(text))
 			{
 				_richTextBox.Select(_richTextBox.TextLength, 0);
 				_richTextBox.SelectionColor = color;

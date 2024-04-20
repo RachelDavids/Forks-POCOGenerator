@@ -1,12 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0-windows</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <AssemblyTitle>POCOGenerator.POCOIterators</AssemblyTitle>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
-    <ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
-    <ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-windows</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<AssemblyTitle>POCOGenerator.POCOIterators</AssemblyTitle>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\POCOGenerator.DbObjects\POCOGenerator.DbObjects.csproj" />
+		<ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
+		<ProjectReference Include="..\POCOGenerator.Utils\POCOGenerator.Utils.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

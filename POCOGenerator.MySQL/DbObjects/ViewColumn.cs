@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.MySQL.DbObjects
+﻿namespace POCOGenerator.MySQL.DbObjects
 {
-    internal class ViewColumn : TableColumn
+	internal class ViewColumn : TableColumn
     {
         /* not in use. reduce memory.
         public string VIEW_CATALOG { get; set; }

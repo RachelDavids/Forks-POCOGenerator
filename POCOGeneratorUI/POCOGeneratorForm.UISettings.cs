@@ -232,7 +232,7 @@ namespace POCOGeneratorUI
 		{
 			try
 			{
-				if (File.Exists(settingsFileName) == false)
+				if (!File.Exists(settingsFileName))
 				{
 					return null;
 				}

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database stored procedure parameter.</summary>
-    public sealed class ProcedureParameter : IDbParameter
+	/// <summary>Represents a database stored procedure parameter.</summary>
+	public sealed class ProcedureParameter : IDbParameter
     {
-        private readonly POCOGenerator.DbObjects.IProcedureParameter procedureParameter;
+        private readonly DbObjects.IProcedureParameter procedureParameter;
 
-        internal ProcedureParameter(POCOGenerator.DbObjects.IProcedureParameter procedureParameter, Procedure procedure)
+        internal ProcedureParameter(DbObjects.IProcedureParameter procedureParameter, Procedure procedure)
         {
             this.procedureParameter = procedureParameter;
             this.Procedure = procedure;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IProcedureParameter procedureParameter)
+        internal bool InternalEquals(DbObjects.IProcedureParameter procedureParameter)
         {
             return this.procedureParameter == procedureParameter;
         }

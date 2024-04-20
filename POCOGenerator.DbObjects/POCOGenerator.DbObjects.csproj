@@ -1,7 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <AssemblyTitle>POCOGenerator.DbObjects</AssemblyTitle>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<AssemblyTitle>POCOGenerator.DbObjects</AssemblyTitle>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

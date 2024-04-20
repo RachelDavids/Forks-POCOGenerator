@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.SQLServer.DbObjects
+﻿namespace POCOGenerator.SQLServer.DbObjects
 {
-    internal class ViewColumn : TableColumn
+	internal class ViewColumn : TableColumn
     {
     }
 }

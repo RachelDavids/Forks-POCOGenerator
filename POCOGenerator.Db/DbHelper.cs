@@ -11,22 +11,10 @@ using POCOGenerator.Utils;
 
 namespace POCOGenerator.Db
 {
-	public abstract class DbHelper : IDbHelper
+	public abstract class DbHelper(string connectionString, IDbSupport support) : IDbHelper
 	{
-		#region Constructor
-
-		protected string ConnectionString;
-		public virtual IDbSupport Support { get; protected set; }
-
-		public DbHelper(string connectionString, IDbSupport support)
-		{
-			ConnectionString = connectionString;
-			Support = support;
-		}
-
-		#endregion
-
-		#region Connection, Command & Parameter
+		protected string ConnectionString { get; } = connectionString;
+		public virtual IDbSupport Support { get; protected set; } = support;
 
 		protected abstract DbConnection GetConnection(string connectionString);
 
@@ -34,18 +22,13 @@ namespace POCOGenerator.Db
 
 		protected abstract IDataParameter GetParameter(IProcedureParameter parameter, IDatabase database);
 
-		#endregion
-
-		#region Server
-
-		public virtual void BuildServerSchema(
-			IServer server,
-			string initialDatabase,
-			bool isEnableTables,
-			bool isEnableViews,
-			bool isEnableStoredProcedures,
-			bool isEnableFunctions,
-			bool isEnableTVPs)
+		public virtual void BuildServerSchema(IServer server,
+											  string initialDatabase,
+											  bool isEnableTables,
+											  bool isEnableViews,
+											  bool isEnableStoredProcedures,
+											  bool isEnableFunctions,
+											  bool isEnableTVPs)
 		{
 			string serverVersion = GetServerVersion();
 
@@ -64,13 +47,12 @@ namespace POCOGenerator.Db
 			foreach (IDatabase database in server.Databases)
 			{
 				database.Server = server;
-				BuildDatabaseSchema(
-					database,
-					isEnableTables,
-					isEnableViews,
-					isEnableStoredProcedures,
-					isEnableFunctions,
-					isEnableTVPs
+				BuildDatabaseSchema(database,
+									isEnableTables,
+									isEnableViews,
+									isEnableStoredProcedures,
+									isEnableFunctions,
+									isEnableTVPs
 				);
 			}
 
@@ -100,7 +82,8 @@ namespace POCOGenerator.Db
 			}
 		}
 
-		protected virtual void SortTables<T>(List<T> tables) where T : ITable
+		protected virtual void SortTables<T>(List<T> tables)
+			where T : ITable
 		{
 			if (tables.HasAny())
 			{
@@ -237,10 +220,6 @@ namespace POCOGenerator.Db
 			}
 		}
 
-		#endregion
-
-		#region Databases
-
 		protected virtual List<IDatabase> GetDatabases(string initialDatabase = null)
 		{
 			try
@@ -352,7 +331,7 @@ namespace POCOGenerator.Db
 				{
 					try
 					{
-						bool isBuildSchemaTVPsForOtherObjectTypes = isEnableTVPs == false;
+						bool isBuildSchemaTVPsForOtherObjectTypes = !isEnableTVPs;
 						BuildSchemaTVPs(database, systemObjects);
 					}
 					catch (Exception ex)
@@ -415,7 +394,7 @@ namespace POCOGenerator.Db
 
 			if (Support.IsSupportTVPs)
 			{
-				if (isEnableTVPs == false && (isEnableStoredProcedures || (Support.IsSupportTableFunctions && isEnableFunctions)))
+				if (!isEnableTVPs && (isEnableStoredProcedures || (Support.IsSupportTableFunctions && isEnableFunctions)))
 				{
 					database.TVPs = null;
 				}
@@ -456,18 +435,10 @@ namespace POCOGenerator.Db
 			}
 		}
 
-		#endregion
-
-		#region System Objects
-
 		protected virtual List<ISystemObject> GetSystemObjects(IDatabase database)
 		{
 			return null;
 		}
-
-		#endregion
-
-		#region Descriptions
 
 		protected abstract List<IDbObjectDescription> GetDbObjectDescriptions(IDatabase database);
 
@@ -486,7 +457,7 @@ namespace POCOGenerator.Db
 					{
 						tvp.Description = descriptions.Where(d =>
 							d.ObjectType == DbObjectType.TVP &&
-							(d is ISchema schema1 == false || tvp is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(d is not ISchema schema1 || tvp is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							d.Name == tvp.Name
 						).Select(d => d.Description).FirstOrDefault();
 
@@ -496,7 +467,7 @@ namespace POCOGenerator.Db
 							{
 								column.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.TVPColumn &&
-									(d is ISchema schema1 == false || tvp is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || tvp is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == tvp.Name &&
 									d.Minor_Name == column.ColumnName
 								).Select(d => d.Description).FirstOrDefault();
@@ -511,7 +482,7 @@ namespace POCOGenerator.Db
 					{
 						table.Description = descriptions.Where(d =>
 							d.ObjectType == DbObjectType.Table &&
-							(d is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(d is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							d.Name == table.Name
 						).Select(d => d.Description).FirstOrDefault();
 
@@ -521,7 +492,7 @@ namespace POCOGenerator.Db
 							{
 								column.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.Column &&
-									(d is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == table.Name &&
 									d.Minor_Name == column.ColumnName
 								).Select(d => d.Description).FirstOrDefault();
@@ -534,7 +505,7 @@ namespace POCOGenerator.Db
 							{
 								index.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.Index &&
-									(d is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == table.Name &&
 									d.Minor_Name == index.Name
 								).Select(d => d.Description).FirstOrDefault();
@@ -549,7 +520,7 @@ namespace POCOGenerator.Db
 					{
 						view.Description = descriptions.Where(d =>
 							d.ObjectType == DbObjectType.View &&
-							(d is ISchema schema1 == false || view is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(d is not ISchema schema1 || view is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							d.Name == view.Name
 						).Select(d => d.Description).FirstOrDefault();
 
@@ -559,7 +530,7 @@ namespace POCOGenerator.Db
 							{
 								column.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.Column &&
-									(d is ISchema schema1 == false || view is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || view is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == view.Name &&
 									d.Minor_Name == column.ColumnName
 								).Select(d => d.Description).FirstOrDefault();
@@ -572,7 +543,7 @@ namespace POCOGenerator.Db
 							{
 								index.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.Index &&
-									(d is ISchema schema1 == false || view is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || view is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == view.Name &&
 									d.Minor_Name == index.Name
 								).Select(d => d.Description).FirstOrDefault();
@@ -587,7 +558,7 @@ namespace POCOGenerator.Db
 					{
 						procedure.Description = descriptions.Where(d =>
 							d.ObjectType == DbObjectType.Procedure &&
-							(d is ISchema schema1 == false || procedure is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(d is not ISchema schema1 || procedure is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							d.Name == procedure.Name
 						).Select(d => d.Description).FirstOrDefault();
 
@@ -597,7 +568,7 @@ namespace POCOGenerator.Db
 							{
 								parameter.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.ProcedureParameter &&
-									(d is ISchema schema1 == false || procedure is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || procedure is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == procedure.Name &&
 									d.Minor_Name == parameter.ParameterName
 								).Select(d => d.Description).FirstOrDefault();
@@ -612,7 +583,7 @@ namespace POCOGenerator.Db
 					{
 						function.Description = descriptions.Where(d =>
 							d.ObjectType == DbObjectType.Function &&
-							(d is ISchema schema1 == false || function is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(d is not ISchema schema1 || function is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							d.Name == function.Name
 						).Select(d => d.Description).FirstOrDefault();
 
@@ -622,7 +593,7 @@ namespace POCOGenerator.Db
 							{
 								parameter.Description = descriptions.Where(d =>
 									d.ObjectType == DbObjectType.ProcedureParameter &&
-									(d is ISchema schema1 == false || function is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+									(d is not ISchema schema1 || function is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 									d.Name == function.Name &&
 									d.Minor_Name == parameter.ParameterName
 								).Select(d => d.Description).FirstOrDefault();
@@ -633,33 +604,13 @@ namespace POCOGenerator.Db
 			}
 		}
 
-		#endregion
-
-		#region Primary, Unique & Foreign Keys
-
 		protected abstract Tuple<List<IInternalKey>, List<IInternalKey>, List<IInternalForeignKey>> GetKeys(IDatabase database);
-
-		#endregion
-
-		#region Indexes
 
 		protected abstract List<IInternalIndex> GetIndexes(IDatabase database);
 
-		#endregion
-
-		#region Identity Columns
-
 		protected abstract List<IIdentityColumn> GetIdentityColumns(IDatabase database);
 
-		#endregion
-
-		#region Computed Columns
-
 		protected abstract List<IComputedColumn> GetComputedColumns(IDatabase database);
-
-		#endregion
-
-		#region TVPs
 
 		protected virtual void BuildSchemaTVPs(IDatabase database, List<ISystemObject> systemObjects = null)
 		{
@@ -713,10 +664,6 @@ namespace POCOGenerator.Db
 		{
 			return null;
 		}
-
-		#endregion
-
-		#region Tables
 
 		protected virtual void BuildSchemaTables(
 			IDatabase database,
@@ -799,7 +746,7 @@ namespace POCOGenerator.Db
 			if (primaryKeysInternal.HasAny())
 			{
 				List<IInternalKey> primaryKeyColumns = primaryKeysInternal.Where(pk =>
-					(pk is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+					(pk is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 					pk.Table_Name == table.Name
 				).ToList();
 
@@ -828,19 +775,19 @@ namespace POCOGenerator.Db
 		{
 			if (uniqueKeysInternal.HasAny())
 			{
-				var uniqueKeys = uniqueKeysInternal.Where(uk =>
-					(uk is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+				List<IGrouping<string, IInternalKey>> uniqueKeys = uniqueKeysInternal.Where(uk =>
+					(uk is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 					uk.Table_Name == table.Name
 				)
-				.GroupBy(ukc => new { ukc.Name })
+				.GroupBy(ukc => ukc.Name)
 				.ToList();
 
 				if (uniqueKeys.HasAny())
 				{
 					table.UniqueKeys = uniqueKeys.Select(uniqueKey => {
 						UniqueKey uk = new() {
-							Name = uniqueKey.Key.Name,
-							Table = table
+							Name = uniqueKey.Key,
+							Table = table,
 						};
 
 						uk.UniqueKeyColumns = table.TableColumns.Join(uniqueKey, c => c.ColumnName, ukc => ukc.Column_Name, (c, ukc) => {
@@ -870,17 +817,17 @@ namespace POCOGenerator.Db
 		{
 			if (indexesInternal.HasAny())
 			{
-				var indexes = indexesInternal.Where(i =>
+				List<IGrouping<(string Name, bool Is_Unique, bool Is_Clustered), IInternalIndex>> indexes = indexesInternal.Where(i =>
 					i.Is_Table_Index == isTableIndex &&
 					i.Is_View_Index == isViewIndex &&
-					(i is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+					(i is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 					i.Table_Name == table.Name
 				)
-				.GroupBy(ic => new {
+				.GroupBy(ic => (
 					ic.Name,
 					ic.Is_Unique,
 					ic.Is_Clustered
-				})
+				))
 				.ToList();
 
 				if (indexes.HasAny())
@@ -926,7 +873,7 @@ namespace POCOGenerator.Db
 					if (identityColumns.HasAny())
 					{
 						column.IsIdentity = identityColumns.Exists(ic =>
-							(ic is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(ic is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							ic.Table_Name == table.Name &&
 							ic.Column_Name == column.ColumnName
 						);
@@ -935,7 +882,7 @@ namespace POCOGenerator.Db
 					if (computedColumns.HasAny())
 					{
 						column.IsComputed = computedColumns.Exists(cc =>
-							(cc is ISchema schema1 == false || table is ISchema schema2 == false || schema1.Schema == schema2.Schema) &&
+							(cc is not ISchema schema1 || table is not ISchema schema2 || schema1.Schema == schema2.Schema) &&
 							cc.Table_Name == table.Name &&
 							cc.Column_Name == column.ColumnName
 						);
@@ -956,11 +903,11 @@ namespace POCOGenerator.Db
 		{
 			if (foreignKeysInternal.HasAny())
 			{
-				var foreignKeys = foreignKeysInternal.Where(fk =>
-					(fk is IInternalForeignKeySchema schema1 == false || table is ISchema schema2 == false || schema1.Foreign_Schema == schema2.Schema) &&
+				List<IGrouping<(string Name, bool Is_One_To_One, bool Is_One_To_Many, bool Is_Many_To_Many, bool Is_Many_To_Many_Complete, bool Is_Cascade_Delete, bool Is_Cascade_Update, string Primary_Schema, string Primary_Table), IInternalForeignKey>> foreignKeys = foreignKeysInternal.Where(fk =>
+					(fk is not IInternalForeignKeySchema schema1 || table is not ISchema schema2 || schema1.Foreign_Schema == schema2.Schema) &&
 					fk.Foreign_Table == table.Name
 				)
-				.GroupBy(fkc => new {
+				.GroupBy(fkc => (
 					fkc.Name,
 					fkc.Is_One_To_One,
 					fkc.Is_One_To_Many,
@@ -968,15 +915,15 @@ namespace POCOGenerator.Db
 					fkc.Is_Many_To_Many_Complete,
 					fkc.Is_Cascade_Delete,
 					fkc.Is_Cascade_Update,
-					Primary_Schema = fkc is ForeignKeySchemaInternal schema ? schema.Primary_Schema : null,
+					Primary_Schema: fkc is ForeignKeySchemaInternal schema ? schema.Primary_Schema : null,
 					fkc.Primary_Table
-				})
+				))
 				.ToList();
 
-				foreach (var foreignKey in foreignKeys)
+				foreach (IGrouping<(string Name, bool Is_One_To_One, bool Is_One_To_Many, bool Is_Many_To_Many, bool Is_Many_To_Many_Complete, bool Is_Cascade_Delete, bool Is_Cascade_Update, string Primary_Schema, string Primary_Table), IInternalForeignKey> foreignKey in foreignKeys)
 				{
 					ITable primaryTable = table.Database.Tables.FirstOrDefault(pt =>
-						(foreignKey.Key.Primary_Schema == null || pt is ISchema schema == false || foreignKey.Key.Primary_Schema == schema.Schema) &&
+						(foreignKey.Key.Primary_Schema == null || pt is not ISchema schema || foreignKey.Key.Primary_Schema == schema.Schema) &&
 						foreignKey.Key.Primary_Table == pt.Name
 					);
 
@@ -1028,10 +975,6 @@ namespace POCOGenerator.Db
 				}
 			}
 		}
-
-		#endregion
-
-		#region Views
 
 		protected virtual void BuildSchemaViews(IDatabase database, List<IInternalIndex> indexesInternal, List<ISystemObject> systemObjects = null)
 		{
@@ -1086,10 +1029,6 @@ namespace POCOGenerator.Db
 		}
 
 		protected abstract IEnumerable<ITableColumn> GetSchemaViewColumns(DbConnection connection, IView view);
-
-		#endregion
-
-		#region Procedures
 
 		protected virtual void BuildSchemaProcedures(IDatabase database, List<ISystemObject> systemObjects = null)
 		{
@@ -1157,7 +1096,7 @@ namespace POCOGenerator.Db
 
 				foreach (IProcedureParameter parameter in procedure.ProcedureParameters)
 				{
-					if (parameter.IsResult == false)
+					if (!parameter.IsResult)
 					{
 						command.Parameters.Add(GetParameter(parameter, procedure.Database));
 					}
@@ -1184,10 +1123,6 @@ namespace POCOGenerator.Db
 		{
 			procedure.Error = ex;
 		}
-
-		#endregion
-
-		#region Functions
 
 		protected virtual void BuildSchemaFunctions(IDatabase database, List<ISystemObject> systemObjects = null)
 		{
@@ -1244,7 +1179,7 @@ namespace POCOGenerator.Db
 					function.ProcedureParameters = GetSchemaFunctionParameters(connection, function).ToList();
 
 					isScalarFunction = function.ProcedureParameters.Where(param => param.IsResult).HasSingle();
-					if (isScalarFunction == false)
+					if (!isScalarFunction)
 					{
 						function.ProcedureColumns = GetFunctionSchema(function, connection);
 					}
@@ -1255,7 +1190,7 @@ namespace POCOGenerator.Db
 				}
 			}
 
-			if (isScalarFunction == false)
+			if (!isScalarFunction)
 			{
 				function.ProcedureParameters?.ForEach(p => p.Procedure = function);
 				function.ProcedureColumns?.ForEach(c => c.Procedure = function);
@@ -1280,7 +1215,7 @@ namespace POCOGenerator.Db
 
 				foreach (IProcedureParameter parameter in function.ProcedureParameters)
 				{
-					if (parameter.IsResult == false)
+					if (!parameter.IsResult)
 					{
 						command.Parameters.Add(GetParameter(parameter, function.Database));
 					}
@@ -1303,10 +1238,6 @@ namespace POCOGenerator.Db
 		{
 			return new IProcedureColumn[0];
 		}
-
-		#endregion
-
-		#region Navigation Properties
 
 		protected virtual void BuildNavigationProperties(IDatabase database)
 		{
@@ -1334,7 +1265,7 @@ namespace POCOGenerator.Db
 		{
 			if (database.Tables.HasAny())
 			{
-				var virtualNPs =
+				List<IGrouping<IForeignKey, (IForeignKey thisFK, NavigationProperty virtualNP, NavigationProperty virtualInverseProperty)>> virtualNPs =
 
 					// all tables
 					database.Tables
@@ -1354,7 +1285,7 @@ namespace POCOGenerator.Db
 					.GroupBy(fk => fk.ForeignTable)
 
 					// pair every fk with any other fk (in the same group of foreign keys that have the same join table)
-					.SelectMany(g => g.SelectMany(fk => g.Except(new IForeignKey[] { fk }), (thisFK, otherFK) => new { thisFK, otherFK }))
+					.SelectMany(g => g.SelectMany(fk => g.Except(new IForeignKey[] { fk }), (thisFK, otherFK) => (thisFK, otherFK)))
 
 					// before: otherFK.PrimaryTable <-- otherFK -- join table (thisFK.ForeignTable) -- thisFK --> thisFK.PrimaryTable
 					// after:  otherFK.PrimaryTable                        -- virtualFK -->                       thisFK.PrimaryTable
@@ -1414,7 +1345,7 @@ namespace POCOGenerator.Db
 						thisFK_NavigationPropertyFromPrimaryToForeign.IsVisibleWhenManyToManyJoinTableIsOn = true;
 						thisFK_NavigationPropertyFromPrimaryToForeign.IsVisibleWhenManyToManyJoinTableIsOff = false;
 
-						return new { item.thisFK, virtualFK };
+						return (item.thisFK, virtualFK);
 					})
 
 					// virtual navigation property from primary to foreign
@@ -1434,19 +1365,19 @@ namespace POCOGenerator.Db
 						virtualInverseProperty.IsVisibleWhenManyToManyJoinTableIsOn = false;
 						virtualInverseProperty.IsVisibleWhenManyToManyJoinTableIsOff = true;
 
-						return new {
+						return (
 							item.thisFK,
 							virtualNP,
 							virtualInverseProperty
-						};
+						);
 					})
 
-					.GroupBy(item => new { item.thisFK })
+					.GroupBy(item => item.thisFK)
 					.ToList();
 
-				foreach (var group in virtualNPs)
+				foreach (IGrouping<IForeignKey, (IForeignKey thisFK, NavigationProperty virtualNP, NavigationProperty virtualInverseProperty)> group in virtualNPs)
 				{
-					foreach (var item in group)
+					foreach ((IForeignKey thisFK, NavigationProperty virtualNP, NavigationProperty virtualInverseProperty) item in group)
 					{
 						NavigationProperty virtualNP = item.virtualNP;
 						NavigationProperty virtualInverseProperty = item.virtualInverseProperty;
@@ -1457,7 +1388,7 @@ namespace POCOGenerator.Db
 						virtualNP.InverseProperty = virtualInverseProperty;
 					}
 
-					ForeignKey thisFK = (ForeignKey)group.Key.thisFK;
+					ForeignKey thisFK = (ForeignKey)group.Key;
 					thisFK.VirtualNavigationProperties = group.Select(x => x.virtualNP).Cast<INavigationProperty>().ToList();
 				}
 			}
@@ -1481,15 +1412,13 @@ namespace POCOGenerator.Db
 			return new NavigationProperty() {
 				ForeignKey = fk,
 				IsFromForeignToPrimary = false,
-				IsCollection = fk.Is_One_To_One == false,
-				PropertyName = GetNavigationPropertyForeignPropertyName(fk, fk.Is_One_To_One == false),
+				IsCollection = !fk.Is_One_To_One,
+				PropertyName = GetNavigationPropertyForeignPropertyName(fk, !fk.Is_One_To_One),
 				IsVirtualNavigationProperty = isVirtualNavigationProperty,
 				IsVisibleWhenManyToManyJoinTableIsOn = true,
 				IsVisibleWhenManyToManyJoinTableIsOff = true
 			};
 		}
-
-		#region Navigation Property Name
 
 		protected virtual string GetNavigationPropertyPrimaryPropertyName(IForeignKey fk, bool isCollection = false)
 		{
@@ -1506,14 +1435,9 @@ namespace POCOGenerator.Db
 
 			propertyName = NameHelper.AddNamePrefix(propertyName, primaryColumn);
 
-			if (NameHelper.IsNameVerb(propertyName))
-			{
-				propertyName = NameHelper.ConjugateNameVerbToPastParticiple(propertyName);
-			}
-			else
-			{
-				propertyName = isCollection ? NameHelper.GetPluralName(propertyName) : NameHelper.GetSingularName(propertyName);
-			}
+			propertyName = NameHelper.IsNameVerb(propertyName)
+				? NameHelper.ConjugateNameVerbToPastParticiple(propertyName)
+				: isCollection ? NameHelper.GetPluralName(propertyName) : NameHelper.GetSingularName(propertyName);
 
 			propertyName = NameHelper.TransformName(propertyName);
 			propertyName = NameHelper.CleanName(propertyName);
@@ -1527,25 +1451,14 @@ namespace POCOGenerator.Db
 			string foreignColumn = fk.ForeignKeyColumns[0].ForeignTableColumn.ColumnName;
 			propertyName = NameHelper.AddNamePrefix(propertyName, foreignColumn);
 
-			if (NameHelper.IsNameVerb(propertyName))
-			{
-				propertyName = NameHelper.ConjugateNameVerbToPastParticiple(propertyName);
-			}
-			else
-			{
-				propertyName = isCollection ? NameHelper.GetPluralName(propertyName) : NameHelper.GetSingularName(propertyName);
-			}
+			propertyName = NameHelper.IsNameVerb(propertyName)
+				? NameHelper.ConjugateNameVerbToPastParticiple(propertyName)
+				: isCollection ? NameHelper.GetPluralName(propertyName) : NameHelper.GetSingularName(propertyName);
 
 			propertyName = NameHelper.TransformName(propertyName);
 			propertyName = NameHelper.CleanName(propertyName);
 			return propertyName;
 		}
-
-		#endregion
-
-		#endregion
-
-		#region Complex Types
 
 		protected virtual void BuildComplexTypes(IDatabase database)
 		{
@@ -1583,7 +1496,7 @@ namespace POCOGenerator.Db
 				foreach (ITable t in ctt.Tables)
 				{
 					t.ComplexTypeTables ??= [];
-					if (t.ComplexTypeTables.Contains(ctt) == false)
+					if (!t.ComplexTypeTables.Contains(ctt))
 					{
 						t.ComplexTypeTables.Add(ctt);
 					}
@@ -1617,7 +1530,7 @@ namespace POCOGenerator.Db
 								column.ForeignKeyColumns.IsNullOrEmpty() &&
 								column.PrimaryForeignKeyColumns.IsNullOrEmpty() &&
 								column.IndexColumns.IsNullOrEmpty() &&
-								column.IsIdentity == false)
+!column.IsIdentity)
 							{
 								int index = column.ColumnName.IndexOf('_');
 								// underscore exists and first underscore not at the start and first underscore not at the end
@@ -1630,7 +1543,7 @@ namespace POCOGenerator.Db
 									complexTypeTables ??= [];
 
 									// build complex type table
-									if ((complexTypeTables.FirstOrDefault(t => t.Name == complexTypeTableName) is ComplexTypeTable complexTypeTable) == false)
+									if (complexTypeTables.FirstOrDefault(t => t.Name == complexTypeTableName) is not ComplexTypeTable complexTypeTable)
 									{
 										complexTypeTable = Support.IsSupportSchema
 											? new ComplexTypeTableWithSchema() {
@@ -1726,7 +1639,7 @@ namespace POCOGenerator.Db
 				{
 					if (t1 != t2)
 					{
-						if (t1.Tables.Contains(t2.Tables[0]) == false)
+						if (!t1.Tables.Contains(t2.Tables[0]))
 						{
 							t1.Tables.Add(t2.Tables[0]);
 						}
@@ -1793,10 +1706,6 @@ namespace POCOGenerator.Db
 			}
 		}
 
-		#endregion
-
-		#region Helper Methods
-
 		protected static string GetScript(Type type, string scriptName)
 		{
 			using (Stream stream = type.Assembly.GetManifestResourceStream(String.Format("{0}.Scripts.{1}", type.Namespace, scriptName)))
@@ -1807,7 +1716,5 @@ namespace POCOGenerator.Db
 				}
 			}
 		}
-
-		#endregion
 	}
 }

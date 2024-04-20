@@ -32,7 +32,7 @@ namespace FastColoredTextBoxDemo
 
 		private void AppendText(string text, Color _)
 		{
-			if (string.IsNullOrEmpty(text) == false)
+			if (!string.IsNullOrEmpty(text))
 			{
 				_richTextBox.AppendText(text);
 			}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using POCOGenerator.DbObjects;
@@ -7,22 +7,20 @@ using POCOGenerator.Utils;
 namespace POCOGenerator.SQLServer.DbObjects
 {
 	internal class TableColumn : ITableColumn
-    {
-        #region Database Properties
+	{
+		public string column_name { get; set; }
+		public int? ordinal_position { get; set; }
+		public string column_default { get; set; }
+		public string is_nullable { get; set; }
+		public string data_type { get; set; }
+		public int? character_maximum_length { get; set; }
+		public byte? numeric_precision { get; set; }
+		public int? numeric_scale { get; set; }
+		public short? datetime_precision { get; set; }
+		public bool is_identity { get; set; }
+		public bool is_computed { get; set; }
 
-        public string column_name { get; set; }
-        public int? ordinal_position { get; set; }
-        public string column_default { get; set; }
-        public string is_nullable { get; set; }
-        public string data_type { get; set; }
-        public int? character_maximum_length { get; set; }
-        public byte? numeric_precision { get; set; }
-        public int? numeric_scale { get; set; }
-        public short? datetime_precision { get; set; }
-        public bool is_identity { get; set; }
-        public bool is_computed { get; set; }
-
-        /* not in use. reduce memory.
+		/* not in use. reduce memory.
         public string table_catalog { get; set; }
         public string table_schema { get; set; }
         public string table_name { get; set; }
@@ -37,105 +35,81 @@ namespace POCOGenerator.SQLServer.DbObjects
         public bool? is_filestream { get; set; }
         */
 
-        #endregion
+		public string ColumnName => column_name;
+		public int? ColumnOrdinal => ordinal_position;
+		public string DataTypeName => data_type;
 
-        #region IColumn
+		public string DataTypeDisplay => data_type == "xml" ? "XML" : data_type;
 
-        public string ColumnName { get { return column_name; } }
-        public int? ColumnOrdinal { get { return ordinal_position; } }
-        public string DataTypeName { get { return data_type; } }
+		public int? StringPrecision => character_maximum_length;
+		public int? NumericPrecision => numeric_precision;
+		public int? NumericScale => numeric_scale;
+		public int? DateTimePrecision => datetime_precision;
+		public bool IsUnsigned => false;
+		public bool IsNullable => String.Equals(is_nullable, "YES", StringComparison.CurrentCultureIgnoreCase);
+		public bool IsIdentity { get => is_identity; set => is_identity = value; }
+		public bool IsComputed { get => is_computed; set => is_computed = value; }
 
-        public string DataTypeDisplay
-        {
-            get
-            {
-                if (data_type == "xml")
-                    return "XML";
-                return data_type;
-            }
-        }
+		public string Precision {
+			get {
+				string precision = null;
 
-        public int? StringPrecision { get { return character_maximum_length; } }
-        public int? NumericPrecision { get { return (int?)numeric_precision; } }
-        public int? NumericScale { get { return numeric_scale; } }
-        public int? DateTimePrecision { get { return datetime_precision; } }
-        public bool IsUnsigned { get { return false; } }
-        public bool IsNullable { get { return string.Compare(is_nullable, "YES", true) == 0; } }
-        public bool IsIdentity { get { return is_identity; } set { is_identity = value; } }
-        public bool IsComputed { get { return is_computed; } set { is_computed = value; } }
+				string dataType = data_type.ToLower();
 
-        public string Precision
-        {
-            get
-            {
-                string precision = null;
+				if (dataType is "binary" or "varbinary" or "char" or "nchar" or "nvarchar" or "varchar")
+				{
+					if (StringPrecision == -1)
+					{
+						precision = "(max)";
+					}
+					else if (StringPrecision > 0)
+					{
+						precision = "(" + StringPrecision + ")";
+					}
+				}
+				else if (dataType is "decimal" or "numeric")
+				{
+					precision = "(" + NumericPrecision + "," + NumericScale + ")";
+				}
+				else if (dataType is "datetime2" or "datetimeoffset" or "time")
+				{
+					precision = "(" + DateTimePrecision + ")";
+				}
+				else if (dataType == "xml")
+				{
+					precision = "(.)";
+				}
 
-                string dataType = data_type.ToLower();
+				return precision;
+			}
+		}
 
-                if (dataType == "binary" || dataType == "varbinary" || dataType == "char" || dataType == "nchar" || dataType == "nvarchar" || dataType == "varchar")
-                {
-                    if (StringPrecision == -1)
-                        precision = "(max)";
-                    else if (StringPrecision > 0)
-                        precision = "(" + StringPrecision + ")";
-                }
-                else if (dataType == "decimal" || dataType == "numeric")
-                {
-                    precision = "(" + NumericPrecision + "," + NumericScale + ")";
-                }
-                else if (dataType == "datetime2" || dataType == "datetimeoffset" || dataType == "time")
-                {
-                    precision = "(" + DateTimePrecision + ")";
-                }
-                else if (dataType == "xml")
-                {
-                    precision = "(.)";
-                }
+		public string Description { get; set; }
 
-                return precision;
-            }
-        }
+		public ITable Table { get; set; }
 
-        #endregion
+		public IPrimaryKeyColumn PrimaryKeyColumn { get; set; }
+		public List<IUniqueKeyColumn> UniqueKeyColumns { get; set; }
+		public List<IForeignKeyColumn> ForeignKeyColumns { get; set; }
+		public List<IForeignKeyColumn> PrimaryForeignKeyColumns { get; set; }
+		public List<IIndexColumn> IndexColumns { get; set; }
+		public IComplexTypeTableColumn ComplexTypeTableColumn { get; set; }
 
-        #region IDescription
+		public string ColumnDefault => column_default;
 
-        public string Description { get; set; }
+		public string ToFullString()
+		{
+			return
+				ColumnName + " (" +
+				(PrimaryKeyColumn != null ? "PK, " : String.Empty) +
+				(ForeignKeyColumns.HasAny() ? "FK, " : String.Empty) +
+				(IsComputed ? "Computed, " : String.Empty) +
+				DataTypeDisplay + Precision + ", " + (IsNullable ? "null" : "not null") + ")";
+		}
 
-        #endregion
-
-        #region ITableColumn
-
-        public ITable Table { get; set; }
-
-        public IPrimaryKeyColumn PrimaryKeyColumn { get; set; }
-        public List<IUniqueKeyColumn> UniqueKeyColumns { get; set; }
-        public List<IForeignKeyColumn> ForeignKeyColumns { get; set; }
-        public List<IForeignKeyColumn> PrimaryForeignKeyColumns { get; set; }
-        public List<IIndexColumn> IndexColumns { get; set; }
-        public IComplexTypeTableColumn ComplexTypeTableColumn { get; set; }
-
-        public string ColumnDefault { get { return column_default; } }
-
-        public string ToFullString()
-        {
-            return
-                ColumnName + " (" +
-                (PrimaryKeyColumn != null ? "PK, " : string.Empty) +
-                (ForeignKeyColumns.HasAny() ? "FK, " : string.Empty) +
-                (IsComputed ? "Computed, " : string.Empty) +
-                DataTypeDisplay + Precision + ", " + (IsNullable ? "null" : "not null") + ")";
-        }
-
-        #endregion
-
-        #region IDbObject
-
-        public override string ToString()
-        {
-            return ColumnName + " (" + DataTypeDisplay + Precision + ", " + (IsNullable ? "null" : "not null") + ")";
-        }
-
-        #endregion
-    }
+		public override string ToString()
+		{
+			return ColumnName + " (" + DataTypeDisplay + Precision + ", " + (IsNullable ? "null" : "not null") + ")";
+		}
+	}
 }

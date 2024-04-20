@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IDbSupport
+	public interface IDbSupport
     {
         bool this[string key] { get; set; }
         bool IsSupportSchema { get; set; }

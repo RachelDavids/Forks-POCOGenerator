@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IProcedureColumn : IColumn
+	public interface IProcedureColumn : IColumn
     {
         IProcedure Procedure { get; set; }
     }

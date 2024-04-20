@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    internal sealed class ForeignKey : IForeignKey
+	internal sealed class ForeignKey : IForeignKey
     {
         public string Name { get; set; }
         public bool Is_One_To_One { get; set; }

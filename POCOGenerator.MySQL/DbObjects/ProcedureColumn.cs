@@ -1,25 +1,26 @@
-﻿using System;
+using System;
+
 using MySql.Data.MySqlClient;
+
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.MySQL.DbObjects
 {
-    internal class ProcedureColumn : IProcedureColumn
-    {
-        #region Database Properties
+	internal class ProcedureColumn
+		: IProcedureColumn
+	{
+		public string ColumnName { get; set; }
+		public int? ColumnOrdinal { get; set; }
+		public int? ColumnSize { get; set; }
+		public int? NumericPrecision { get; set; }
+		public int? NumericScale { get; set; }
+		public Type DataType { get; set; }
+		public bool? AllowDBNull { get; set; }
+		public int? ProviderType { get; set; }
+		public bool IsIdentity { get; set; } // originally bool?
+		public bool? IsLong { get; set; }
 
-        public string ColumnName { get; set; }
-        public int? ColumnOrdinal { get; set; }
-        public int? ColumnSize { get; set; }
-        public int? NumericPrecision { get; set; }
-        public int? NumericScale { get; set; }
-        public Type DataType { get; set; }
-        public bool? AllowDBNull { get; set; }
-        public int? ProviderType { get; set; }
-        public bool IsIdentity { get; set; } // originally bool?
-        public bool? IsLong { get; set; }
-
-        /* not in use. reduce memory.
+		/* not in use. reduce memory.
         public bool? IsUnique { get; set; }
         public bool? IsKey { get; set; }
         public string BaseCatalogName { get; set; }
@@ -34,177 +35,151 @@ namespace POCOGenerator.MySQL.DbObjects
         public bool? IsReadOnly { get; set; }
         */
 
-        #endregion
+		public string DataTypeName {
+			get {
+				if (ProviderType == null)
+				{
+					return String.Empty;
+				}
 
-        #region IColumn
+				MySqlDbType mySqlDbType = (MySqlDbType)Enum.ToObject(typeof(MySqlDbType), ProviderType.Value);
 
-        public string DataTypeName
-        {
-            get
-            {
-                if (ProviderType == null)
-                    return string.Empty;
+				return mySqlDbType switch {
+					MySqlDbType.Decimal => "decimal",
+					MySqlDbType.Byte => "tinyint",
+					MySqlDbType.Int16 => "smallint",
+					MySqlDbType.Int32 => "int",
+					MySqlDbType.Float => "float",
+					MySqlDbType.Double => "double",
+					MySqlDbType.Timestamp => "timestamp",
+					MySqlDbType.Int64 => "bigint",
+					MySqlDbType.Int24 => "mediumint",
+					MySqlDbType.Date => "date",
+					MySqlDbType.Time => "time",
+					MySqlDbType.DateTime => "datetime",
+					MySqlDbType.Year => "year",
+					MySqlDbType.Newdate => "date",
+					MySqlDbType.VarString => "varchar",
+					MySqlDbType.Bit => "bit",
+					MySqlDbType.JSON => "json",
+					MySqlDbType.NewDecimal => "decimal",
+					MySqlDbType.Enum => "enum",
+					MySqlDbType.Set => "set",
+					MySqlDbType.TinyBlob => "tinyblob",
+					MySqlDbType.MediumBlob => "mediumblob",
+					MySqlDbType.LongBlob => "longblob",
+					MySqlDbType.VarChar => "varchar",
+					MySqlDbType.String => "char",//  MySqlDbType.String returns for enum & set
+					MySqlDbType.Geometry => "geometry",
+					MySqlDbType.UByte => "tinyint",// tinyint unsigned
+					MySqlDbType.UInt16 => "smallint",// smallint unsigned
+					MySqlDbType.UInt32 => "int",// int unsigned
+					MySqlDbType.UInt64 => "bigint",// bigint unsigned
+					MySqlDbType.UInt24 => "mediumint",// mediumint unsigned
+					MySqlDbType.Binary => "binary",
+					MySqlDbType.VarBinary => "varbinary",
+					MySqlDbType.TinyText => "tinytext",
+					MySqlDbType.MediumText => "mediumtext",
+					MySqlDbType.LongText => "longtext",
+					MySqlDbType.Guid => "varbinary",// varbinary(16)
+					MySqlDbType.Blob => ColumnSize.GetValueOrDefault() switch {
+						255 => "tinyblob",
+						65535 => "blob",
+						16777215 => "mediumblob",
+						-1 => "longblob",
+						_ => "blob",
+					},
+					MySqlDbType.Text => ColumnSize.GetValueOrDefault() switch {
+						255 => "tinytext",
+						65535 => "text",
+						16777215 => "mediumtext",
+						-1 => "longtext",
+						_ => "text",
+					},
+					_ => String.Empty,
+				};
+			}
+		}
 
-                MySqlDbType mySqlDbType = (MySqlDbType)Enum.ToObject(typeof(MySqlDbType), ProviderType.Value);
+		public bool IsUnsigned {
+			get {
+				if (ProviderType == null)
+				{
+					return false;
+				}
 
-                switch (mySqlDbType)
-                {
-                    case MySqlDbType.Decimal: return "decimal";
-                    case MySqlDbType.Byte: return "tinyint";
-                    case MySqlDbType.Int16: return "smallint";
-                    case MySqlDbType.Int32: return "int";
-                    case MySqlDbType.Float: return "float";
-                    case MySqlDbType.Double: return "double";
-                    case MySqlDbType.Timestamp: return "timestamp";
-                    case MySqlDbType.Int64: return "bigint";
-                    case MySqlDbType.Int24: return "mediumint";
-                    case MySqlDbType.Date: return "date";
-                    case MySqlDbType.Time: return "time";
-                    case MySqlDbType.DateTime: return "datetime";
-                    case MySqlDbType.Year: return "year";
-                    case MySqlDbType.Newdate: return "date";
-                    case MySqlDbType.VarString: return "varchar";
-                    case MySqlDbType.Bit: return "bit";
-                    case MySqlDbType.JSON: return "json";
-                    case MySqlDbType.NewDecimal: return "decimal";
-                    case MySqlDbType.Enum: return "enum";
-                    case MySqlDbType.Set: return "set";
-                    case MySqlDbType.TinyBlob: return "tinyblob";
-                    case MySqlDbType.MediumBlob: return "mediumblob";
-                    case MySqlDbType.LongBlob: return "longblob";
-                    case MySqlDbType.Blob:
-                        if (ColumnSize != null)
-                        {
-                            if (ColumnSize.Value == 255)
-                                return "tinyblob";
-                            else if (ColumnSize.Value == 65535)
-                                return "blob";
-                            else if (ColumnSize.Value == 16777215)
-                                return "mediumblob";
-                            else if (ColumnSize.Value == -1)
-                                return "longblob";
-                        }
-                        return "blob";
-                    case MySqlDbType.VarChar: return "varchar";
-                    case MySqlDbType.String: return "char"; //  MySqlDbType.String returns for enum & set
-                    case MySqlDbType.Geometry: return "geometry";
-                    case MySqlDbType.UByte: return "tinyint"; // tinyint unsigned
-                    case MySqlDbType.UInt16: return "smallint"; // smallint unsigned
-                    case MySqlDbType.UInt32: return "int"; // int unsigned
-                    case MySqlDbType.UInt64: return "bigint"; // bigint unsigned
-                    case MySqlDbType.UInt24: return "mediumint"; // mediumint unsigned
-                    case MySqlDbType.Binary: return "binary";
-                    case MySqlDbType.VarBinary: return "varbinary";
-                    case MySqlDbType.TinyText: return "tinytext";
-                    case MySqlDbType.MediumText: return "mediumtext";
-                    case MySqlDbType.LongText: return "longtext";
-                    case MySqlDbType.Text:
-                        if (ColumnSize != null)
-                        {
-                            if (ColumnSize.Value == 255)
-                                return "tinytext";
-                            else if (ColumnSize.Value == 65535)
-                                return "text";
-                            else if (ColumnSize.Value == 16777215)
-                                return "mediumtext";
-                            else if (ColumnSize.Value == -1)
-                                return "longtext";
-                        }
-                        return "text";
-                    case MySqlDbType.Guid: return "varbinary"; // varbinary(16)
-                    default: return string.Empty;
-                }
-            }
-        }
+				MySqlDbType mySqlDbType = (MySqlDbType)Enum.ToObject(typeof(MySqlDbType), ProviderType.Value);
 
-        public bool IsUnsigned
-        {
-            get
-            {
-                if (ProviderType == null)
-                    return false;
+#pragma warning disable IDE0072 // Add missing cases
+				return mySqlDbType switch {
+					// tinyint unsigned
+					MySqlDbType.UByte => true,
+					MySqlDbType.UInt16 => true,
+					MySqlDbType.UInt32 => true,
+					MySqlDbType.UInt64 => true,
+					MySqlDbType.UInt24 => true,
+					_ => false,
+				};
+#pragma warning restore IDE0072 // Add missing cases
+			}
+		}
 
-                MySqlDbType mySqlDbType = (MySqlDbType)Enum.ToObject(typeof(MySqlDbType), ProviderType.Value);
+		public int? StringPrecision => IsLong == true ? -1 : ColumnSize;
+		public int? DateTimePrecision => NumericScale;
+		public bool IsNullable => AllowDBNull ?? false;
+		public bool IsComputed { get => false; set { } }
 
-                switch (mySqlDbType)
-                {
-                    case MySqlDbType.UByte: // tinyint unsigned
-                    case MySqlDbType.UInt16: // smallint unsigned
-                    case MySqlDbType.UInt32: // int unsigned
-                    case MySqlDbType.UInt64: // bigint unsigned
-                    case MySqlDbType.UInt24: // mediumint unsigned
-                        return true;
-                    default: return false;
-                }
-            }
-        }
+		public string DataTypeDisplay => DataTypeName.ToLower();
 
-        public int? StringPrecision { get { return (IsLong == true ? -1 : ColumnSize); } }
-        public int? DateTimePrecision { get { return NumericScale; } }
-        public bool IsNullable { get { return (AllowDBNull ?? false); } }
-        public bool IsComputed { get { return false; } set { } }
+		public string Precision {
+			get {
+				string precision = null;
 
-        public string DataTypeDisplay
-        {
-            get
-            {
-                return DataTypeName.ToLower();
-            }
-        }
+				string dataType = DataTypeName.ToLower();
 
-        public string Precision
-        {
-            get
-            {
-                string precision = null;
+				if (dataType is "binary" or "char byte" or
+					"char" or "character" or
+					"nchar" or "national char" or
+					"nvarchar" or "national varchar" or
+					"varbinary" or
+					"varchar" or "character varying")
+				{
+					if (StringPrecision != null)
+					{
+						precision = "(" + StringPrecision + ")";
+					}
+				}
+				else if (dataType == "bit")
+				{
+					if (NumericPrecision != null)
+					{
+						precision = "(" + ColumnSize + ")";
+					}
+				}
+				else if (dataType is "decimal" or "numeric" or "dec" or "fixed")
+				{
+					if (NumericPrecision != null && NumericScale != null)
+					{
+						precision = "(" + NumericPrecision + "," + NumericScale + ")";
+					}
+				}
+				else if (dataType is "datetime" or "time" or "timestamp")
+				{
+					if (DateTimePrecision is not null and > 0)
+					{
+						precision = "(" + DateTimePrecision + ")";
+					}
+				}
 
-                string dataType = DataTypeName.ToLower();
+				return precision;
+			}
+		}
 
-                if (dataType == "binary" || dataType == "char byte" ||
-                    dataType == "char" || dataType == "character" ||
-                    dataType == "nchar" || dataType == "national char" ||
-                    dataType == "nvarchar" || dataType == "national varchar" ||
-                    dataType == "varbinary" ||
-                    dataType == "varchar" || dataType == "character varying")
-                {
-                    if (StringPrecision != null)
-                        precision = "(" + StringPrecision + ")";
-                }
-                else if (dataType == "bit")
-                {
-                    if (NumericPrecision != null)
-                        precision = "(" + ColumnSize + ")";
-                }
-                else if (dataType == "decimal" || dataType == "numeric" || dataType == "dec" || dataType == "fixed")
-                {
-                    if (NumericPrecision != null && NumericScale != null)
-                        precision = "(" + NumericPrecision + "," + NumericScale + ")";
-                }
-                else if (dataType == "datetime" || dataType == "time" || dataType == "timestamp")
-                {
-                    if (DateTimePrecision != null && DateTimePrecision > 0)
-                        precision = "(" + DateTimePrecision + ")";
-                }
+		public IProcedure Procedure { get; set; }
 
-                return precision;
-            }
-        }
-
-        #endregion
-
-        #region IProcedureColumn
-
-        public IProcedure Procedure { get; set; }
-
-        #endregion
-
-        #region IDbObject
-
-        public override string ToString()
-        {
-            return ColumnName + " (" + DataTypeDisplay + Precision + (IsUnsigned ? " unsigned" : string.Empty) + ", " + (IsNullable ? "null" : "not null") + ")";
-        }
-
-        #endregion
-    }
+		public override string ToString()
+		{
+			return ColumnName + " (" + DataTypeDisplay + Precision + (IsUnsigned ? " unsigned" : String.Empty) + ", " + (IsNullable ? "null" : "not null") + ")";
+		}
+	}
 }

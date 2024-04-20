@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
 using POCOGenerator;
 using POCOGenerator.Objects;
 
@@ -86,7 +87,7 @@ namespace POCOGeneratorUI
 			catch (Exception ex)
 			{
 				SetStatusErrorMessage("Error. " +
-									  (ex.Message + (ex.InnerException != null ? " " + ex.InnerException.Message : string.Empty))
+									  (ex.Message + (ex.InnerException != null ? " " + ex.InnerException.Message : String.Empty))
 									  .Replace(Environment.NewLine, " "));
 			}
 		}
@@ -134,12 +135,12 @@ namespace POCOGeneratorUI
 			}
 			errorMessage += ".";
 			string statusErrorMessage = errorMessage;
-			if (_generator != null && string.IsNullOrEmpty(_generator.Settings.Connection.ConnectionString) == false)
+			if (_generator != null && !String.IsNullOrEmpty(_generator.Settings.Connection.ConnectionString))
 			{
 				errorMessage += Environment.NewLine + Environment.NewLine + "CONNECTION STRING: " +
 								_generator.Settings.Connection.ConnectionString;
 			}
-			if (_generator != null && _generator.Error != null)
+			if (_generator is { Error: not null })
 			{
 				errorMessage += Environment.NewLine + Environment.NewLine + _generator.Error.GetUnhandledExceptionErrorMessage();
 				statusErrorMessage += " ERROR: " + _generator.Error.Message;
@@ -152,8 +153,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildServerNode(Server server)
 		{
-			return new TreeNode(server.ToStringWithVersion())
-			{
+			return new TreeNode(server.ToStringWithVersion()) {
 				Tag = server,
 				ImageIndex = (int)ImageType.Server,
 				SelectedImageIndex = (int)ImageType.Server
@@ -162,8 +162,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildDatabaseNode(Database database)
 		{
-			TreeNode databaseNode = new(database.ToString())
-			{
+			TreeNode databaseNode = new(database.ToString()) {
 				Tag = database,
 				ImageIndex = (int)ImageType.Database,
 				SelectedImageIndex = (int)ImageType.Database
@@ -180,8 +179,7 @@ namespace POCOGeneratorUI
 		{
 			if (dbObjects.Any())
 			{
-				TreeNode node = new(dbObjectsName)
-				{
+				TreeNode node = new(dbObjectsName) {
 					Tag = dbObjects,
 					ImageIndex = (int)ImageType.Folder,
 					SelectedImageIndex = (int)ImageType.Folder
@@ -340,13 +338,12 @@ namespace POCOGeneratorUI
 			IEnumerable<T> items = node.Tag as IEnumerable<T>;
 			foreach (T item in items)
 			{
-				TreeNode itemNode = new(item.ToString())
-				{
+				TreeNode itemNode = new(item.ToString()) {
 					Tag = item,
 					ImageIndex = (int)imageType,
 					SelectedImageIndex = (int)imageType
 				};
-				if (string.IsNullOrEmpty(item.Error) == false)
+				if (!String.IsNullOrEmpty(item.Error))
 				{
 					itemNode.ForeColor = Color.Red;
 				}
@@ -365,8 +362,7 @@ namespace POCOGeneratorUI
 
 		private void BuildColumnsNode(TreeNode node, IEnumerable<IDbColumn> columns)
 		{
-			TreeNode columnsNode = new("Columns")
-			{
+			TreeNode columnsNode = new("Columns") {
 				Tag = columns,
 				ImageIndex = (int)ImageType.Folder,
 				SelectedImageIndex = (int)ImageType.Folder
@@ -380,8 +376,7 @@ namespace POCOGeneratorUI
 
 		private void BuildParametersNode(TreeNode node, IEnumerable<IDbParameter> parameters)
 		{
-			TreeNode parametersNode = new("Parameters")
-			{
+			TreeNode parametersNode = new("Parameters") {
 				Tag = parameters,
 				ImageIndex = (int)ImageType.Folder,
 				SelectedImageIndex = (int)ImageType.Folder
@@ -397,8 +392,7 @@ namespace POCOGeneratorUI
 		{
 			if (primaryKey != null)
 			{
-				TreeNode primaryKeyNode = new("Primary Key")
-				{
+				TreeNode primaryKeyNode = new("Primary Key") {
 					Tag = new PrimaryKey[] { primaryKey },
 					ImageIndex = (int)ImageType.Folder,
 					SelectedImageIndex = (int)ImageType.Folder
@@ -412,8 +406,7 @@ namespace POCOGeneratorUI
 		{
 			if (uniqueKeys.Any())
 			{
-				TreeNode uniqueKeysNode = new("Unique Keys")
-				{
+				TreeNode uniqueKeysNode = new("Unique Keys") {
 					Tag = uniqueKeys,
 					ImageIndex = (int)ImageType.Folder,
 					SelectedImageIndex = (int)ImageType.Folder
@@ -427,8 +420,7 @@ namespace POCOGeneratorUI
 		{
 			if (foreignKeys.Any())
 			{
-				TreeNode foreignKeysNode = new("Foreign Keys")
-				{
+				TreeNode foreignKeysNode = new("Foreign Keys") {
 					Tag = foreignKeys,
 					ImageIndex = (int)ImageType.Folder,
 					SelectedImageIndex = (int)ImageType.Folder
@@ -442,8 +434,7 @@ namespace POCOGeneratorUI
 		{
 			if (indexes.Any())
 			{
-				TreeNode indexesNode = new("Indexes")
-				{
+				TreeNode indexesNode = new("Indexes") {
 					Tag = indexes,
 					ImageIndex = (int)ImageType.Folder,
 					SelectedImageIndex = (int)ImageType.Folder
@@ -464,8 +455,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableColumnNode(TableColumn column)
 		{
-			return new TreeNode(column.ToFullString())
-			{
+			return new TreeNode(column.ToFullString()) {
 				Tag = column,
 				ImageIndex = (int)(column.PrimaryKeyColumn != null
 											  ? ImageType.PrimaryKey
@@ -486,8 +476,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTablePrimaryKeyNode(PrimaryKey primaryKey)
 		{
-			return new TreeNode(primaryKey.ToString())
-			{
+			return new TreeNode(primaryKey.ToString()) {
 				Tag = primaryKey,
 				ImageIndex = (int)ImageType.PrimaryKey,
 				SelectedImageIndex = (int)ImageType.PrimaryKey
@@ -505,8 +494,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTablePrimaryKeyColumnNode(PrimaryKeyColumn column)
 		{
-			return new TreeNode(column.ToFullString())
-			{
+			return new TreeNode(column.ToFullString()) {
 				Tag = column,
 				ImageIndex = (int)ImageType.PrimaryKey,
 				SelectedImageIndex = (int)ImageType.PrimaryKey
@@ -526,8 +514,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableUniqueKeyNode(UniqueKey uniqueKey)
 		{
-			return new TreeNode(uniqueKey.ToString())
-			{
+			return new TreeNode(uniqueKey.ToString()) {
 				Tag = uniqueKey,
 				ImageIndex = (int)ImageType.UniqueKey,
 				SelectedImageIndex = (int)ImageType.UniqueKey
@@ -545,8 +532,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableUniqueKeyColumnNode(UniqueKeyColumn column)
 		{
-			return new TreeNode(column.ToFullString())
-			{
+			return new TreeNode(column.ToFullString()) {
 				Tag = column,
 				ImageIndex = (int)(column.TableColumn.PrimaryKeyColumn != null
 											  ? ImageType.PrimaryKey
@@ -574,8 +560,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableForeignKeyNode(ForeignKey foreignKey)
 		{
-			return new TreeNode(foreignKey.ToString())
-			{
+			return new TreeNode(foreignKey.ToString()) {
 				Tag = foreignKey,
 				ImageIndex = (int)ImageType.ForeignKey,
 				SelectedImageIndex = (int)ImageType.ForeignKey
@@ -593,9 +578,8 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableForeignKeyColumnNode(ForeignKeyColumn column, ForeignKey foreignKey)
 		{
-			return new TreeNode(string.Format("{0} {1} {2}.{3}", column.ToFullString(), char.ConvertFromUtf32(8594),
-											  foreignKey.PrimaryTable, column.PrimaryTableColumn))
-			{
+			return new TreeNode(String.Format("{0} {1} {2}.{3}", column.ToFullString(), Char.ConvertFromUtf32(8594),
+											  foreignKey.PrimaryTable, column.PrimaryTableColumn)) {
 				Tag = column,
 				ImageIndex = (int)ImageType.ForeignKey,
 				SelectedImageIndex = (int)ImageType.ForeignKey
@@ -615,8 +599,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableIndexNode(TableIndex tableIndex)
 		{
-			return new TreeNode(tableIndex.ToString())
-			{
+			return new TreeNode(tableIndex.ToString()) {
 				Tag = tableIndex,
 				ImageIndex = (int)ImageType.Index,
 				SelectedImageIndex = (int)ImageType.Index
@@ -634,8 +617,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTableIndexColumnNode(TableIndexColumn column)
 		{
-			return new TreeNode(column.ToFullString())
-			{
+			return new TreeNode(column.ToFullString()) {
 				Tag = column,
 				ImageIndex = (int)(column.TableColumn.PrimaryKeyColumn != null
 											  ? ImageType.PrimaryKey
@@ -661,8 +643,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildViewColumnNode(ViewColumn column)
 		{
-			return new TreeNode(column.ToFullString())
-			{
+			return new TreeNode(column.ToFullString()) {
 				Tag = column,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column
@@ -682,8 +663,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildViewIndexNode(ViewIndex viewIndex)
 		{
-			return new TreeNode(viewIndex.ToString())
-			{
+			return new TreeNode(viewIndex.ToString()) {
 				Tag = viewIndex,
 				ImageIndex = (int)ImageType.Index,
 				SelectedImageIndex = (int)ImageType.Index
@@ -701,8 +681,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildViewIndexColumnNode(ViewIndexColumn column)
 		{
-			return new TreeNode(column.ToFullString())
-			{
+			return new TreeNode(column.ToFullString()) {
 				Tag = column,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column
@@ -720,8 +699,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildProcedureParameterNode(ProcedureParameter parameter)
 		{
-			return new TreeNode(parameter.ToString())
-			{
+			return new TreeNode(parameter.ToString()) {
 				Tag = parameter,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column
@@ -739,8 +717,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildProcedureColumnNode(ProcedureColumn column)
 		{
-			return new TreeNode(column.ToString())
-			{
+			return new TreeNode(column.ToString()) {
 				Tag = column,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column
@@ -758,8 +735,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildFunctionParameterNode(FunctionParameter parameter)
 		{
-			return new TreeNode(parameter.ToString())
-			{
+			return new TreeNode(parameter.ToString()) {
 				Tag = parameter,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column
@@ -777,8 +753,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildFunctionColumnNode(FunctionColumn column)
 		{
-			return new TreeNode(column.ToString())
-			{
+			return new TreeNode(column.ToString()) {
 				Tag = column,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column
@@ -796,8 +771,7 @@ namespace POCOGeneratorUI
 
 		private TreeNode BuildTVPColumnNode(TVPColumn column)
 		{
-			return new TreeNode(column.ToString())
-			{
+			return new TreeNode(column.ToString()) {
 				Tag = column,
 				ImageIndex = (int)ImageType.Column,
 				SelectedImageIndex = (int)ImageType.Column

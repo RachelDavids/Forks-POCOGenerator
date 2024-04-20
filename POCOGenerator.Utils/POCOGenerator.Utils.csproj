@@ -1,10 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <AssemblyTitle>POCOGenerator.Utils</AssemblyTitle>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Pluralize.NET" Version="1.0.2" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<AssemblyTitle>POCOGenerator.Utils</AssemblyTitle>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Pluralize.NET" Version="*" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

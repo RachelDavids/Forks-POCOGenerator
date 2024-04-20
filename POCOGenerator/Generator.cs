@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+
 using POCOGenerator.DbFactories;
 using POCOGenerator.DbHandlers;
 using POCOGenerator.DbObjects;
@@ -27,10 +28,8 @@ namespace POCOGenerator
 		private readonly GeneratorSettings settings;
 		private GeneratorSettings settingsInternal;
 
-		public ISettings Settings
-		{
-			get
-			{
+		public ISettings Settings {
+			get {
 				lock (lockObject)
 				{
 					return settings;
@@ -45,7 +44,7 @@ namespace POCOGenerator
 		private IDbHelper dbHelper;
 		internal Func<IWriter> createWriter;
 		private Func<IWriter> createWriterInternal;
-		private POCOGenerator.Objects.Server proxyServer;
+		private Objects.Server proxyServer;
 		private List<IDbObjectTraverse> dbObjectsToGenerate;
 
 		public Support Support { get; private set; }
@@ -123,7 +122,7 @@ namespace POCOGenerator
 				SetDbObjectsToGenerate(databasesAccessibleObjects);
 
 				// create proxy server
-				proxyServer = new POCOGenerator.Objects.Server(server, databasesAccessibleObjects);
+				proxyServer = new Objects.Server(server, databasesAccessibleObjects);
 
 				// the server is built
 				isServerBuilt = true;
@@ -389,7 +388,7 @@ namespace POCOGenerator
 
 		private GeneratorResults ValidateConnectionString(ref IDbHandler dbHandler, ref string serverName, ref string instanceName, ref string userId, ref string initialDatabase)
 		{
-			if (string.IsNullOrEmpty(settingsInternal.Connection.ConnectionString))
+			if (String.IsNullOrEmpty(settingsInternal.Connection.ConnectionString))
 			{
 				return GeneratorResults.ConnectionStringMissing;
 			}
@@ -411,7 +410,7 @@ namespace POCOGenerator
 					settingsInternal.Connection.RDBMS = items[0];
 					dbHandler = GetDbHandler(settingsInternal.Connection.RDBMS);
 
-					if (dbHandler.GetConnectionStringParser().Ping(settingsInternal.Connection.ConnectionString) == false)
+					if (!dbHandler.GetConnectionStringParser().Ping(settingsInternal.Connection.ConnectionString))
 					{
 						dbHandler = null;
 						return GeneratorResults.ServerNotResponding;
@@ -439,13 +438,13 @@ namespace POCOGenerator
 			{
 				dbHandler = GetDbHandler(settingsInternal.Connection.RDBMS);
 
-				if (dbHandler.GetConnectionStringParser().Validate(settingsInternal.Connection.ConnectionString) == false)
+				if (!dbHandler.GetConnectionStringParser().Validate(settingsInternal.Connection.ConnectionString))
 				{
 					dbHandler = null;
 					return GeneratorResults.ConnectionStringMalformed;
 				}
 
-				if (dbHandler.GetConnectionStringParser().Ping(settingsInternal.Connection.ConnectionString) == false)
+				if (!dbHandler.GetConnectionStringParser().Ping(settingsInternal.Connection.ConnectionString))
 				{
 					dbHandler = null;
 					return GeneratorResults.ServerNotResponding;
@@ -457,7 +456,7 @@ namespace POCOGenerator
 			bool integratedSecurity = false;
 			dbHandler.GetConnectionStringParser().Parse(settingsInternal.Connection.ConnectionString, ref serverName, ref initialDatabase, ref userId, ref integratedSecurity);
 
-			if (string.IsNullOrEmpty(serverName))
+			if (String.IsNullOrEmpty(serverName))
 			{
 				return GeneratorResults.ConnectionStringMalformed;
 			}
@@ -483,15 +482,14 @@ namespace POCOGenerator
 		{
 			return
 				(isIncludeAll || isIncludeAllDbObjects || includeDbObjects.HasAny()) &&
-				(isExcludeAllDbObjects == false);
+				(!isExcludeAllDbObjects);
 		}
 
 		#region Accessible Db Objects
 
 		private List<DatabaseAccessibleObjects> GetDatabasesAccessibleObjects(IServer server)
 		{
-			List<DatabaseAccessibleObjects> databasesAccessibleObjects = server.Databases.Select(database => new DatabaseAccessibleObjects()
-			{
+			List<DatabaseAccessibleObjects> databasesAccessibleObjects = server.Databases.Select(database => new DatabaseAccessibleObjects() {
 				Database = database,
 				Tables = GetDatabaseObjects(
 					database.Tables,
@@ -592,7 +590,7 @@ namespace POCOGenerator
 		{
 			if (dbObjects.HasAny())
 			{
-				if (isExcludeAllDbObjects == false)
+				if (!isExcludeAllDbObjects)
 				{
 					if (isIncludeAll || isIncludeAllDbObjects)
 					{
@@ -603,7 +601,7 @@ namespace POCOGenerator
 						else
 						{
 							string[] excludePatterns = excludeDbObjects.Select(eo => "^" + Regex.Escape(eo).Replace(@"\*", ".*?").Replace(@"\?", ".") + "$").ToArray();
-							return dbObjects.Where(o => excludePatterns.All(pattern => Regex.IsMatch(o.ToString(), pattern) == false && Regex.IsMatch(o.Name, pattern) == false)).ToList();
+							return dbObjects.Where(o => excludePatterns.All(pattern => !Regex.IsMatch(o.ToString(), pattern) && !Regex.IsMatch(o.Name, pattern))).ToList();
 						}
 					}
 					else if (includeDbObjects.HasAny())
@@ -618,7 +616,7 @@ namespace POCOGenerator
 						else
 						{
 							string[] excludePatterns = excludeDbObjects.Select(eo => "^" + Regex.Escape(eo).Replace(@"\*", ".*?").Replace(@"\?", ".") + "$").ToArray();
-							return includedObjects.Where(o => excludePatterns.All(pattern => Regex.IsMatch(o.ToString(), pattern) == false && Regex.IsMatch(o.Name, pattern) == false)).ToList();
+							return includedObjects.Where(o => excludePatterns.All(pattern => !Regex.IsMatch(o.ToString(), pattern) && !Regex.IsMatch(o.Name, pattern))).ToList();
 						}
 					}
 				}
@@ -649,7 +647,7 @@ namespace POCOGenerator
 							{
 								foreach (IForeignKey foreignKey in table.ForeignKeys)
 								{
-									if (item.AccessibleTables.Contains(foreignKey.PrimaryTable) == false)
+									if (!item.AccessibleTables.Contains(foreignKey.PrimaryTable))
 									{
 										item.AccessibleTables.Add(foreignKey.PrimaryTable);
 									}
@@ -660,7 +658,7 @@ namespace POCOGenerator
 							{
 								if (foreignTable.ForeignKeys.HasAny())
 								{
-									if (item.AccessibleTables.Contains(foreignTable) == false)
+									if (!item.AccessibleTables.Contains(foreignTable))
 									{
 										if (foreignTable.ForeignKeys.Any(x => x.PrimaryTable == table))
 										{
@@ -676,7 +674,7 @@ namespace POCOGenerator
 								{
 									foreach (ITable t in complexTypeTable.Tables)
 									{
-										if (item.AccessibleTables.Contains(t) == false)
+										if (!item.AccessibleTables.Contains(t))
 										{
 											item.AccessibleTables.Add(t);
 										}
@@ -890,1190 +888,980 @@ namespace POCOGenerator
 		private event EventHandler<ServerGeneratedEventArgs> serverGeneratedInternal;
 
 		// in order of execution
-		public event EventHandler<ServerBuiltAsyncEventArgs> ServerBuiltAsync
-		{
-			add
-			{
+		public event EventHandler<ServerBuiltAsyncEventArgs> ServerBuiltAsync {
+			add {
 				lock (lockObject)
 				{
 					serverBuiltAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					serverBuiltAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ServerBuiltEventArgs> ServerBuilt
-		{
-			add
-			{
+		public event EventHandler<ServerBuiltEventArgs> ServerBuilt {
+			add {
 				lock (lockObject)
 				{
 					serverBuilt += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					serverBuilt -= value;
 				}
 			}
 		}
-		public event EventHandler<ServerGeneratingAsyncEventArgs> ServerGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ServerGeneratingAsyncEventArgs> ServerGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					serverGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					serverGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ServerGeneratingEventArgs> ServerGenerating
-		{
-			add
-			{
+		public event EventHandler<ServerGeneratingEventArgs> ServerGenerating {
+			add {
 				lock (lockObject)
 				{
 					serverGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					serverGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<DatabaseGeneratingAsyncEventArgs> DatabaseGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<DatabaseGeneratingAsyncEventArgs> DatabaseGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					databaseGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					databaseGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<DatabaseGeneratingEventArgs> DatabaseGenerating
-		{
-			add
-			{
+		public event EventHandler<DatabaseGeneratingEventArgs> DatabaseGenerating {
+			add {
 				lock (lockObject)
 				{
 					databaseGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					databaseGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<TablesGeneratingAsyncEventArgs> TablesGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<TablesGeneratingAsyncEventArgs> TablesGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					tablesGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tablesGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TablesGeneratingEventArgs> TablesGenerating
-		{
-			add
-			{
+		public event EventHandler<TablesGeneratingEventArgs> TablesGenerating {
+			add {
 				lock (lockObject)
 				{
 					tablesGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tablesGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<TableGeneratingAsyncEventArgs> TableGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<TableGeneratingAsyncEventArgs> TableGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					tableGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tableGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TableGeneratingEventArgs> TableGenerating
-		{
-			add
-			{
+		public event EventHandler<TableGeneratingEventArgs> TableGenerating {
+			add {
 				lock (lockObject)
 				{
 					tableGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tableGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<TablePOCOAsyncEventArgs> TablePOCOAsync
-		{
-			add
-			{
+		public event EventHandler<TablePOCOAsyncEventArgs> TablePOCOAsync {
+			add {
 				lock (lockObject)
 				{
 					tablePOCOAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tablePOCOAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TablePOCOEventArgs> TablePOCO
-		{
-			add
-			{
+		public event EventHandler<TablePOCOEventArgs> TablePOCO {
+			add {
 				lock (lockObject)
 				{
 					tablePOCO += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tablePOCO -= value;
 				}
 			}
 		}
-		public event EventHandler<TableGeneratedAsyncEventArgs> TableGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<TableGeneratedAsyncEventArgs> TableGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					tableGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tableGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TableGeneratedEventArgs> TableGenerated
-		{
-			add
-			{
+		public event EventHandler<TableGeneratedEventArgs> TableGenerated {
+			add {
 				lock (lockObject)
 				{
 					tableGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tableGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<TablesGeneratedAsyncEventArgs> TablesGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<TablesGeneratedAsyncEventArgs> TablesGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					tablesGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tablesGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TablesGeneratedEventArgs> TablesGenerated
-		{
-			add
-			{
+		public event EventHandler<TablesGeneratedEventArgs> TablesGenerated {
+			add {
 				lock (lockObject)
 				{
 					tablesGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tablesGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTablesGeneratingAsyncEventArgs> ComplexTypeTablesGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTablesGeneratingAsyncEventArgs> ComplexTypeTablesGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTablesGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTablesGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTablesGeneratingEventArgs> ComplexTypeTablesGenerating
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTablesGeneratingEventArgs> ComplexTypeTablesGenerating {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTablesGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTablesGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTableGeneratingAsyncEventArgs> ComplexTypeTableGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTableGeneratingAsyncEventArgs> ComplexTypeTableGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTableGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTableGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTableGeneratingEventArgs> ComplexTypeTableGenerating
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTableGeneratingEventArgs> ComplexTypeTableGenerating {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTableGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTableGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTablePOCOAsyncEventArgs> ComplexTypeTablePOCOAsync
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTablePOCOAsyncEventArgs> ComplexTypeTablePOCOAsync {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTablePOCOAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTablePOCOAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTablePOCOEventArgs> ComplexTypeTablePOCO
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTablePOCOEventArgs> ComplexTypeTablePOCO {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTablePOCO += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTablePOCO -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTableGeneratedAsyncEventArgs> ComplexTypeTableGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTableGeneratedAsyncEventArgs> ComplexTypeTableGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTableGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTableGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTableGeneratedEventArgs> ComplexTypeTableGenerated
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTableGeneratedEventArgs> ComplexTypeTableGenerated {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTableGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTableGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTablesGeneratedAsyncEventArgs> ComplexTypeTablesGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTablesGeneratedAsyncEventArgs> ComplexTypeTablesGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTablesGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTablesGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ComplexTypeTablesGeneratedEventArgs> ComplexTypeTablesGenerated
-		{
-			add
-			{
+		public event EventHandler<ComplexTypeTablesGeneratedEventArgs> ComplexTypeTablesGenerated {
+			add {
 				lock (lockObject)
 				{
 					complexTypeTablesGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					complexTypeTablesGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewsGeneratingAsyncEventArgs> ViewsGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ViewsGeneratingAsyncEventArgs> ViewsGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					viewsGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewsGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewsGeneratingEventArgs> ViewsGenerating
-		{
-			add
-			{
+		public event EventHandler<ViewsGeneratingEventArgs> ViewsGenerating {
+			add {
 				lock (lockObject)
 				{
 					viewsGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewsGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewGeneratingAsyncEventArgs> ViewGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ViewGeneratingAsyncEventArgs> ViewGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					viewGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewGeneratingEventArgs> ViewGenerating
-		{
-			add
-			{
+		public event EventHandler<ViewGeneratingEventArgs> ViewGenerating {
+			add {
 				lock (lockObject)
 				{
 					viewGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewPOCOAsyncEventArgs> ViewPOCOAsync
-		{
-			add
-			{
+		public event EventHandler<ViewPOCOAsyncEventArgs> ViewPOCOAsync {
+			add {
 				lock (lockObject)
 				{
 					viewPOCOAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewPOCOAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewPOCOEventArgs> ViewPOCO
-		{
-			add
-			{
+		public event EventHandler<ViewPOCOEventArgs> ViewPOCO {
+			add {
 				lock (lockObject)
 				{
 					viewPOCO += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewPOCO -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewGeneratedAsyncEventArgs> ViewGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ViewGeneratedAsyncEventArgs> ViewGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					viewGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewGeneratedEventArgs> ViewGenerated
-		{
-			add
-			{
+		public event EventHandler<ViewGeneratedEventArgs> ViewGenerated {
+			add {
 				lock (lockObject)
 				{
 					viewGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewsGeneratedAsyncEventArgs> ViewsGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ViewsGeneratedAsyncEventArgs> ViewsGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					viewsGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewsGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ViewsGeneratedEventArgs> ViewsGenerated
-		{
-			add
-			{
+		public event EventHandler<ViewsGeneratedEventArgs> ViewsGenerated {
+			add {
 				lock (lockObject)
 				{
 					viewsGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					viewsGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ProceduresGeneratingAsyncEventArgs> ProceduresGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ProceduresGeneratingAsyncEventArgs> ProceduresGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					proceduresGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					proceduresGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ProceduresGeneratingEventArgs> ProceduresGenerating
-		{
-			add
-			{
+		public event EventHandler<ProceduresGeneratingEventArgs> ProceduresGenerating {
+			add {
 				lock (lockObject)
 				{
 					proceduresGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					proceduresGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<ProcedureGeneratingAsyncEventArgs> ProcedureGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<ProcedureGeneratingAsyncEventArgs> ProcedureGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					procedureGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					procedureGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ProcedureGeneratingEventArgs> ProcedureGenerating
-		{
-			add
-			{
+		public event EventHandler<ProcedureGeneratingEventArgs> ProcedureGenerating {
+			add {
 				lock (lockObject)
 				{
 					procedureGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					procedureGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<ProcedurePOCOAsyncEventArgs> ProcedurePOCOAsync
-		{
-			add
-			{
+		public event EventHandler<ProcedurePOCOAsyncEventArgs> ProcedurePOCOAsync {
+			add {
 				lock (lockObject)
 				{
 					procedurePOCOAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					procedurePOCOAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ProcedurePOCOEventArgs> ProcedurePOCO
-		{
-			add
-			{
+		public event EventHandler<ProcedurePOCOEventArgs> ProcedurePOCO {
+			add {
 				lock (lockObject)
 				{
 					procedurePOCO += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					procedurePOCO -= value;
 				}
 			}
 		}
-		public event EventHandler<ProcedureGeneratedAsyncEventArgs> ProcedureGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ProcedureGeneratedAsyncEventArgs> ProcedureGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					procedureGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					procedureGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ProcedureGeneratedEventArgs> ProcedureGenerated
-		{
-			add
-			{
+		public event EventHandler<ProcedureGeneratedEventArgs> ProcedureGenerated {
+			add {
 				lock (lockObject)
 				{
 					procedureGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					procedureGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ProceduresGeneratedAsyncEventArgs> ProceduresGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ProceduresGeneratedAsyncEventArgs> ProceduresGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					proceduresGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					proceduresGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ProceduresGeneratedEventArgs> ProceduresGenerated
-		{
-			add
-			{
+		public event EventHandler<ProceduresGeneratedEventArgs> ProceduresGenerated {
+			add {
 				lock (lockObject)
 				{
 					proceduresGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					proceduresGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionsGeneratingAsyncEventArgs> FunctionsGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<FunctionsGeneratingAsyncEventArgs> FunctionsGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					functionsGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionsGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionsGeneratingEventArgs> FunctionsGenerating
-		{
-			add
-			{
+		public event EventHandler<FunctionsGeneratingEventArgs> FunctionsGenerating {
+			add {
 				lock (lockObject)
 				{
 					functionsGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionsGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionGeneratingAsyncEventArgs> FunctionGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<FunctionGeneratingAsyncEventArgs> FunctionGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					functionGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionGeneratingEventArgs> FunctionGenerating
-		{
-			add
-			{
+		public event EventHandler<FunctionGeneratingEventArgs> FunctionGenerating {
+			add {
 				lock (lockObject)
 				{
 					functionGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionPOCOAsyncEventArgs> FunctionPOCOAsync
-		{
-			add
-			{
+		public event EventHandler<FunctionPOCOAsyncEventArgs> FunctionPOCOAsync {
+			add {
 				lock (lockObject)
 				{
 					functionPOCOAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionPOCOAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionPOCOEventArgs> FunctionPOCO
-		{
-			add
-			{
+		public event EventHandler<FunctionPOCOEventArgs> FunctionPOCO {
+			add {
 				lock (lockObject)
 				{
 					functionPOCO += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionPOCO -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionGeneratedAsyncEventArgs> FunctionGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<FunctionGeneratedAsyncEventArgs> FunctionGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					functionGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionGeneratedEventArgs> FunctionGenerated
-		{
-			add
-			{
+		public event EventHandler<FunctionGeneratedEventArgs> FunctionGenerated {
+			add {
 				lock (lockObject)
 				{
 					functionGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionsGeneratedAsyncEventArgs> FunctionsGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<FunctionsGeneratedAsyncEventArgs> FunctionsGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					functionsGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionsGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<FunctionsGeneratedEventArgs> FunctionsGenerated
-		{
-			add
-			{
+		public event EventHandler<FunctionsGeneratedEventArgs> FunctionsGenerated {
+			add {
 				lock (lockObject)
 				{
 					functionsGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					functionsGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPsGeneratingAsyncEventArgs> TVPsGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<TVPsGeneratingAsyncEventArgs> TVPsGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					tvpsGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpsGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPsGeneratingEventArgs> TVPsGenerating
-		{
-			add
-			{
+		public event EventHandler<TVPsGeneratingEventArgs> TVPsGenerating {
+			add {
 				lock (lockObject)
 				{
 					tvpsGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpsGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPGeneratingAsyncEventArgs> TVPGeneratingAsync
-		{
-			add
-			{
+		public event EventHandler<TVPGeneratingAsyncEventArgs> TVPGeneratingAsync {
+			add {
 				lock (lockObject)
 				{
 					tvpGeneratingAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpGeneratingAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPGeneratingEventArgs> TVPGenerating
-		{
-			add
-			{
+		public event EventHandler<TVPGeneratingEventArgs> TVPGenerating {
+			add {
 				lock (lockObject)
 				{
 					tvpGenerating += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpGenerating -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPPOCOAsyncEventArgs> TVPPOCOAsync
-		{
-			add
-			{
+		public event EventHandler<TVPPOCOAsyncEventArgs> TVPPOCOAsync {
+			add {
 				lock (lockObject)
 				{
 					tvpPOCOAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpPOCOAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPPOCOEventArgs> TVPPOCO
-		{
-			add
-			{
+		public event EventHandler<TVPPOCOEventArgs> TVPPOCO {
+			add {
 				lock (lockObject)
 				{
 					tvpPOCO += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpPOCO -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPGeneratedAsyncEventArgs> TVPGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<TVPGeneratedAsyncEventArgs> TVPGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					tvpGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPGeneratedEventArgs> TVPGenerated
-		{
-			add
-			{
+		public event EventHandler<TVPGeneratedEventArgs> TVPGenerated {
+			add {
 				lock (lockObject)
 				{
 					tvpGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPsGeneratedAsyncEventArgs> TVPsGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<TVPsGeneratedAsyncEventArgs> TVPsGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					tvpsGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpsGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<TVPsGeneratedEventArgs> TVPsGenerated
-		{
-			add
-			{
+		public event EventHandler<TVPsGeneratedEventArgs> TVPsGenerated {
+			add {
 				lock (lockObject)
 				{
 					tvpsGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					tvpsGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<DatabaseGeneratedAsyncEventArgs> DatabaseGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<DatabaseGeneratedAsyncEventArgs> DatabaseGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					databaseGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					databaseGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<DatabaseGeneratedEventArgs> DatabaseGenerated
-		{
-			add
-			{
+		public event EventHandler<DatabaseGeneratedEventArgs> DatabaseGenerated {
+			add {
 				lock (lockObject)
 				{
 					databaseGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					databaseGenerated -= value;
 				}
 			}
 		}
-		public event EventHandler<ServerGeneratedAsyncEventArgs> ServerGeneratedAsync
-		{
-			add
-			{
+		public event EventHandler<ServerGeneratedAsyncEventArgs> ServerGeneratedAsync {
+			add {
 				lock (lockObject)
 				{
 					serverGeneratedAsync += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					serverGeneratedAsync -= value;
 				}
 			}
 		}
-		public event EventHandler<ServerGeneratedEventArgs> ServerGenerated
-		{
-			add
-			{
+		public event EventHandler<ServerGeneratedEventArgs> ServerGenerated {
+			add {
 				lock (lockObject)
 				{
 					serverGenerated += value;
 				}
 			}
-			remove
-			{
+			remove {
 				lock (lockObject)
 				{
 					serverGenerated -= value;
@@ -2081,12 +1869,11 @@ namespace POCOGenerator
 			}
 		}
 
-		private void SetPOCOIteratorEvents(IDbIterator iterator, POCOGenerator.Objects.Server proxyServer)
+		private void SetPOCOIteratorEvents(IDbIterator iterator, Objects.Server proxyServer)
 		{
 			if (serverGeneratingAsyncInternal != null)
 			{
-				iterator.ServerGeneratingAsync += (sender, e) =>
-				{
+				iterator.ServerGeneratingAsync += (sender, e) => {
 					serverGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ServerGeneratingAsyncEventArgs(
@@ -2098,8 +1885,7 @@ namespace POCOGenerator
 
 			if (serverGeneratingInternal != null)
 			{
-				iterator.ServerGenerating += (sender, e) =>
-				{
+				iterator.ServerGenerating += (sender, e) => {
 					ServerGeneratingEventArgs args = new(
 						proxyServer
 					);
@@ -2110,8 +1896,7 @@ namespace POCOGenerator
 
 			if (databaseGeneratingAsyncInternal != null)
 			{
-				iterator.DatabaseGeneratingAsync += (sender, e) =>
-				{
+				iterator.DatabaseGeneratingAsync += (sender, e) => {
 					databaseGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new DatabaseGeneratingAsyncEventArgs(
@@ -2123,8 +1908,7 @@ namespace POCOGenerator
 
 			if (databaseGeneratingInternal != null)
 			{
-				iterator.DatabaseGenerating += (sender, e) =>
-				{
+				iterator.DatabaseGenerating += (sender, e) => {
 					DatabaseGeneratingEventArgs args = new(
 						proxyServer.Databases.First(d => d.InternalEquals(e.Database))
 					);
@@ -2136,8 +1920,7 @@ namespace POCOGenerator
 
 			if (tablesGeneratingAsyncInternal != null)
 			{
-				iterator.TablesGeneratingAsync += (sender, e) =>
-				{
+				iterator.TablesGeneratingAsync += (sender, e) => {
 					tablesGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new TablesGeneratingAsyncEventArgs()
@@ -2147,8 +1930,7 @@ namespace POCOGenerator
 
 			if (tablesGeneratingInternal != null)
 			{
-				iterator.TablesGenerating += (sender, e) =>
-				{
+				iterator.TablesGenerating += (sender, e) => {
 					TablesGeneratingEventArgs args = new();
 					tablesGeneratingInternal.Raise(this, args);
 					e.Skip = args.Skip;
@@ -2158,8 +1940,7 @@ namespace POCOGenerator
 
 			if (tableGeneratingAsyncInternal != null)
 			{
-				iterator.TableGeneratingAsync += (sender, e) =>
-				{
+				iterator.TableGeneratingAsync += (sender, e) => {
 					tableGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new TableGeneratingAsyncEventArgs(
@@ -2172,8 +1953,7 @@ namespace POCOGenerator
 
 			if (tableGeneratingInternal != null)
 			{
-				iterator.TableGenerating += (sender, e) =>
-				{
+				iterator.TableGenerating += (sender, e) => {
 					TableGeneratingEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Tables).First(t => t.InternalEquals(e.Table)),
 						e.Namespace
@@ -2187,8 +1967,7 @@ namespace POCOGenerator
 
 			if (tablePOCOAsyncInternal != null)
 			{
-				iterator.TablePOCOAsync += (sender, e) =>
-				{
+				iterator.TablePOCOAsync += (sender, e) => {
 					tablePOCOAsyncInternal.RaiseAsync(
 						this,
 						new TablePOCOAsyncEventArgs(
@@ -2201,8 +1980,7 @@ namespace POCOGenerator
 
 			if (tablePOCOInternal != null)
 			{
-				iterator.TablePOCO += (sender, e) =>
-				{
+				iterator.TablePOCO += (sender, e) => {
 					TablePOCOEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Tables).First(t => t.InternalEquals(e.Table)),
 						e.POCO
@@ -2214,8 +1992,7 @@ namespace POCOGenerator
 
 			if (tableGeneratedAsyncInternal != null)
 			{
-				iterator.TableGeneratedAsync += (sender, e) =>
-				{
+				iterator.TableGeneratedAsync += (sender, e) => {
 					tableGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new TableGeneratedAsyncEventArgs(
@@ -2228,8 +2005,7 @@ namespace POCOGenerator
 
 			if (tableGeneratedInternal != null)
 			{
-				iterator.TableGenerated += (sender, e) =>
-				{
+				iterator.TableGenerated += (sender, e) => {
 					TableGeneratedEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Tables).First(t => t.InternalEquals(e.Table)),
 						e.Namespace
@@ -2241,8 +2017,7 @@ namespace POCOGenerator
 
 			if (tablesGeneratedAsyncInternal != null)
 			{
-				iterator.TablesGeneratedAsync += (sender, e) =>
-				{
+				iterator.TablesGeneratedAsync += (sender, e) => {
 					tablesGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new TablesGeneratedAsyncEventArgs()
@@ -2252,8 +2027,7 @@ namespace POCOGenerator
 
 			if (tablesGeneratedInternal != null)
 			{
-				iterator.TablesGenerated += (sender, e) =>
-				{
+				iterator.TablesGenerated += (sender, e) => {
 					TablesGeneratedEventArgs args = new();
 					tablesGeneratedInternal.Raise(this, args);
 					e.Stop = args.Stop;
@@ -2262,8 +2036,7 @@ namespace POCOGenerator
 
 			if (complexTypeTablesGeneratingAsyncInternal != null)
 			{
-				iterator.ComplexTypeTablesGeneratingAsync += (sender, e) =>
-				{
+				iterator.ComplexTypeTablesGeneratingAsync += (sender, e) => {
 					complexTypeTablesGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ComplexTypeTablesGeneratingAsyncEventArgs()
@@ -2273,8 +2046,7 @@ namespace POCOGenerator
 
 			if (complexTypeTablesGeneratingInternal != null)
 			{
-				iterator.ComplexTypeTablesGenerating += (sender, e) =>
-				{
+				iterator.ComplexTypeTablesGenerating += (sender, e) => {
 					ComplexTypeTablesGeneratingEventArgs args = new();
 					complexTypeTablesGeneratingInternal.Raise(this, args);
 					e.Skip = args.Skip;
@@ -2284,8 +2056,7 @@ namespace POCOGenerator
 
 			if (complexTypeTableGeneratingAsyncInternal != null)
 			{
-				iterator.ComplexTypeTableGeneratingAsync += (sender, e) =>
-				{
+				iterator.ComplexTypeTableGeneratingAsync += (sender, e) => {
 					complexTypeTableGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ComplexTypeTableGeneratingAsyncEventArgs(
@@ -2298,8 +2069,7 @@ namespace POCOGenerator
 
 			if (complexTypeTableGeneratingInternal != null)
 			{
-				iterator.ComplexTypeTableGenerating += (sender, e) =>
-				{
+				iterator.ComplexTypeTableGenerating += (sender, e) => {
 					ComplexTypeTableGeneratingEventArgs args = new(
 						proxyServer.Databases.Where(d => d.ComplexTypeTables.HasAny()).SelectMany(d => d.ComplexTypeTables).First(t => t.InternalEquals(e.ComplexTypeTable)),
 						e.Namespace
@@ -2313,8 +2083,7 @@ namespace POCOGenerator
 
 			if (complexTypeTablePOCOAsyncInternal != null)
 			{
-				iterator.ComplexTypeTablePOCOAsync += (sender, e) =>
-				{
+				iterator.ComplexTypeTablePOCOAsync += (sender, e) => {
 					complexTypeTablePOCOAsyncInternal.RaiseAsync(
 						this,
 						new ComplexTypeTablePOCOAsyncEventArgs(
@@ -2327,8 +2096,7 @@ namespace POCOGenerator
 
 			if (complexTypeTablePOCOInternal != null)
 			{
-				iterator.ComplexTypeTablePOCO += (sender, e) =>
-				{
+				iterator.ComplexTypeTablePOCO += (sender, e) => {
 					ComplexTypeTablePOCOEventArgs args = new(
 						proxyServer.Databases.Where(d => d.ComplexTypeTables.HasAny()).SelectMany(d => d.ComplexTypeTables).First(t => t.InternalEquals(e.ComplexTypeTable)),
 						e.POCO
@@ -2340,8 +2108,7 @@ namespace POCOGenerator
 
 			if (complexTypeTableGeneratedAsyncInternal != null)
 			{
-				iterator.ComplexTypeTableGeneratedAsync += (sender, e) =>
-				{
+				iterator.ComplexTypeTableGeneratedAsync += (sender, e) => {
 					complexTypeTableGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ComplexTypeTableGeneratedAsyncEventArgs(
@@ -2354,8 +2121,7 @@ namespace POCOGenerator
 
 			if (complexTypeTableGeneratedInternal != null)
 			{
-				iterator.ComplexTypeTableGenerated += (sender, e) =>
-				{
+				iterator.ComplexTypeTableGenerated += (sender, e) => {
 					ComplexTypeTableGeneratedEventArgs args = new(
 						proxyServer.Databases.Where(d => d.ComplexTypeTables.HasAny()).SelectMany(d => d.ComplexTypeTables).First(t => t.InternalEquals(e.ComplexTypeTable)),
 						e.Namespace
@@ -2367,8 +2133,7 @@ namespace POCOGenerator
 
 			if (complexTypeTablesGeneratedAsyncInternal != null)
 			{
-				iterator.ComplexTypeTablesGeneratedAsync += (sender, e) =>
-				{
+				iterator.ComplexTypeTablesGeneratedAsync += (sender, e) => {
 					complexTypeTablesGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ComplexTypeTablesGeneratedAsyncEventArgs()
@@ -2378,8 +2143,7 @@ namespace POCOGenerator
 
 			if (complexTypeTablesGeneratedInternal != null)
 			{
-				iterator.ComplexTypeTablesGenerated += (sender, e) =>
-				{
+				iterator.ComplexTypeTablesGenerated += (sender, e) => {
 					ComplexTypeTablesGeneratedEventArgs args = new();
 					complexTypeTablesGeneratedInternal.Raise(this, args);
 					e.Stop = args.Stop;
@@ -2388,8 +2152,7 @@ namespace POCOGenerator
 
 			if (viewsGeneratingAsyncInternal != null)
 			{
-				iterator.ViewsGeneratingAsync += (sender, e) =>
-				{
+				iterator.ViewsGeneratingAsync += (sender, e) => {
 					viewsGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ViewsGeneratingAsyncEventArgs()
@@ -2399,8 +2162,7 @@ namespace POCOGenerator
 
 			if (viewsGeneratingInternal != null)
 			{
-				iterator.ViewsGenerating += (sender, e) =>
-				{
+				iterator.ViewsGenerating += (sender, e) => {
 					ViewsGeneratingEventArgs args = new();
 					viewsGeneratingInternal.Raise(this, args);
 					e.Skip = args.Skip;
@@ -2410,8 +2172,7 @@ namespace POCOGenerator
 
 			if (viewGeneratingAsyncInternal != null)
 			{
-				iterator.ViewGeneratingAsync += (sender, e) =>
-				{
+				iterator.ViewGeneratingAsync += (sender, e) => {
 					viewGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ViewGeneratingAsyncEventArgs(
@@ -2424,8 +2185,7 @@ namespace POCOGenerator
 
 			if (viewGeneratingInternal != null)
 			{
-				iterator.ViewGenerating += (sender, e) =>
-				{
+				iterator.ViewGenerating += (sender, e) => {
 					ViewGeneratingEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Views).First(v => v.InternalEquals(e.View)),
 						e.Namespace
@@ -2439,8 +2199,7 @@ namespace POCOGenerator
 
 			if (viewPOCOAsyncInternal != null)
 			{
-				iterator.ViewPOCOAsync += (sender, e) =>
-				{
+				iterator.ViewPOCOAsync += (sender, e) => {
 					viewPOCOAsyncInternal.RaiseAsync(
 						this,
 						new ViewPOCOAsyncEventArgs(
@@ -2453,8 +2212,7 @@ namespace POCOGenerator
 
 			if (viewPOCOInternal != null)
 			{
-				iterator.ViewPOCO += (sender, e) =>
-				{
+				iterator.ViewPOCO += (sender, e) => {
 					ViewPOCOEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Views).First(v => v.InternalEquals(e.View)),
 						e.POCO
@@ -2466,8 +2224,7 @@ namespace POCOGenerator
 
 			if (viewGeneratedAsyncInternal != null)
 			{
-				iterator.ViewGeneratedAsync += (sender, e) =>
-				{
+				iterator.ViewGeneratedAsync += (sender, e) => {
 					viewGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ViewGeneratedAsyncEventArgs(
@@ -2480,8 +2237,7 @@ namespace POCOGenerator
 
 			if (viewGeneratedInternal != null)
 			{
-				iterator.ViewGenerated += (sender, e) =>
-				{
+				iterator.ViewGenerated += (sender, e) => {
 					ViewGeneratedEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Views).First(v => v.InternalEquals(e.View)),
 						e.Namespace
@@ -2493,8 +2249,7 @@ namespace POCOGenerator
 
 			if (viewsGeneratedAsyncInternal != null)
 			{
-				iterator.ViewsGeneratedAsync += (sender, e) =>
-				{
+				iterator.ViewsGeneratedAsync += (sender, e) => {
 					viewsGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ViewsGeneratedAsyncEventArgs()
@@ -2504,8 +2259,7 @@ namespace POCOGenerator
 
 			if (viewsGeneratedInternal != null)
 			{
-				iterator.ViewsGenerated += (sender, e) =>
-				{
+				iterator.ViewsGenerated += (sender, e) => {
 					ViewsGeneratedEventArgs args = new();
 					viewsGeneratedInternal.Raise(this, args);
 					e.Stop = args.Stop;
@@ -2514,8 +2268,7 @@ namespace POCOGenerator
 
 			if (proceduresGeneratingAsyncInternal != null)
 			{
-				iterator.ProceduresGeneratingAsync += (sender, e) =>
-				{
+				iterator.ProceduresGeneratingAsync += (sender, e) => {
 					proceduresGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ProceduresGeneratingAsyncEventArgs()
@@ -2525,8 +2278,7 @@ namespace POCOGenerator
 
 			if (proceduresGeneratingInternal != null)
 			{
-				iterator.ProceduresGenerating += (sender, e) =>
-				{
+				iterator.ProceduresGenerating += (sender, e) => {
 					ProceduresGeneratingEventArgs args = new();
 					proceduresGeneratingInternal.Raise(this, args);
 					e.Skip = args.Skip;
@@ -2536,8 +2288,7 @@ namespace POCOGenerator
 
 			if (procedureGeneratingAsyncInternal != null)
 			{
-				iterator.ProcedureGeneratingAsync += (sender, e) =>
-				{
+				iterator.ProcedureGeneratingAsync += (sender, e) => {
 					procedureGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new ProcedureGeneratingAsyncEventArgs(
@@ -2550,8 +2301,7 @@ namespace POCOGenerator
 
 			if (procedureGeneratingInternal != null)
 			{
-				iterator.ProcedureGenerating += (sender, e) =>
-				{
+				iterator.ProcedureGenerating += (sender, e) => {
 					ProcedureGeneratingEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Procedures).First(p => p.InternalEquals(e.Procedure)),
 						e.Namespace
@@ -2565,8 +2315,7 @@ namespace POCOGenerator
 
 			if (procedurePOCOAsyncInternal != null)
 			{
-				iterator.ProcedurePOCOAsync += (sender, e) =>
-				{
+				iterator.ProcedurePOCOAsync += (sender, e) => {
 					procedurePOCOAsyncInternal.RaiseAsync(
 						this,
 						new ProcedurePOCOAsyncEventArgs(
@@ -2579,8 +2328,7 @@ namespace POCOGenerator
 
 			if (procedurePOCOInternal != null)
 			{
-				iterator.ProcedurePOCO += (sender, e) =>
-				{
+				iterator.ProcedurePOCO += (sender, e) => {
 					ProcedurePOCOEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Procedures).First(p => p.InternalEquals(e.Procedure)),
 						e.POCO
@@ -2592,8 +2340,7 @@ namespace POCOGenerator
 
 			if (procedureGeneratedAsyncInternal != null)
 			{
-				iterator.ProcedureGeneratedAsync += (sender, e) =>
-				{
+				iterator.ProcedureGeneratedAsync += (sender, e) => {
 					procedureGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ProcedureGeneratedAsyncEventArgs(
@@ -2606,8 +2353,7 @@ namespace POCOGenerator
 
 			if (procedureGeneratedInternal != null)
 			{
-				iterator.ProcedureGenerated += (sender, e) =>
-				{
+				iterator.ProcedureGenerated += (sender, e) => {
 					ProcedureGeneratedEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Procedures).First(p => p.InternalEquals(e.Procedure)),
 						e.Namespace
@@ -2619,8 +2365,7 @@ namespace POCOGenerator
 
 			if (proceduresGeneratedAsyncInternal != null)
 			{
-				iterator.ProceduresGeneratedAsync += (sender, e) =>
-				{
+				iterator.ProceduresGeneratedAsync += (sender, e) => {
 					proceduresGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ProceduresGeneratedAsyncEventArgs()
@@ -2630,8 +2375,7 @@ namespace POCOGenerator
 
 			if (proceduresGeneratedInternal != null)
 			{
-				iterator.ProceduresGenerated += (sender, e) =>
-				{
+				iterator.ProceduresGenerated += (sender, e) => {
 					ProceduresGeneratedEventArgs args = new();
 					proceduresGeneratedInternal.Raise(this, args);
 					e.Stop = args.Stop;
@@ -2640,8 +2384,7 @@ namespace POCOGenerator
 
 			if (functionsGeneratingAsyncInternal != null)
 			{
-				iterator.FunctionsGeneratingAsync += (sender, e) =>
-				{
+				iterator.FunctionsGeneratingAsync += (sender, e) => {
 					functionsGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new FunctionsGeneratingAsyncEventArgs()
@@ -2651,8 +2394,7 @@ namespace POCOGenerator
 
 			if (functionsGeneratingInternal != null)
 			{
-				iterator.FunctionsGenerating += (sender, e) =>
-				{
+				iterator.FunctionsGenerating += (sender, e) => {
 					FunctionsGeneratingEventArgs args = new();
 					functionsGeneratingInternal.Raise(this, args);
 					e.Skip = args.Skip;
@@ -2662,8 +2404,7 @@ namespace POCOGenerator
 
 			if (functionGeneratingAsyncInternal != null)
 			{
-				iterator.FunctionGeneratingAsync += (sender, e) =>
-				{
+				iterator.FunctionGeneratingAsync += (sender, e) => {
 					functionGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new FunctionGeneratingAsyncEventArgs(
@@ -2676,8 +2417,7 @@ namespace POCOGenerator
 
 			if (functionGeneratingInternal != null)
 			{
-				iterator.FunctionGenerating += (sender, e) =>
-				{
+				iterator.FunctionGenerating += (sender, e) => {
 					FunctionGeneratingEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Functions).First(f => f.InternalEquals(e.Function)),
 						e.Namespace
@@ -2691,8 +2431,7 @@ namespace POCOGenerator
 
 			if (functionPOCOAsyncInternal != null)
 			{
-				iterator.FunctionPOCOAsync += (sender, e) =>
-				{
+				iterator.FunctionPOCOAsync += (sender, e) => {
 					functionPOCOAsyncInternal.RaiseAsync(
 						this,
 						new FunctionPOCOAsyncEventArgs(
@@ -2705,8 +2444,7 @@ namespace POCOGenerator
 
 			if (functionPOCOInternal != null)
 			{
-				iterator.FunctionPOCO += (sender, e) =>
-				{
+				iterator.FunctionPOCO += (sender, e) => {
 					FunctionPOCOEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Functions).First(f => f.InternalEquals(e.Function)),
 						e.POCO
@@ -2718,8 +2456,7 @@ namespace POCOGenerator
 
 			if (functionGeneratedAsyncInternal != null)
 			{
-				iterator.FunctionGeneratedAsync += (sender, e) =>
-				{
+				iterator.FunctionGeneratedAsync += (sender, e) => {
 					functionGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new FunctionGeneratedAsyncEventArgs(
@@ -2732,8 +2469,7 @@ namespace POCOGenerator
 
 			if (functionGeneratedInternal != null)
 			{
-				iterator.FunctionGenerated += (sender, e) =>
-				{
+				iterator.FunctionGenerated += (sender, e) => {
 					FunctionGeneratedEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.Functions).First(f => f.InternalEquals(e.Function)),
 						e.Namespace
@@ -2745,8 +2481,7 @@ namespace POCOGenerator
 
 			if (functionsGeneratedAsyncInternal != null)
 			{
-				iterator.FunctionsGeneratedAsync += (sender, e) =>
-				{
+				iterator.FunctionsGeneratedAsync += (sender, e) => {
 					functionsGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new FunctionsGeneratedAsyncEventArgs()
@@ -2756,8 +2491,7 @@ namespace POCOGenerator
 
 			if (functionsGeneratedInternal != null)
 			{
-				iterator.FunctionsGenerated += (sender, e) =>
-				{
+				iterator.FunctionsGenerated += (sender, e) => {
 					FunctionsGeneratedEventArgs args = new();
 					functionsGeneratedInternal.Raise(this, args);
 					e.Stop = args.Stop;
@@ -2766,8 +2500,7 @@ namespace POCOGenerator
 
 			if (tvpsGeneratingAsyncInternal != null)
 			{
-				iterator.TVPsGeneratingAsync += (sender, e) =>
-				{
+				iterator.TVPsGeneratingAsync += (sender, e) => {
 					tvpsGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new TVPsGeneratingAsyncEventArgs()
@@ -2777,8 +2510,7 @@ namespace POCOGenerator
 
 			if (tvpsGeneratingInternal != null)
 			{
-				iterator.TVPsGenerating += (sender, e) =>
-				{
+				iterator.TVPsGenerating += (sender, e) => {
 					TVPsGeneratingEventArgs args = new();
 					tvpsGeneratingInternal.Raise(this, args);
 					e.Skip = args.Skip;
@@ -2788,8 +2520,7 @@ namespace POCOGenerator
 
 			if (tvpGeneratingAsyncInternal != null)
 			{
-				iterator.TVPGeneratingAsync += (sender, e) =>
-				{
+				iterator.TVPGeneratingAsync += (sender, e) => {
 					tvpGeneratingAsyncInternal.RaiseAsync(
 						this,
 						new TVPGeneratingAsyncEventArgs(
@@ -2802,8 +2533,7 @@ namespace POCOGenerator
 
 			if (tvpGeneratingInternal != null)
 			{
-				iterator.TVPGenerating += (sender, e) =>
-				{
+				iterator.TVPGenerating += (sender, e) => {
 					TVPGeneratingEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.TVPs).First(t => t.InternalEquals(e.TVP)),
 						e.Namespace
@@ -2817,8 +2547,7 @@ namespace POCOGenerator
 
 			if (tvpPOCOAsyncInternal != null)
 			{
-				iterator.TVPPOCOAsync += (sender, e) =>
-				{
+				iterator.TVPPOCOAsync += (sender, e) => {
 					tvpPOCOAsyncInternal.RaiseAsync(
 						this,
 						new TVPPOCOAsyncEventArgs(
@@ -2831,8 +2560,7 @@ namespace POCOGenerator
 
 			if (tvpPOCOInternal != null)
 			{
-				iterator.TVPPOCO += (sender, e) =>
-				{
+				iterator.TVPPOCO += (sender, e) => {
 					TVPPOCOEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.TVPs).First(t => t.InternalEquals(e.TVP)),
 						e.POCO
@@ -2844,8 +2572,7 @@ namespace POCOGenerator
 
 			if (tvpGeneratedAsyncInternal != null)
 			{
-				iterator.TVPGeneratedAsync += (sender, e) =>
-				{
+				iterator.TVPGeneratedAsync += (sender, e) => {
 					tvpGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new TVPGeneratedAsyncEventArgs(
@@ -2858,8 +2585,7 @@ namespace POCOGenerator
 
 			if (tvpGeneratedInternal != null)
 			{
-				iterator.TVPGenerated += (sender, e) =>
-				{
+				iterator.TVPGenerated += (sender, e) => {
 					TVPGeneratedEventArgs args = new(
 						proxyServer.Databases.SelectMany(d => d.TVPs).First(t => t.InternalEquals(e.TVP)),
 						e.Namespace
@@ -2871,8 +2597,7 @@ namespace POCOGenerator
 
 			if (tvpsGeneratedAsyncInternal != null)
 			{
-				iterator.TVPsGeneratedAsync += (sender, e) =>
-				{
+				iterator.TVPsGeneratedAsync += (sender, e) => {
 					tvpsGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new TVPsGeneratedAsyncEventArgs()
@@ -2882,8 +2607,7 @@ namespace POCOGenerator
 
 			if (tvpsGeneratedInternal != null)
 			{
-				iterator.TVPsGenerated += (sender, e) =>
-				{
+				iterator.TVPsGenerated += (sender, e) => {
 					TVPsGeneratedEventArgs args = new();
 					tvpsGeneratedInternal.Raise(this, args);
 					e.Stop = args.Stop;
@@ -2892,8 +2616,7 @@ namespace POCOGenerator
 
 			if (databaseGeneratedAsyncInternal != null)
 			{
-				iterator.DatabaseGeneratedAsync += (sender, e) =>
-				{
+				iterator.DatabaseGeneratedAsync += (sender, e) => {
 					databaseGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new DatabaseGeneratedAsyncEventArgs(
@@ -2905,8 +2628,7 @@ namespace POCOGenerator
 
 			if (databaseGeneratedInternal != null)
 			{
-				iterator.DatabaseGenerated += (sender, e) =>
-				{
+				iterator.DatabaseGenerated += (sender, e) => {
 					DatabaseGeneratedEventArgs args = new(
 						proxyServer.Databases.First(d => d.InternalEquals(e.Database))
 					);
@@ -2917,8 +2639,7 @@ namespace POCOGenerator
 
 			if (serverGeneratedAsyncInternal != null)
 			{
-				iterator.ServerGeneratedAsync += (sender, e) =>
-				{
+				iterator.ServerGeneratedAsync += (sender, e) => {
 					serverGeneratedAsyncInternal.RaiseAsync(
 						this,
 						new ServerGeneratedAsyncEventArgs(
@@ -2930,8 +2651,7 @@ namespace POCOGenerator
 
 			if (serverGeneratedInternal != null)
 			{
-				iterator.ServerGenerated += (sender, e) =>
-				{
+				iterator.ServerGenerated += (sender, e) => {
 					ServerGeneratedEventArgs args = new(
 						proxyServer
 					);

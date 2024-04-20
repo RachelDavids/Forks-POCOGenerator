@@ -6,8 +6,6 @@ namespace POCOGenerator.Utils
 {
 	public static partial class CollectionExtensions
 	{
-		#region Visual Studio Search and Replace
-
 		// if \((?<lst>[a-zA-Z0-9._]+) == null \|\| \k<lst>\.Count(?:\(\))? == 0\)
 		// if (${lst}.IsNullOrEmpty())
 
@@ -16,8 +14,6 @@ namespace POCOGenerator.Utils
 
 		// if \((?<lst>[a-zA-Z0-9._]+) != null && \k<lst>\.Count(?:\(\))? == 1\)
 		// if (${lst}.HasSingle())
-
-		#endregion
 
 		public static bool IsNullOrEmpty<TSource>(this IEnumerable<TSource> source)
 		{

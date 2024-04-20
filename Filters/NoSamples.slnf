@@ -1,0 +1,20 @@
+{
+  "solution": {
+    "path": "../POCOGenerator.sln",
+    "projects": [
+	"POCOGenerator\\POCOGenerator.csproj",
+	"POCOGeneratorUI\\POCOGeneratorUI.csproj",
+	"POCOGenerator.DbObjects\\POCOGenerator.DbObjects.csproj",
+	"POCOGenerator.Db\\POCOGenerator.Db.csproj",
+	"POCOGenerator.DbFactories\\POCOGenerator.DbFactories.csproj",
+	"POCOGenerator.DbHandlers\\POCOGenerator.DbHandlers.csproj",
+	"POCOGenerator.MySQL\\POCOGenerator.MySQL.csproj",
+	"POCOGenerator.POCOIterators\\POCOGenerator.POCOIterators.csproj",
+	"POCOGenerator.POCOWriters\\POCOGenerator.POCOWriters.csproj",
+	"POCOGenerator.SQLServer\\POCOGenerator.SQLServer.csproj",
+	"POCOGenerator.Utils\\POCOGenerator.Utils.csproj",
+	"POCOGenerator.Forms\\POCOGenerator.Forms.csproj",
+	"Data\\Sql\\Data.Sql.csproj"
+    ]
+  }
+}

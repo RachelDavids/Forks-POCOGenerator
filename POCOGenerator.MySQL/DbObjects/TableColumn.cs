@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,22 +9,20 @@ using POCOGenerator.Utils;
 namespace POCOGenerator.MySQL.DbObjects
 {
 	internal class TableColumn : ITableColumn, IEnumColumn
-    {
-        #region Database Properties
+	{
+		public string COLUMN_NAME { get; set; }
+		public ulong? ORDINAL_POSITION { get; set; }
+		public string COLUMN_DEFAULT { get; set; }
+		public string IS_NULLABLE { get; set; }
+		public string DATA_TYPE { get; set; }
+		public ulong? CHARACTER_MAXIMUM_LENGTH { get; set; }
+		public ulong? NUMERIC_PRECISION { get; set; }
+		public ulong? NUMERIC_SCALE { get; set; }
+		public ulong? DATETIME_PRECISION { get; set; }
+		public string COLUMN_TYPE { get; set; }
+		public string EXTRA { get; set; }
 
-        public string COLUMN_NAME { get; set; }
-        public ulong? ORDINAL_POSITION { get; set; }
-        public string COLUMN_DEFAULT { get; set; }
-        public string IS_NULLABLE { get; set; }
-        public string DATA_TYPE { get; set; }
-        public ulong? CHARACTER_MAXIMUM_LENGTH { get; set; }
-        public ulong? NUMERIC_PRECISION { get; set; }
-        public ulong? NUMERIC_SCALE { get; set; }
-        public ulong? DATETIME_PRECISION { get; set; }
-        public string COLUMN_TYPE { get; set; }
-        public string EXTRA { get; set; }
-
-        /* not in use. reduce memory.
+		/* not in use. reduce memory.
         public virtual string TABLE_CATALOG { get; set; }
         public virtual string TABLE_SCHEMA { get; set; }
         public virtual string TABLE_NAME { get; set; }
@@ -36,169 +34,148 @@ namespace POCOGenerator.MySQL.DbObjects
         public string GENERATION_EXPRESSION { get; set; }
         */
 
-        #endregion
+		public string ColumnName => COLUMN_NAME;
+		public int? ColumnOrdinal => (int?)ORDINAL_POSITION;
+		public string DataTypeName => DATA_TYPE;
+		public string DataTypeDisplay => DATA_TYPE.ToLower();
+		public int? StringPrecision => (int?)CHARACTER_MAXIMUM_LENGTH;
+		public int? NumericPrecision => (int?)NUMERIC_PRECISION;
+		public int? NumericScale => (int?)NUMERIC_SCALE;
+		public int? DateTimePrecision => (int?)DATETIME_PRECISION;
+		public bool IsUnsigned => !String.IsNullOrEmpty(COLUMN_TYPE) && COLUMN_TYPE.ToLower().Contains("unsigned");
+		public bool IsNullable => String.Equals(IS_NULLABLE, "YES", StringComparison.CurrentCultureIgnoreCase);
 
-        #region IColumn
+		private bool? _isIdentity;
+		public bool IsIdentity {
+			get {
+				_isIdentity ??= !String.IsNullOrEmpty(EXTRA) && EXTRA.ToLower().Contains("auto_increment");
+				return _isIdentity.Value;
+			}
+			set => _isIdentity = value;
+		}
 
-        public string ColumnName { get { return COLUMN_NAME; } }
-        public int? ColumnOrdinal { get { return (int?)ORDINAL_POSITION; } }
-        public string DataTypeName { get { return DATA_TYPE; } }
-        public string DataTypeDisplay { get { return DATA_TYPE.ToLower(); } }
-        public int? StringPrecision { get { return (int?)CHARACTER_MAXIMUM_LENGTH; } }
-        public int? NumericPrecision { get { return (int?)NUMERIC_PRECISION; } }
-        public int? NumericScale { get { return (int?)NUMERIC_SCALE; } }
-        public int? DateTimePrecision { get { return (int?)DATETIME_PRECISION; } }
-        public bool IsUnsigned { get { return (string.IsNullOrEmpty(COLUMN_TYPE) == false && COLUMN_TYPE.ToLower().Contains("unsigned")); } }
-        public bool IsNullable { get { return string.Compare(IS_NULLABLE, "YES", true) == 0; } }
+		private bool? _isComputed;
+		public bool IsComputed {
+			get {
+				_isComputed ??= !String.IsNullOrEmpty(EXTRA) && (EXTRA.ToUpper().Contains("VIRTUAL GENERATED") || EXTRA.ToUpper().Contains("VIRTUAL STORED"));
+				return _isComputed.Value;
+			}
+			set => _isComputed = value;
+		}
 
-        private bool? is_identity;
-        public bool IsIdentity
-        {
-            get
-            {
-                if (is_identity == null)
-                    is_identity = string.IsNullOrEmpty(EXTRA) == false && EXTRA.ToLower().Contains("auto_increment");
-                return is_identity.Value;
-            }
-            set { is_identity = value; }
-        }
+		public string Precision {
+			get {
+				string precision = null;
 
-        private bool? is_computed;
-        public bool IsComputed
-        {
-            get
-            {
-                if (is_computed == null)
-                    is_computed = string.IsNullOrEmpty(EXTRA) == false && (EXTRA.ToUpper().Contains("VIRTUAL GENERATED") || EXTRA.ToUpper().Contains("VIRTUAL STORED"));
-                return is_computed.Value;
-            }
-            set { is_computed = value; }
-        }
+				string dataType = DATA_TYPE.ToLower();
 
-        public string Precision
-        {
-            get
-            {
-                string precision = null;
+				if (dataType is "binary" or "char byte" or
+					"char" or "character" or
+					"nchar" or "national char" or
+					"nvarchar" or "national varchar" or
+					"varbinary" or
+					"varchar" or "character varying")
+				{
+					if (StringPrecision != null)
+					{
+						precision = "(" + StringPrecision + ")";
+					}
+				}
+				else if (dataType == "bit")
+				{
+					if (NumericPrecision != null)
+					{
+						precision = "(" + NumericPrecision + ")";
+					}
+				}
+				else if (dataType is "decimal" or "numeric" or "dec" or "fixed")
+				{
+					if (NumericPrecision != null && NumericScale != null)
+					{
+						precision = "(" + NumericPrecision + "," + NumericScale + ")";
+					}
+				}
+				else if (dataType is "datetime" or "time" or "timestamp")
+				{
+					if (DateTimePrecision is not null and > 0)
+					{
+						precision = "(" + DateTimePrecision + ")";
+					}
+				}
+				else if (dataType is "enum" or "set")
+				{
+					if (!String.IsNullOrEmpty(COLUMN_TYPE))
+					{
+						int startIndex = COLUMN_TYPE.IndexOf('(');
+						if (startIndex != -1)
+						{
+							int endIndex = COLUMN_TYPE.LastIndexOf(')');
+							if (endIndex != -1)
+							{
+								precision = COLUMN_TYPE.Substring(startIndex, endIndex - startIndex + 1);
+							}
+						}
+					}
+				}
 
-                string dataType = DATA_TYPE.ToLower();
+				return precision;
+			}
+		}
 
-                if (dataType == "binary" || dataType == "char byte" ||
-                    dataType == "char" || dataType == "character" ||
-                    dataType == "nchar" || dataType == "national char" ||
-                    dataType == "nvarchar" || dataType == "national varchar" ||
-                    dataType == "varbinary" ||
-                    dataType == "varchar" || dataType == "character varying")
-                {
-                    if (StringPrecision != null)
-                        precision = "(" + StringPrecision + ")";
-                }
-                else if (dataType == "bit")
-                {
-                    if (NumericPrecision != null)
-                        precision = "(" + NumericPrecision + ")";
-                }
-                else if (dataType == "decimal" || dataType == "numeric" || dataType == "dec" || dataType == "fixed")
-                {
-                    if (NumericPrecision != null && NumericScale != null)
-                        precision = "(" + NumericPrecision + "," + NumericScale + ")";
-                }
-                else if (dataType == "datetime" || dataType == "time" || dataType == "timestamp")
-                {
-                    if (DateTimePrecision != null && DateTimePrecision > 0)
-                        precision = "(" + DateTimePrecision + ")";
-                }
-                else if (dataType == "enum" || dataType == "set")
-                {
-                    if (string.IsNullOrEmpty(COLUMN_TYPE) == false)
-                    {
-                        int startIndex = COLUMN_TYPE.IndexOf('(');
-                        if (startIndex != -1)
-                        {
-                            int endIndex = COLUMN_TYPE.LastIndexOf(')');
-                            if (endIndex != -1)
-                                precision = COLUMN_TYPE.Substring(startIndex, endIndex - startIndex + 1);
-                        }
-                    }
-                }
+		public string Description { get; set; }
 
-                return precision;
-            }
-        }
+		public ITable Table { get; set; }
 
-        #endregion
+		public IPrimaryKeyColumn PrimaryKeyColumn { get; set; }
+		public List<IUniqueKeyColumn> UniqueKeyColumns { get; set; }
+		public List<IForeignKeyColumn> ForeignKeyColumns { get; set; }
+		public List<IForeignKeyColumn> PrimaryForeignKeyColumns { get; set; }
+		public List<IIndexColumn> IndexColumns { get; set; }
+		public IComplexTypeTableColumn ComplexTypeTableColumn { get; set; }
 
-        #region IDescription
+		public string ColumnDefault => COLUMN_DEFAULT;
 
-        public string Description { get; set; }
+		public string ToFullString()
+		{
+			return
+				ColumnName + " (" +
+				(PrimaryKeyColumn != null ? "PK, " : String.Empty) +
+				(ForeignKeyColumns.HasAny() ? "FK, " : String.Empty) +
+				(IsComputed ? "Generated, " : String.Empty) +
+				DATA_TYPE + Precision + (IsUnsigned ? " unsigned" : String.Empty) + ", " + (IsNullable ? "null" : "not null") + ")";
+		}
 
-        #endregion
+		public IColumn Column => this;
+		public bool IsEnumDataType => DATA_TYPE.ToLower() == "enum";
+		public bool IsSetDataType => DATA_TYPE.ToLower() == "set";
 
-        #region ITableColumn
+		private static readonly Regex enumLiteralsRegex = new(@"^(?i:enum|set)\s*\((?:\s*,?\s*'(?<literal>.*?)')+\)$", RegexOptions.Compiled);
 
-        public ITable Table { get; set; }
+		private List<string> enumLiterals;
+		public List<string> EnumLiterals {
+			get {
+				if (enumLiterals == null)
+				{
+					Match match = enumLiteralsRegex.Match(COLUMN_TYPE);
+					if (match.Success)
+					{
+						Group group = match.Groups["literal"];
+						if (group.Success)
+						{
+							enumLiterals = group.Captures.Cast<Capture>().Select(c => c.Value).ToList();
+						}
+					}
 
-        public IPrimaryKeyColumn PrimaryKeyColumn { get; set; }
-        public List<IUniqueKeyColumn> UniqueKeyColumns { get; set; }
-        public List<IForeignKeyColumn> ForeignKeyColumns { get; set; }
-        public List<IForeignKeyColumn> PrimaryForeignKeyColumns { get; set; }
-        public List<IIndexColumn> IndexColumns { get; set; }
-        public IComplexTypeTableColumn ComplexTypeTableColumn { get; set; }
+					enumLiterals ??= [];
+				}
 
-        public string ColumnDefault { get { return COLUMN_DEFAULT; } }
+				return enumLiterals;
+			}
+		}
 
-        public string ToFullString()
-        {
-            return
-                ColumnName + " (" +
-                (PrimaryKeyColumn != null ? "PK, " : string.Empty) +
-                (ForeignKeyColumns.HasAny() ? "FK, " : string.Empty) +
-                (IsComputed ? "Generated, " : string.Empty) +
-                DATA_TYPE + Precision + (IsUnsigned ? " unsigned" : string.Empty) + ", " + (IsNullable ? "null" : "not null") + ")";
-        }
-
-        #endregion
-
-        #region IEnumColumn
-
-        public IColumn Column { get { return this; } }
-        public bool IsEnumDataType { get { return DATA_TYPE.ToLower() == "enum"; } }
-        public bool IsSetDataType { get { return DATA_TYPE.ToLower() == "set"; } }
-
-        private static readonly Regex enumLiteralsRegex = new Regex(@"^(?i:enum|set)\s*\((?:\s*,?\s*'(?<literal>.*?)')+\)$", RegexOptions.Compiled);
-
-        private List<string> enumLiterals;
-        public List<string> EnumLiterals
-        {
-            get
-            {
-                if (enumLiterals == null)
-                {
-                    Match match = enumLiteralsRegex.Match(COLUMN_TYPE);
-                    if (match.Success)
-                    {
-                        Group group = match.Groups["literal"];
-                        if (group.Success)
-                            enumLiterals = group.Captures.Cast<Capture>().Select(c => c.Value).ToList();
-                    }
-
-                    if (enumLiterals == null)
-                        enumLiterals = new List<string>();
-                }
-
-                return enumLiterals;
-            }
-        }
-
-        #endregion
-
-        #region IDbObject
-
-        public override string ToString()
-        {
-            return ColumnName + " (" + DATA_TYPE + Precision + (IsUnsigned ? " unsigned" : string.Empty) + ", " + (IsNullable ? "null" : "not null") + ")";
-        }
-
-        #endregion
-    }
+		public override string ToString()
+		{
+			return ColumnName + " (" + DATA_TYPE + Precision + (IsUnsigned ? " unsigned" : String.Empty) + ", " + (IsNullable ? "null" : "not null") + ")";
+		}
+	}
 }

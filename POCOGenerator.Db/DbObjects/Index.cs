@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    internal sealed class Index : IIndex
+	internal sealed class Index : IIndex
     {
         public string Name { get; set; }
         public ITable Table { get; set; } // can be IView

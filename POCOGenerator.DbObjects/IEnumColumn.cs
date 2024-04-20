@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace POCOGenerator.DbObjects
 {
-    public interface IEnumColumn
+	public interface IEnumColumn
     {
         IColumn Column { get; }
         bool IsEnumDataType { get; }

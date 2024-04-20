@@ -1,18 +1,16 @@
-﻿using System;
-
-namespace POCOGenerator.Objects
+﻿namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a column of a database index.</summary>
-    public abstract class IndexColumn
+	/// <summary>Represents a column of a database index.</summary>
+	public abstract class IndexColumn
     {
-        private protected readonly POCOGenerator.DbObjects.IIndexColumn indexColumn;
+        private protected readonly DbObjects.IIndexColumn indexColumn;
 
-        internal IndexColumn(POCOGenerator.DbObjects.IIndexColumn indexColumn)
+        internal IndexColumn(DbObjects.IIndexColumn indexColumn)
         {
             this.indexColumn = indexColumn;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IIndexColumn indexColumn)
+        internal bool InternalEquals(DbObjects.IIndexColumn indexColumn)
         {
             return this.indexColumn == indexColumn;
         }

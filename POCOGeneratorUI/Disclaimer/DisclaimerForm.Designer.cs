@@ -1,6 +1,6 @@
-﻿namespace POCOGeneratorUI.Disclaimer
+namespace POCOGeneratorUI.Disclaimer
 {
-    partial class DisclaimerForm
+	sealed partial class DisclaimerForm
     {
         /// <summary>
         /// Required designer variable.

@@ -1,24 +1,24 @@
-﻿using System;
+using System;
 using System.Data;
+
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.SQLServer.DbObjects
 {
-    internal class ProcedureParameter : IProcedureParameter
-    {
-        #region Database Properties
+	internal class ProcedureParameter
+		: IProcedureParameter
+	{
+		public int? ordinal_position { get; set; }
+		public string parameter_mode { get; set; }
+		public string is_result { get; set; }
+		public string parameter_name { get; set; }
+		public string data_type { get; set; }
+		public int? character_maximum_length { get; set; }
+		public byte? numeric_precision { get; set; }
+		public int? numeric_scale { get; set; }
+		public short? datetime_precision { get; set; }
 
-        public int? ordinal_position { get; set; }
-        public string parameter_mode { get; set; }
-        public string is_result { get; set; }
-        public string parameter_name { get; set; }
-        public string data_type { get; set; }
-        public int? character_maximum_length { get; set; }
-        public byte? numeric_precision { get; set; }
-        public int? numeric_scale { get; set; }
-        public short? datetime_precision { get; set; }
-
-        /* not in use. reduce memory.
+		/* not in use. reduce memory.
         public string specific_catalog { get; set; }
         public string specific_schema { get; set; }
         public string specific_name { get; set; }
@@ -35,110 +35,89 @@ namespace POCOGenerator.SQLServer.DbObjects
         public short? interval_precision { get; set; }
         */
 
-        #endregion
+		public IProcedure Procedure { get; set; }
+		public string ParameterName => parameter_name;
+		public string ParameterDataType => data_type;
+		public bool ParameterIsUnsigned => false;
+		public int? ParameterOrdinal => ordinal_position;
+		public int? ParameterSize => character_maximum_length;
+		public byte? ParameterPrecision => numeric_precision;
+		public int? ParameterScale => numeric_scale;
+		public int? ParameterDateTimePrecision => datetime_precision;
+		public string ParameterMode => parameter_mode;
 
-        #region IProcedureParameter
+		public ParameterDirection ParameterDirection =>
+			ParameterMode.ToLower(null) switch {
+				"in" => ParameterDirection.Input,
+				"inout" => ParameterDirection.InputOutput,
+				"out" => ParameterDirection.Output,
+				_ => ParameterDirection.Input
+			};
 
-        public IProcedure Procedure { get; set; }
-        public string ParameterName { get { return parameter_name; } }
-        public string ParameterDataType { get { return data_type; } }
-        public bool ParameterIsUnsigned { get { return false; } }
-        public int? ParameterOrdinal { get { return ordinal_position; } }
-        public int? ParameterSize { get { return character_maximum_length; } }
-        public byte? ParameterPrecision { get { return numeric_precision; } }
-        public int? ParameterScale { get { return numeric_scale; } }
-        public int? ParameterDateTimePrecision { get { return datetime_precision; } }
-        public string ParameterMode { get { return parameter_mode; } }
+		public bool IsResult => String.Equals(is_result, "YES", StringComparison.CurrentCultureIgnoreCase);
 
-        public ParameterDirection ParameterDirection
-        {
-            get
-            {
-                if (string.Compare(ParameterMode, "IN", true) == 0)
-                    return ParameterDirection.Input;
-                else if (string.Compare(ParameterMode, "INOUT", true) == 0)
-                    return ParameterDirection.InputOutput;
-                else if (string.Compare(ParameterMode, "OUT", true) == 0)
-                    return ParameterDirection.Output;
-                return ParameterDirection.Input;
-            }
-        }
+		public string Description { get; set; }
 
-        public bool IsResult { get { return string.Compare(is_result, "YES", true) == 0; } }
+		public override string ToString()
+		{
+			return IsResult
+				? "Returns " + DataTypeDisplay + Precision
+				: ParameterName + " (" + DataTypeDisplay + Precision + ", " + Direction + ")";
+		}
 
-        #endregion
+		public string DataTypeDisplay => ParameterDataType == "xml" ? "XML" : ParameterDataType;
 
-        #region IDescription
+		public string Precision {
+			get {
+				string precision = null;
 
-        public string Description { get; set; }
+				string dataType = ParameterDataType.ToLower();
 
-        #endregion
+				if (dataType is "binary" or "varbinary" or "char" or "nchar" or "nvarchar" or "varchar")
+				{
+					if (ParameterSize == -1)
+					{
+						precision = "(max)";
+					}
+					else if (ParameterSize > 0)
+					{
+						precision = "(" + ParameterSize + ")";
+					}
+				}
+				else if (dataType is "decimal" or "numeric")
+				{
+					precision = "(" + ParameterPrecision + "," + ParameterScale + ")";
+				}
+				else if (dataType is "datetime2" or "datetimeoffset" or "time")
+				{
+					precision = "(" + ParameterDateTimePrecision + ")";
+				}
+				else if (dataType == "xml")
+				{
+					precision = "(.)";
+				}
 
-        #region IDbObject
+				return precision;
+			}
+		}
 
-        public override string ToString()
-        {
-            if (IsResult)
-                return "Returns " + DataTypeDisplay + Precision;
-            return ParameterName + " (" + DataTypeDisplay + Precision + ", " + Direction + ")";
-        }
+		public string Direction {
+			get {
+				if (String.Compare(ParameterMode, "IN", true) == 0)
+				{
+					return "Input";
+				}
+				else if (String.Compare(ParameterMode, "INOUT", true) == 0)
+				{
+					return "Input/Output";
+				}
+				else if (String.Compare(ParameterMode, "OUT", true) == 0)
+				{
+					return "Output";
+				}
 
-        public string DataTypeDisplay
-        {
-            get
-            {
-                if (ParameterDataType == "xml")
-                    return "XML";
-                return ParameterDataType;
-            }
-        }
-        
-        public string Precision
-        {
-            get
-            {
-                string precision = null;
-
-                string dataType = ParameterDataType.ToLower();
-
-                if (dataType == "binary" || dataType == "varbinary" || dataType == "char" || dataType == "nchar" || dataType == "nvarchar" || dataType == "varchar")
-                {
-                    if (ParameterSize == -1)
-                        precision = "(max)";
-                    else if (ParameterSize > 0)
-                        precision = "(" + ParameterSize + ")";
-                }
-                else if (dataType == "decimal" || dataType == "numeric")
-                {
-                    precision = "(" + ParameterPrecision + "," + ParameterScale + ")";
-                }
-                else if (dataType == "datetime2" || dataType == "datetimeoffset" || dataType == "time")
-                {
-                    precision = "(" + ParameterDateTimePrecision + ")";
-                }
-                else if (dataType == "xml")
-                {
-                    precision = "(.)";
-                }
-
-                return precision;
-            }
-        }
-
-        public string Direction
-        {
-            get
-            {
-                if (string.Compare(ParameterMode, "IN", true) == 0)
-                    return "Input";
-                else if (string.Compare(ParameterMode, "INOUT", true) == 0)
-                    return "Input/Output";
-                else if (string.Compare(ParameterMode, "OUT", true) == 0)
-                    return "Output";
-                return null;
-            }
-        }
-
-        #endregion
-    }
+				return null;
+			}
+		}
+	}
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using POCOGenerator.Db.DbObjects;
+﻿using POCOGenerator.Db.DbObjects;
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.SQLServer.DbObjects
 {
-    internal class SystemObject : SystemObjectBase
+	internal class SystemObject : SystemObjectBase
     {
     }
 

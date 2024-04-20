@@ -9,4 +9,7 @@
     <ProjectReference Include="..\POCOGenerator.MySQL\POCOGenerator.MySQL.csproj" />
     <ProjectReference Include="..\POCOGenerator.SQLServer\POCOGenerator.SQLServer.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

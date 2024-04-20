@@ -1,20 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a column of a database primary key.</summary>
-    public sealed class PrimaryKeyColumn
+	/// <summary>Represents a column of a database primary key.</summary>
+	public sealed class PrimaryKeyColumn
     {
-        private readonly POCOGenerator.DbObjects.IPrimaryKeyColumn primaryKeyColumn;
+        private readonly DbObjects.IPrimaryKeyColumn primaryKeyColumn;
 
-        internal PrimaryKeyColumn(POCOGenerator.DbObjects.IPrimaryKeyColumn primaryKeyColumn, PrimaryKey primaryKey)
+        internal PrimaryKeyColumn(DbObjects.IPrimaryKeyColumn primaryKeyColumn, PrimaryKey primaryKey)
         {
             this.primaryKeyColumn = primaryKeyColumn;
             this.PrimaryKey = primaryKey;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IPrimaryKeyColumn primaryKeyColumn)
+        internal bool InternalEquals(DbObjects.IPrimaryKeyColumn primaryKeyColumn)
         {
             return this.primaryKeyColumn == primaryKeyColumn;
         }
@@ -31,9 +30,11 @@ namespace POCOGenerator.Objects
             get
             {
                 if (this.tableColumn == null)
-                    this.tableColumn = this.PrimaryKey.Table.TableColumns.First(c => c.InternalEquals(this.primaryKeyColumn.TableColumn));
+				{
+					this.tableColumn = this.PrimaryKey.Table.TableColumns.First(c => c.InternalEquals(this.primaryKeyColumn.TableColumn));
+				}
 
-                return this.tableColumn;
+				return this.tableColumn;
             }
         }
 

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.Versioning;
+
 using Microsoft.Data.Sql;
 using Microsoft.Win32;
+
 using Rachel.Core.Win32;
+
 using RegistryHive = Rachel.Core.Win32.RegistryHive;
 
 namespace Rachel.Data.Sql
@@ -19,7 +22,7 @@ namespace Rachel.Data.Sql
 	[SupportedOSPlatform("windows")]
 	public sealed class InstanceLocator
 	{
-		private List<string> sqlInstances = [];
+		private readonly List<string> sqlInstances = [];
 
 		private void collectInstances()
 		{
@@ -30,7 +33,7 @@ namespace Rachel.Data.Sql
 				foreach (DataRow row in dataTable.Rows)
 				{
 					string instanceName =
-						string.Format(@"{0}\{1}", row["ServerName"].ToString(), row["InstanceName"].ToString());
+						String.Format(@"{0}\{1}", row["ServerName"].ToString(), row["InstanceName"].ToString());
 
 					//Do not add the local instance, we will add it in the next section. Otherwise, duplicated!
 					if (!sqlInstances.Contains(instanceName) && !instanceName.Contains(Environment.MachineName))

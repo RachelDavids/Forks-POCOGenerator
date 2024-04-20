@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace POCOGenerator.Objects
+﻿namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database user-defined table type column.</summary>
-    public sealed class TVPColumn : IDbColumn
+	/// <summary>Represents a database user-defined table type column.</summary>
+	public sealed class TVPColumn : IDbColumn
     {
-        private readonly POCOGenerator.DbObjects.ITVPColumn tvpColumn;
+        private readonly DbObjects.ITVPColumn tvpColumn;
 
-        internal TVPColumn(POCOGenerator.DbObjects.ITVPColumn tvpColumn, TVP tvp)
+        internal TVPColumn(DbObjects.ITVPColumn tvpColumn, TVP tvp)
         {
             this.tvpColumn = tvpColumn;
             this.TVP = tvp;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.ITVPColumn tvpColumn)
+        internal bool InternalEquals(DbObjects.ITVPColumn tvpColumn)
         {
             return this.tvpColumn == tvpColumn;
         }

@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.Db.DbObjects;
+﻿using POCOGenerator.Db.DbObjects;
 
 namespace POCOGenerator.MySQL.DbObjects
 {
-    internal class MySQL : ServerBase
+	internal class MySQL : ServerBase
     {
         public MySQL()
         {

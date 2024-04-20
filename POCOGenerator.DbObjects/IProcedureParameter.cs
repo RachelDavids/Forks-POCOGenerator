@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace POCOGenerator.DbObjects
 {
-    public interface IProcedureParameter : IDbObject, IDescription
+	public interface IProcedureParameter : IDbObject, IDescription
     {
         IProcedure Procedure { get; set; }
         string ParameterName { get; }

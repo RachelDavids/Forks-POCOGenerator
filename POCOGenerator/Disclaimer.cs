@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace POCOGenerator
+﻿namespace POCOGenerator
 {
-    /// <summary>Provides a disclaimer message about POCO Generator.</summary>
-    public static class Disclaimer
+	/// <summary>Provides a disclaimer message about POCO Generator.</summary>
+	public static class Disclaimer
     {
         /// <summary>The disclaimer message about POCO Generator.</summary>
         public static readonly string Message =

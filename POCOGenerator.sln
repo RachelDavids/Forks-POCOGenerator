@@ -6,7 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{44EA78
 	ProjectSection(SolutionItems) = preProject
 		Common\Dependencies.txt = Common\Dependencies.txt
 		Common\Disclaimer.txt = Common\Disclaimer.txt
-		Common\SolutionAssemblyInfo.cs = Common\SolutionAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POCOGenerator", "POCOGenerator\POCOGenerator.csproj", "{8E9F1307-4DAD-4F02-97F0-C0BCE59B1B86}"
@@ -167,6 +166,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FastColoredTextBoxDemo", "Samples\FastColoredTextBox\FastColoredTextBoxDemo\FastColoredTextBoxDemo.csproj", "{48744FA4-1A1B-4727-8230-C77B68C850D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FastColoredTextBox", "FastColoredTextBox", "{3AFA66BB-76DD-4603-B488-7D6AEFE3D997}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AnalyzerConfig", "AnalyzerConfig", "{AE61AD93-674D-4273-AFB8-7BCCCB9EC9BE}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\AnalyzerConfig\codestyle.globalconfig = Shared\AnalyzerConfig\codestyle.globalconfig
+		Shared\AnalyzerConfig\roslyn.globalconfig = Shared\AnalyzerConfig\roslyn.globalconfig
+		Shared\AnalyzerConfig\xtended.globalconfig = Shared\AnalyzerConfig\xtended.globalconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -362,6 +368,7 @@ Global
 		{5A47EF8A-0805-4A4F-B93C-51A527AC0FFB} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
 		{48744FA4-1A1B-4727-8230-C77B68C850D4} = {3AFA66BB-76DD-4603-B488-7D6AEFE3D997}
 		{3AFA66BB-76DD-4603-B488-7D6AEFE3D997} = {17F0A88F-B277-4EC6-9B82-943331DCC804}
+		{AE61AD93-674D-4273-AFB8-7BCCCB9EC9BE} = {18B7CFAA-EFB0-4CD4-807E-70CA08194953}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B151279D-E4E7-4770-96DC-B5BBC39AA6B6}

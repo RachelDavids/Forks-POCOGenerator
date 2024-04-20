@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IColumn : IDbObject
+	public interface IColumn : IDbObject
     {
         string ColumnName { get; }
         int? ColumnOrdinal { get; }

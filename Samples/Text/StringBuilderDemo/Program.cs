@@ -1,57 +1,69 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
+
 using POCOGenerator;
 
 namespace StringBuilderDemo
 {
-    class Program
-    {
-        static void Main()
-        {
-            StringBuilder stringBuilder = new StringBuilder();
+	internal static class Program
+	{
+		private static void Main()
+		{
+			StringBuilder stringBuilder = new();
 
-            IGenerator generator = GeneratorFactory.GetGenerator(stringBuilder);
-            try { generator.Settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt"); } catch { }
-            if (string.IsNullOrEmpty(generator.Settings.Connection.ConnectionString))
-                generator.Settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
-            generator.Settings.DatabaseObjects.Tables.IncludeAll = true;
-            generator.Settings.POCO.CommentsWithoutNull = true;
-            generator.Settings.ClassName.IncludeSchema = true;
-            generator.Settings.ClassName.SchemaSeparator = "_";
-            generator.Settings.ClassName.IgnoreDboSchema = true;
+			IGenerator generator = GeneratorFactory.GetGenerator(stringBuilder);
+			try { generator.Settings.Connection.ConnectionString = File.ReadAllText("ConnectionString.txt"); } catch { }
+			if (String.IsNullOrEmpty(generator.Settings.Connection.ConnectionString))
+			{
+				generator.Settings.Connection.ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=AdventureWorks2014;Integrated Security=True";
+			}
 
-            GeneratorResults results = generator.Generate();
+			generator.Settings.DatabaseObjects.Tables.IncludeAll = true;
+			generator.Settings.POCO.CommentsWithoutNull = true;
+			generator.Settings.ClassName.IncludeSchema = true;
+			generator.Settings.ClassName.SchemaSeparator = "_";
+			generator.Settings.ClassName.IgnoreDboSchema = true;
 
-            if (results == GeneratorResults.None)
-                Console.WriteLine(stringBuilder.ToString());
+			GeneratorResults results = generator.Generate();
 
-            PrintError(results, generator.Error);
+			if (results == GeneratorResults.None)
+			{
+				Console.WriteLine(stringBuilder.ToString());
+			}
 
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue . . .");
-            Console.ReadKey(true);
-        }
+			PrintError(results, generator.Error);
 
-        private static void PrintError(GeneratorResults results, Exception Error)
-        {
-            bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
-            bool isWarning = (results & GeneratorResults.Warning) == GeneratorResults.Warning;
+			Console.WriteLine();
+			Console.WriteLine("Press any key to continue . . .");
+			Console.ReadKey(true);
+		}
 
-            if (results != GeneratorResults.None)
-                Console.WriteLine();
+		private static void PrintError(GeneratorResults results, Exception Error)
+		{
+			bool isError = (results & GeneratorResults.Error) == GeneratorResults.Error;
+			bool isWarning = (results & GeneratorResults.Warning) == GeneratorResults.Warning;
 
-            if (isError)
-                Console.WriteLine("Error Result: {0}", results);
-            else if (isWarning)
-                Console.WriteLine("Warning Result: {0}", results);
+			if (results != GeneratorResults.None)
+			{
+				Console.WriteLine();
+			}
 
-            if (Error != null)
-            {
-                Console.WriteLine("Error: {0}", Error.Message);
-                Console.WriteLine("Error Stack Trace:");
-                Console.WriteLine(Error.StackTrace);
-            }
-        }
-    }
+			if (isError)
+			{
+				Console.WriteLine("Error Result: {0}", results);
+			}
+			else if (isWarning)
+			{
+				Console.WriteLine("Warning Result: {0}", results);
+			}
+
+			if (Error != null)
+			{
+				Console.WriteLine("Error: {0}", Error.Message);
+				Console.WriteLine("Error Stack Trace:");
+				Console.WriteLine(Error.StackTrace);
+			}
+		}
+	}
 }

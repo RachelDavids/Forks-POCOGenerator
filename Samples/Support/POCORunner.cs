@@ -1,32 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using POCOGenerator;
+
 using Rachel.Data.Sql;
 
 namespace Samples.Support
 {
-	public class POCORunner
+	public class POCORunner(Func<IGenerator> factory, string targetDbName)
 	{
-		private readonly Func<IGenerator> _generatorFactory;
-		private readonly string _targetDbName;
 		public IGenerator Generator { get; private set; }
 		public ISettings GeneratorSettings => Generator.Settings;
-
-		public POCORunner(Func<IGenerator> factory, string targetDbName)
-		{
-			_generatorFactory = factory;
-			_targetDbName = targetDbName;
-		}
 
 		public IGenerator Initialize() => Initialize(ApplyDefaults);
 		public IGenerator Initialize(Action<ISettings> settingsUpdate)
 		{
 			ArgumentNullException.ThrowIfNull(settingsUpdate);
-			IGenerator generator = _generatorFactory();
+			IGenerator generator = factory();
 			ISettings settings = generator.Settings;
 			IConnection connection = settings.Connection;
-			connection.ConnectionString = FindLocalDb(_targetDbName);
+			connection.ConnectionString = FindLocalDb(targetDbName);
 			settingsUpdate.Invoke(settings);
 			Generator = generator;
 			return generator;

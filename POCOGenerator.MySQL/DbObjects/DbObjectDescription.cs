@@ -1,10 +1,9 @@
-﻿using System;
-using POCOGenerator.Db.DbObjects;
+﻿using POCOGenerator.Db.DbObjects;
 using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.MySQL.DbObjects
 {
-    internal class DbObjectDescription : DbObjectDescriptionBase
+	internal class DbObjectDescription : DbObjectDescriptionBase
     {
     }
 

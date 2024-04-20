@@ -9,4 +9,7 @@
 		<ProjectReference Include="..\POCOGenerator.POCOWriters\POCOGenerator.POCOWriters.csproj" />
 		<ProjectReference Include="..\POCOGenerator\POCOGenerator.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

@@ -210,7 +210,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 
 		private void SetDatabaseControls()
 		{
-			bool enabled = string.IsNullOrEmpty(ddlServers.Text) == false;
+			bool enabled = !string.IsNullOrEmpty(ddlServers.Text);
 			ddlDatabases.Enabled = enabled;
 			lblDatabase.Enabled = enabled;
 			btnRefreshDatabases.Enabled = enabled;
@@ -303,7 +303,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 					{
 						int serverIndex = -1;
 						string currentServer = ddlServers.Text;
-						if (string.IsNullOrEmpty(currentServer) == false)
+						if (!string.IsNullOrEmpty(currentServer))
 						{
 							for (int i = 0; i < servers.Count; i++)
 							{
@@ -328,8 +328,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 						}
 						else
 						{
-							ddlServers.Text = string.IsNullOrEmpty(currentServer) == false
-												  ? currentServer
+							ddlServers.Text = !string.IsNullOrEmpty(currentServer) ? currentServer
 												  : null;
 						}
 
@@ -376,7 +375,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 				{
 					int databaseIndex = -1;
 					string currentDatabase = ddlDatabases.Text;
-					if (string.IsNullOrEmpty(currentDatabase) == false)
+					if (!string.IsNullOrEmpty(currentDatabase))
 					{
 						for (int i = 0; i < databases.Length; i++)
 						{
@@ -401,7 +400,7 @@ namespace POCOGeneratorUI.ConnectionDialog
 					}
 					else
 					{
-						ddlDatabases.Text = string.IsNullOrEmpty(currentDatabase) == false ? currentDatabase : null;
+						ddlDatabases.Text = !string.IsNullOrEmpty(currentDatabase) ? currentDatabase : null;
 					}
 
 					txtConnectionString.Text = ConnectionString;

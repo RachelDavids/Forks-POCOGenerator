@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.DbObjects;
+﻿using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    internal sealed class ForeignKeyColumn : IForeignKeyColumn
+	internal sealed class ForeignKeyColumn : IForeignKeyColumn
     {
         public IForeignKey ForeignKey { get; set; }
 

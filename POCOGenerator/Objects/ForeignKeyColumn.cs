@@ -1,20 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a column of a database foreign key.</summary>
-    public sealed class ForeignKeyColumn
+	/// <summary>Represents a column of a database foreign key.</summary>
+	public sealed class ForeignKeyColumn
     {
-        private readonly POCOGenerator.DbObjects.IForeignKeyColumn foreignKeyColumn;
+        private readonly DbObjects.IForeignKeyColumn foreignKeyColumn;
 
-        internal ForeignKeyColumn(POCOGenerator.DbObjects.IForeignKeyColumn foreignKeyColumn, ForeignKey foreignKey)
+        internal ForeignKeyColumn(DbObjects.IForeignKeyColumn foreignKeyColumn, ForeignKey foreignKey)
         {
             this.foreignKeyColumn = foreignKeyColumn;
             this.ForeignKey = foreignKey;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IForeignKeyColumn foreignKeyColumn)
+        internal bool InternalEquals(DbObjects.IForeignKeyColumn foreignKeyColumn)
         {
             return this.foreignKeyColumn == foreignKeyColumn;
         }
@@ -31,9 +30,11 @@ namespace POCOGenerator.Objects
             get
             {
                 if (this.foreignTableColumn == null)
-                    this.foreignTableColumn = this.ForeignKey.ForeignTable.TableColumns.First(c => c.InternalEquals(this.foreignKeyColumn.ForeignTableColumn));
+				{
+					this.foreignTableColumn = this.ForeignKey.ForeignTable.TableColumns.First(c => c.InternalEquals(this.foreignKeyColumn.ForeignTableColumn));
+				}
 
-                return this.foreignTableColumn;
+				return this.foreignTableColumn;
             }
         }
 
@@ -45,12 +46,16 @@ namespace POCOGenerator.Objects
             get
             {
                 if (this.foreignKeyColumn.PrimaryTableColumn == null)
-                    return null;
+				{
+					return null;
+				}
 
-                if (this.primaryTableColumn == null)
-                    this.primaryTableColumn = this.ForeignKey.PrimaryTable.TableColumns.First(c => c.InternalEquals(this.foreignKeyColumn.PrimaryTableColumn));
+				if (this.primaryTableColumn == null)
+				{
+					this.primaryTableColumn = this.ForeignKey.PrimaryTable.TableColumns.First(c => c.InternalEquals(this.foreignKeyColumn.PrimaryTableColumn));
+				}
 
-                return this.primaryTableColumn;
+				return this.primaryTableColumn;
             }
         }
 

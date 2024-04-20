@@ -5,10 +5,4 @@
 	<PropertyGroup>
 		<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
 	</PropertyGroup>
-
-	<!--<ItemGroup>
-		<Compile Include="$(SolutionDir)\Common\SolutionAssemblyInfo.cs">
-			<Link>Properties\SolutionAssemblyInfo.cs</Link>
-		</Compile>
-	</ItemGroup>-->
 </Project>

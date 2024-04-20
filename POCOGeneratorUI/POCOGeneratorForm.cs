@@ -14,8 +14,6 @@ namespace POCOGeneratorUI
 	public sealed partial class POCOGeneratorForm
 		: Form
 	{
-		#region Form
-
 		public POCOGeneratorForm()
 		{
 			InitializeComponent();
@@ -25,26 +23,33 @@ namespace POCOGeneratorUI
 
 		private bool hasUISettings;
 
-		private void POCOGeneratorForm_Load(object sender, EventArgs e) => hasUISettings = LoadUISettings();
+		private void POCOGeneratorForm_Load(object sender, EventArgs e)
+		{
+			hasUISettings = LoadUISettings();
+		}
 
 		private void POCOGeneratorForm_Shown(object sender, EventArgs e)
 		{
-			if (hasUISettings == false)
+			if (!hasUISettings)
 			{
 				ShowDisclaimer();
 			}
 		}
 
-		private void POCOGeneratorForm_FormClosing(object sender, FormClosingEventArgs e) => SerializeUISettings();
+		private void POCOGeneratorForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			SerializeUISettings();
+		}
 
-		private void btnClose_Click(object sender, EventArgs e) => Close();
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			Close();
+		}
 
-		private void GroupBox_Paint(object sender, PaintEventArgs e) =>
+		private void GroupBox_Paint(object sender, PaintEventArgs e)
+		{
 			(sender as GroupBox).DrawGroupBox(e.Graphics, BackColor, Color.Black, SystemColors.ActiveBorder, FontStyle.Bold);
-
-		#endregion
-
-		#region Generator
+		}
 
 		private IGenerator GetGenerator(RDBMS rdbms, string connectionString)
 		{
@@ -57,13 +62,15 @@ namespace POCOGeneratorUI
 											  dbObjectsForm_IsEnableViews,
 											  dbObjectsForm_IsEnableProcedures,
 											  dbObjectsForm_IsEnableFunctions,
-											  dbObjectsForm_IsEnableTVPs
-											 );
+											  dbObjectsForm_IsEnableTVPs);
 
 			if (dbObjectsForm.ShowDialog(this) == DialogResult.OK)
 			{
-				if (dbObjectsForm.IsEnableTables || dbObjectsForm.IsEnableViews || dbObjectsForm.IsEnableProcedures ||
-					dbObjectsForm.IsEnableFunctions || dbObjectsForm.IsEnableTVPs)
+				if (dbObjectsForm.IsEnableTables
+					|| dbObjectsForm.IsEnableViews
+					|| dbObjectsForm.IsEnableProcedures
+					|| dbObjectsForm.IsEnableFunctions
+					|| dbObjectsForm.IsEnableTVPs)
 				{
 					IGenerator generator = GeneratorWinFormsFactory.GetGenerator(txtPocoEditor);
 					ISettings settings = generator.Settings;
@@ -178,10 +185,6 @@ namespace POCOGeneratorUI
 			poco.Tab = "    ";
 		}
 
-		#endregion
-
-		#region Controls Appearance
-
 		private Dictionary<Control, Point> controlsOriginalLocation;
 
 		private void GetControlsOriginalLocation()
@@ -215,9 +218,9 @@ namespace POCOGeneratorUI
 
 			chkIgnoreDboSchema.Visible = isSupportSchema;
 
-			if (isSupportSchema == false)
+			if (!isSupportSchema)
 			{
-				txtSchemaSeparator.Text = string.Empty;
+				txtSchemaSeparator.Text = String.Empty;
 			}
 
 			lblSchemaSeparator.Visible = isSupportSchema;
@@ -257,10 +260,6 @@ namespace POCOGeneratorUI
 			}
 		}
 
-		#endregion
-
-		#region Enable/Disable Server Tree
-
 		private void EnableServerTree()
 		{
 			trvServer.BeforeCollapse -= trvServer_DisableEvent;
@@ -281,13 +280,16 @@ namespace POCOGeneratorUI
 			trvServer.AfterSelect -= trvServer_AfterSelect;
 		}
 
-		private void trvServer_DisableEvent(object sender, TreeViewCancelEventArgs e) => e.Cancel = true;
+		private void trvServer_DisableEvent(object sender, TreeViewCancelEventArgs e)
+		{
+			e.Cancel = true;
+		}
 
 		private bool isServerTreeAfterCheckEnabled = true;
 
 		private void EnableServerTreeAfterCheck()
 		{
-			if (isServerTreeAfterCheckEnabled == false)
+			if (!isServerTreeAfterCheckEnabled)
 			{
 				trvServer.AfterCheck += trvServer_AfterCheck;
 				isServerTreeAfterCheckEnabled = true;
@@ -302,10 +304,6 @@ namespace POCOGeneratorUI
 				isServerTreeAfterCheckEnabled = false;
 			}
 		}
-
-		#endregion
-
-		#region Server Tree Check Boxes
 
 		private void trvServer_DrawNode(object sender, DrawTreeNodeEventArgs e)
 		{
@@ -322,7 +320,7 @@ namespace POCOGeneratorUI
 					Function or
 					TVP);
 
-			if (isDrawCheckBox == false)
+			if (!isDrawCheckBox)
 			{
 				e.Node.HideCheckBox();
 			}
@@ -341,7 +339,7 @@ namespace POCOGeneratorUI
 		{
 			if (e.Node.Tag is not null and Database)
 			{
-				if (e.Node.IsExpanded == false)
+				if (!e.Node.IsExpanded)
 				{
 					e.Node.Expand();
 					Application.DoEvents();
@@ -349,7 +347,7 @@ namespace POCOGeneratorUI
 
 				foreach (TreeNode node in e.Node.Nodes)
 				{
-					if (node.IsExpanded == false)
+					if (!node.IsExpanded)
 					{
 						node.Expand();
 						Application.DoEvents();
@@ -360,7 +358,7 @@ namespace POCOGeneratorUI
 			}
 			else if (e.Node.Tag is not null and IEnumerable<Table>)
 			{
-				if (e.Node.IsExpanded == false)
+				if (!e.Node.IsExpanded)
 				{
 					e.Node.Expand();
 					Application.DoEvents();
@@ -370,7 +368,7 @@ namespace POCOGeneratorUI
 			}
 			else if (e.Node.Tag is not null and IEnumerable<POCOGenerator.Objects.View>)
 			{
-				if (e.Node.IsExpanded == false)
+				if (!e.Node.IsExpanded)
 				{
 					e.Node.Expand();
 					Application.DoEvents();
@@ -380,7 +378,7 @@ namespace POCOGeneratorUI
 			}
 			else if (e.Node.Tag is not null and IEnumerable<Procedure>)
 			{
-				if (e.Node.IsExpanded == false)
+				if (!e.Node.IsExpanded)
 				{
 					e.Node.Expand();
 					Application.DoEvents();
@@ -390,7 +388,7 @@ namespace POCOGeneratorUI
 			}
 			else if (e.Node.Tag is not null and IEnumerable<Function>)
 			{
-				if (e.Node.IsExpanded == false)
+				if (!e.Node.IsExpanded)
 				{
 					e.Node.Expand();
 					Application.DoEvents();
@@ -400,7 +398,7 @@ namespace POCOGeneratorUI
 			}
 			else if (e.Node.Tag is not null and IEnumerable<TVP>)
 			{
-				if (e.Node.IsExpanded == false)
+				if (!e.Node.IsExpanded)
 				{
 					e.Node.Expand();
 					Application.DoEvents();
@@ -465,8 +463,8 @@ namespace POCOGeneratorUI
 		{
 			if (isCheckedDatabase)
 			{
-				if (isCheckedTables == false || isCheckedViews == false || isCheckedProcedures == false ||
-					isCheckedFunctions == false || isCheckedTVPs == false)
+				if (!isCheckedTables || !isCheckedViews || !isCheckedProcedures ||
+!isCheckedFunctions || !isCheckedTVPs)
 				{
 					isCheckedDatabase = false;
 					DisableServerTreeAfterCheck();
@@ -541,7 +539,7 @@ namespace POCOGeneratorUI
 			{
 				foreach (TreeNode siblingNode in node.Parent.Nodes)
 				{
-					if (siblingNode.Checked == false)
+					if (!siblingNode.Checked)
 					{
 						return;
 					}
@@ -570,10 +568,6 @@ namespace POCOGeneratorUI
 			}
 		}
 
-		#endregion
-
-		#region Status Message
-
 		private void SetStatusMessage(string message)
 		{
 			toolStripStatusLabel.Text = message;
@@ -588,16 +582,15 @@ namespace POCOGeneratorUI
 			Application.DoEvents();
 		}
 
-		private void ClearStatus() => SetStatusMessage(string.Empty);
-
-		#endregion
-
-		#region Copy
+		private void ClearStatus()
+		{
+			SetStatusMessage(String.Empty);
+		}
 
 		private void btnCopy_Click(object sender, EventArgs e)
 		{
 			string text = txtPocoEditor.Text;
-			if (string.IsNullOrEmpty(text))
+			if (String.IsNullOrEmpty(text))
 			{
 				Clipboard.Clear();
 			}
@@ -610,7 +603,7 @@ namespace POCOGeneratorUI
 		private void copyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			string text = txtPocoEditor.SelectedText;
-			if (string.IsNullOrEmpty(text))
+			if (String.IsNullOrEmpty(text))
 			{
 				Clipboard.Clear();
 			}
@@ -627,7 +620,5 @@ namespace POCOGeneratorUI
 			txtPocoEditor.SelectAll();
 			txtPocoEditor.Focus();
 		}
-
-		#endregion
 	}
 }

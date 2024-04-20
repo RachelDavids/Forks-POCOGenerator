@@ -1,9 +1,8 @@
-﻿using System;
-using POCOGenerator.DbObjects;
+﻿using POCOGenerator.DbObjects;
 
 namespace POCOGenerator.Db.DbObjects
 {
-    public interface IInternalKey
+	public interface IInternalKey
     {
         string Name { get; }
         string Table_Name { get; }

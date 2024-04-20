@@ -1,52 +1,41 @@
-﻿namespace System.Collections.Generic
+namespace System.Collections.Generic
 {
-    internal sealed class CachedEnumerable<TSource, TResult> : IEnumerable<TResult>
-    {
-        private readonly IEnumerable<TSource> source;
-        private readonly Func<TSource, TResult> selector;
-        private readonly object syncCache = new object();
-        private Dictionary<TSource, TResult> cache;
+	internal sealed class CachedEnumerable<TSource, TResult>(IEnumerable<TSource> source,
+															 Func<TSource, TResult> selector)
+		: IEnumerable<TResult>
+	{
+		private readonly object _syncCache = new();
+		private Dictionary<TSource, TResult> _cache;
 
-        public CachedEnumerable(IEnumerable<TSource> source, Func<TSource, TResult> selector)
-        {
-            this.source = source;
-            this.selector = selector;
-        }
+		public IEnumerator<TResult> GetEnumerator()
+		{
+			if (source == null)
+			{
+				yield break;
+			}
 
-        #region IEnumerable<TResult> Members
+			lock (_syncCache)
+			{
+				_cache ??= [];
+			}
 
-        public IEnumerator<TResult> GetEnumerator()
-        {
-            if (source == null)
-                yield break;
+			foreach (TSource key in source)
+			{
+				TResult item;
+				lock (_cache)
+				{
+					if (!_cache.TryGetValue(key, out item))
+					{
+						_cache.Add(key, item = selector(key));
+					}
+				}
+				yield return item;
+			}
+		}
 
-            lock (syncCache)
-            {
-                if (cache == null)
-                    cache = new Dictionary<TSource, TResult>();
-            }
-
-            foreach (var key in source)
-            {
-                TResult item;
-                lock (cache)
-                {
-                    if (cache.TryGetValue(key, out item) == false)
-                        cache.Add(key, item = selector(key));
-                }
-                yield return item;
-            }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-    }
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+	}
 }

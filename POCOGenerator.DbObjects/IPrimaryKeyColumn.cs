@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IPrimaryKeyColumn : IDbObject
+	public interface IPrimaryKeyColumn : IDbObject
     {
         IPrimaryKey PrimaryKey { get; }
         ITableColumn TableColumn { get; }

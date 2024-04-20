@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface IForeignKeyColumn : IDbObject
+	public interface IForeignKeyColumn : IDbObject
     {
         IForeignKey ForeignKey { get; }
 

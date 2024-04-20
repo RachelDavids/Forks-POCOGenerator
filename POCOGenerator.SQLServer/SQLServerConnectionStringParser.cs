@@ -1,4 +1,4 @@
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using POCOGenerator.Db;
 
 namespace POCOGenerator.SQLServer
@@ -34,6 +34,7 @@ namespace POCOGenerator.SQLServer
 
 			using (SqlConnection connection = new(connectionString))
 			{
+#pragma warning disable CA1031 // Do not catch general exception types
 				try
 				{
 					connection.Open();
@@ -43,6 +44,7 @@ namespace POCOGenerator.SQLServer
 				{
 					return false;
 				}
+#pragma warning restore CA1031 // Do not catch general exception types
 			}
 		}
 	}

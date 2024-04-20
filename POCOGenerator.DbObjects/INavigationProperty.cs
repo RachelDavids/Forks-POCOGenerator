@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace POCOGenerator.DbObjects
+﻿namespace POCOGenerator.DbObjects
 {
-    public interface INavigationProperty : IDbObject
+	public interface INavigationProperty : IDbObject
     {
         IForeignKey ForeignKey { get; }
         bool IsFromForeignToPrimary { get; }

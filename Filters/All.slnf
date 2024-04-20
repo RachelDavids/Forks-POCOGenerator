@@ -1,0 +1,40 @@
+{
+  "solution": {
+    "path": "../POCOGenerator.sln",
+    "projects": [
+	"POCOGenerator\\POCOGenerator.csproj",
+	"Samples\\Console\\ConsoleColorDarkThemeDemo\\ConsoleColorDarkThemeDemo.csproj",
+	"Samples\\Console\\ConsoleColorDemo\\ConsoleColorDemo.csproj",
+	"Samples\\Console\\ConsoleDemo\\ConsoleDemo.csproj",
+	"Samples\\Events\\EventsDemo\\EventsDemo.csproj",
+	"Samples\\Events\\MultipleFilesDemo\\MultipleFilesDemo.csproj",
+	"Samples\\GeneratePOCOs\\GeneratePOCOsDemo\\GeneratePOCOsDemo.csproj",
+	"Samples\\SelectingObjects\\SelectingObjectsDemo\\SelectingObjectsDemo.csproj",
+	"Samples\\SelectingObjects\\SkipAndStopDemo\\SkipAndStopDemo.csproj",
+	"Samples\\SelectingObjects\\WildcardsDemo\\WildcardsDemo.csproj",
+	"Samples\\ServerTree\\DetailedServerTreeDemo\\DetailedServerTreeDemo.csproj",
+	"Samples\\ServerTree\\ServerTreeDemo\\ServerTreeDemo.csproj",
+	"Samples\\Stream\\FileStreamDemo\\FileStreamDemo.csproj",
+	"Samples\\Stream\\MemoryStreamDemo\\MemoryStreamDemo.csproj",
+	"Samples\\Text\\StringBuilderDemo\\StringBuilderDemo.csproj",
+	"Samples\\Text\\TextWriterDemo\\TextWriterDemo.csproj",
+	"Samples\\RichTextBox\\RichTextBoxDemo\\RichTextBoxDemo.csproj",
+	"POCOGeneratorUI\\POCOGeneratorUI.csproj",
+	"POCOGenerator.DbObjects\\POCOGenerator.DbObjects.csproj",
+	"POCOGenerator.Db\\POCOGenerator.Db.csproj",
+	"POCOGenerator.DbFactories\\POCOGenerator.DbFactories.csproj",
+	"POCOGenerator.DbHandlers\\POCOGenerator.DbHandlers.csproj",
+	"POCOGenerator.MySQL\\POCOGenerator.MySQL.csproj",
+	"POCOGenerator.POCOIterators\\POCOGenerator.POCOIterators.csproj",
+	"POCOGenerator.POCOWriters\\POCOGenerator.POCOWriters.csproj",
+	"POCOGenerator.SQLServer\\POCOGenerator.SQLServer.csproj",
+	"POCOGenerator.Utils\\POCOGenerator.Utils.csproj",
+	"Samples\\ServerTree\\NavigationPropertiesDemo\\NavigationPropertiesDemo.csproj",
+	"Samples\\GeneratePOCOs\\ComplexTypesDemo\\ComplexTypesDemo.csproj",
+	"POCOGenerator.Forms\\POCOGenerator.Forms.csproj",
+	"Data\\Sql\\Data.Sql.csproj",
+	"Samples\\Support\\Samples.Support.csproj",
+	"Samples\\FastColoredTextBox\\FastColoredTextBoxDemo\\FastColoredTextBoxDemo.csproj"
+    ]
+  }
+}

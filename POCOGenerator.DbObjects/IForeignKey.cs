@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace POCOGenerator.DbObjects
 {
-    public interface IForeignKey : IDbObject
+	public interface IForeignKey : IDbObject
     {
         string Name { get; }
         bool Is_One_To_One { get; }

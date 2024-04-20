@@ -1,10 +1,9 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database parameter</summary>
-    public interface IDbParameter
+	/// <summary>Represents a database parameter</summary>
+	public interface IDbParameter
     {
         /// <summary>Gets the name of the parameter.</summary>
         /// <value>The name of the parameter.</value>

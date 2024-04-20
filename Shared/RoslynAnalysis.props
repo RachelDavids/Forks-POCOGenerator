@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<_analyzerStyleConfigFile>$(MSBuildThisFileDirectory)roslyn.globalconfig</_analyzerStyleConfigFile>
+<Project>
+	<PropertyGroup Label="Traceability">
+		<ImportedFiles>$(ImportedFiles);$(MSBuildThisFileFullPath)</ImportedFiles>
 	</PropertyGroup>
-	<ItemGroup Condition=" Exists('$(MSBuildThisFileDirectory)roslyn.globalconfig')">
-		<AnalyzerFile Include="$(MSBuildThisFileDirectory)roslyn.globalconfig" />
+	<ItemGroup>
+		<GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)AnalyzerConfig\*.globalconfig" >
+			<Link>_SolutionConfig_\%(Filename)%(Extension)</Link>
+			<Visible>true</Visible>
+		</GlobalAnalyzerConfigFiles>
 	</ItemGroup>
 </Project>

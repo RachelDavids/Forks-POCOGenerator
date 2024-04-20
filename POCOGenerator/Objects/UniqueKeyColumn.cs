@@ -1,20 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a column of a database unique key.</summary>
-    public sealed class UniqueKeyColumn
+	/// <summary>Represents a column of a database unique key.</summary>
+	public sealed class UniqueKeyColumn
     {
-        private readonly POCOGenerator.DbObjects.IUniqueKeyColumn uniqueKeyColumn;
+        private readonly DbObjects.IUniqueKeyColumn uniqueKeyColumn;
 
-        internal UniqueKeyColumn(POCOGenerator.DbObjects.IUniqueKeyColumn uniqueKeyColumn, UniqueKey uniqueKey)
+        internal UniqueKeyColumn(DbObjects.IUniqueKeyColumn uniqueKeyColumn, UniqueKey uniqueKey)
         {
             this.uniqueKeyColumn = uniqueKeyColumn;
             this.UniqueKey = uniqueKey;
         }
 
-        internal bool InternalEquals(POCOGenerator.DbObjects.IUniqueKeyColumn uniqueKeyColumn)
+        internal bool InternalEquals(DbObjects.IUniqueKeyColumn uniqueKeyColumn)
         {
             return this.uniqueKeyColumn == uniqueKeyColumn;
         }
@@ -31,9 +30,11 @@ namespace POCOGenerator.Objects
             get
             {
                 if (this.tableColumn == null)
-                    this.tableColumn = this.UniqueKey.Table.TableColumns.First(c => c.InternalEquals(this.uniqueKeyColumn.TableColumn));
+				{
+					this.tableColumn = this.UniqueKey.Table.TableColumns.First(c => c.InternalEquals(this.uniqueKeyColumn.TableColumn));
+				}
 
-                return this.tableColumn;
+				return this.tableColumn;
             }
         }
 

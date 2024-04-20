@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace POCOGenerator.Objects
 {
-    /// <summary>Represents a database object</summary>
-    public interface IDbObject
+	/// <summary>Represents a database object</summary>
+	public interface IDbObject
     {
         /// <summary>Gets the database that this database object belongs to.</summary>
         /// <value>The database that this database object belongs to.</value>
